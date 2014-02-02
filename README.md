@@ -5,10 +5,13 @@
 Check out this repository and the Vitamins repository into the same working directory. 
 This project will assume both repositories are in this same directory. 
 
+$ cd ~/git/
 
-git clone https://github.com/Technocopia/ServoStock-hw.git
+$ git clone https://github.com/Technocopia/ServoStock-hw.git
 
-git clone https://github.com/Technocopia/Vitamins.git
+$ git clone https://github.com/Technocopia/Vitamins.git
+
+$ cd ServoStock-hw/ServoStock/
 
 
 ## Building ##

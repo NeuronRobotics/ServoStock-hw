@@ -132,7 +132,7 @@ module BoltSlot(RodLength=100)
 }
 
 
-module DeltaFreeArm(RodLength=200)
+module DeltaFreeArm(RodLength=180)
 {
 	translate([0,0,RodEndRodDiam()*.7]){
 		difference()
@@ -156,7 +156,8 @@ module DeltaFreeArm(RodLength=200)
 	}
 }
 
-translate([0,0,0])
-	color("Red")
+for ( i = [0 : 1 : 8] ){
+	translate([0,i*13,0])
 		DeltaFreeArm();
 
+}

@@ -1,9 +1,9 @@
 use <Parameters.scad>
-use <../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
-use <../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
-use <../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
-use <../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
-use <../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
 
 use <BearingCap.scad>	

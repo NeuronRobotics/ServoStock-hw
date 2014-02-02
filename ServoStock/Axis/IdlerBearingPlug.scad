@@ -1,5 +1,5 @@
-use <../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 
 function IdlerBearingPlugPlasticWidth()= 608BallBearingHeight()/4;
 

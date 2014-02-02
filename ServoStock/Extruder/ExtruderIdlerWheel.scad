@@ -1,5 +1,6 @@
-use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>;
-use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
+
 $fn=50;
 function ExtruderIdlerWheelThickness() = 1.2;
 function ExtruderIdlerWheelDiam(3dPrinterTolerance=.4) = 37+3dPrinterTolerance;

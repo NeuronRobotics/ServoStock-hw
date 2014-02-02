@@ -1,14 +1,14 @@
 $fn=100;
 
-use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>;
-use <../../Vitamins/VitaminsActuators/StandardServo/Servo_Connector_Vitamin.scad>;
-use<../../Vitamins/VitaminsFasteners/Screws/High_Low_Screw_Vitamin.scad>;
-use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>;
-use <../../Vitamins/VitaminsSensors/Encoders/Encoder_Vitamin.scad>;
-use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>;
-use <../../Vitamins/VitaminsTools/Standard_Extruder_Spacing_Vitamin.scad>;
-use <../../Vitamins/VitaminsTools/Filament_Vitamin.scad>;
-use <../../Vitamins/VitaminsElectronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/Servo_Connector_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>;
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 

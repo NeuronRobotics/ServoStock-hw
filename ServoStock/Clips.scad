@@ -1,9 +1,9 @@
 use <Parameters.scad>
-use <../../Vitamins/VitaminsStructural/SteelRod/8mm_Rod_Vitamin.scad>
-use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>
-use <../../Vitamins/VitaminsFasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
-use <../../Vitamins/VitaminsFasteners/Screws/High_Low_Screw_Vitamin.scad>
-use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
+use <../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
 
 

@@ -1,6 +1,6 @@
-use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../Vitamins/VitaminsKinematics/Belts/Generic_Drive_Belt_Vitamin.scad>
-use <../../Vitamins/VitaminsKinematics/Pulleys/Pulley_Vitamin.scad>
+use <../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../Vitamins/Vitamins/Kinematics/Belts/Generic_Drive_Belt_Vitamin.scad>
+use <../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
 
 
 function BearingClipSideWidth()= (PulleyInnerDiam()-608BallBearingDiam(.3))/2;

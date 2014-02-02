@@ -13,6 +13,14 @@ function offsetheight()= .75;
 function offsetdiam() = 9;
 function MKIIwheelheight() = wheelheight()+offsetheight()+MagnetLength(.4)-.1;
 
+module bearingshaft(3dPrinterTolerance=.4)
+{
+	difference()
+	{
+		cylinder(h=MagnetLength(3dPrinterTolerance), r=(608BallBearingInnerDiam(3dPrinterTolerance)/2)+.1);
+		translate([0,0,MagnetLength(3dPrinterTolerance)-.25]){rotate([0,180,0]){MagnetDraft(.4);}}
+	}
+}
 module MKIIwheel(){
 	union()
 	{

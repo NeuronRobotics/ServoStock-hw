@@ -1,11 +1,11 @@
 use <Parameters.scad>
-use <../Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
-use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../Vitamins/Fasteners/Bolts/M8x50_Vitamin.scad>
-use <../Vitamins/Fasteners/Bolts/M8x30_Vitamin.scad>
-use <../Vitamins/Fasteners/Bolts/M8_Nut_Vitamin.scad>
-use <../Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
-use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
+use <../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/Bolts/M8x50_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/Bolts/M8x30_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/Bolts/M8_Nut_Vitamin.scad>
+use <../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 
 
 use <Clips.scad>

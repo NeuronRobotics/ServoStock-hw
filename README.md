@@ -20,3 +20,12 @@ SingleAxisPrintBed.scad
 and one copy of
 
 ExtruderPrintBed.scad
+
+## Vitamins ##
+
+The ServoStock uses standardized vitamin models found in the Vitamins project. These models refer to actual hardware that can not be printed. 
+
+Parts lists can be found here:
+
+https://docs.google.com/spreadsheet/ccc?key=0AvROWAz_jAGGdHdnakh3WWF6LXMtMFFtdWdrZkJVZVE&usp=sharing
+

@@ -1,6 +1,6 @@
 use <Parameters.scad>
-use <../Vitamins/Structural/RodEnds/RodEnd_Vitamin2.scad>
-use <../Vitamins/Fasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vitamin.scad>
+use <../../Vitamins/VitaminsStructural/RodEnds/RodEnd_Vitamin2.scad>
+use <../../Vitamins/VitaminsFasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vitamin.scad>
 
 function RodEndClipLength()=RodEndBallSwivelFlangeHeight()*1.2;
 function RodEndClipWidth()=MotorScrewBoltLength()*.9;

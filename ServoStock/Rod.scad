@@ -1,6 +1,6 @@
 //use <Parameters.scad>
-use <../Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
-use <../Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../Vitamins/VitaminsStructural/RodEnds/RodEnd_Vitamin.scad>
+use <../../Vitamins/VitaminsFasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 
 
 //the rod in yellow will clip onto the rod end using a HiLo screw, however I am not confident about how well it will work in real life, so I've also made a rod (in green) that can simply be inserted into the rod ends and will require another vitamin (glue or epoxy or something) to secure the rod end inside the rod

@@ -1,9 +1,9 @@
 use <Parameters.scad>
-use <../Vitamins/Structural/LinearBearings/LM8UU_Linear_Bearing_Vitamin.scad>
-use <../Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
-use <../Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt.scad>
-use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
-use <../Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
+use <../../Vitamins/VitaminsStructural/LinearBearings/LM8UU_Linear_Bearing_Vitamin.scad>
+use <../../Vitamins/VitaminsFasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../Vitamins/VitaminsKinematics/Belts/OneFifthinXLTimingBelt.scad>
+use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../Vitamins/VitaminsStructural/RodEnds/RodEnd_Vitamin.scad>
 
 use <RodEndClips.scad>
 use <Pulley.scad>
@@ -218,7 +218,7 @@ module Slider(HiLo=false, Style=2)
 Slider(false, 1);
 
 //to check if pulley lines up
-//use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+//use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>
 //translate([0,StandardServoCylinderHeight(),0])
 //	rotate([-90,0,0])
 //		{

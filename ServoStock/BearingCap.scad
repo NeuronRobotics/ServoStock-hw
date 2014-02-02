@@ -1,7 +1,7 @@
 use <Parameters.scad>
 
-use <../Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
-use <../Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
+use <../../Vitamins/VitaminsSensors/Encoders/Encoder_Vitamin.scad>
+use <../../Vitamins/VitaminsKinematics/Pulleys/Pulley_Vitamin.scad>
 
 use <StructuralFeet.scad>	
 

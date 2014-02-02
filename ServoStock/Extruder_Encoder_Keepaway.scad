@@ -1,9 +1,9 @@
 //creates an extruder-specific encoder holder.  print two of these to effectively secure the encoder.
 
 $fn=50;
-use <../Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
-use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
-use <../Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
+use <../../Vitamins/VitaminsSensors/Encoders/Encoder_Vitamin.scad>;
+use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../Vitamins/VitaminsFasteners/Screws/High_Low_Screw_Vitamin.scad>;
 use <Extruder.scad>;
 use <ExtruderIdlerWheel.scad>;
 

@@ -1,8 +1,8 @@
 use <ExtruderIdlerWheel.scad>;
-use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
-use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
-use <../Vitamins/Tools/Filament_Vitamin.scad>;
-use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
+use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>;
+use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../Vitamins/VitaminsTools/Filament_Vitamin.scad>;
+use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>;
 
 $fn=50;
 

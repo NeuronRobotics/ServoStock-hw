@@ -1,7 +1,7 @@
-use <../Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
-use <../Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>
-use <../Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt.scad>
+use <../../Vitamins/VitaminsActuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../Vitamins/VitaminsStructural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>
+use <../../Vitamins/VitaminsKinematics/Belts/OneFifthinXLTimingBelt.scad>
 
 use <Parameters.scad>
 

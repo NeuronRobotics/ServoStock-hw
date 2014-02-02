@@ -1,7 +1,7 @@
 use <Extruder.scad>;
 use <ExtruderIdlerWheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
-use <../Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../Vitamins/VitaminsSensors/Encoders/EncoderMagnet_Vitamin.scad>;
 
 translate([ExtruderLength(.4)/2,-ExtruderWidth(.4)/2,0]){mirror([1,0,0]){Extruder(true,.4);}}
 

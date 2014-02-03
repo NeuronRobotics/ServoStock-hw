@@ -1,0 +1,4 @@
+function getThickness() = 18;
+
+
+

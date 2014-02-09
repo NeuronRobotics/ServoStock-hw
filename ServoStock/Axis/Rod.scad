@@ -2,7 +2,6 @@
 use <../../../Vitamins/Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 
-
 //the rod in yellow will clip onto the rod end using a HiLo screw, however I am not confident about how well it will work in real life, so I've also made a rod (in green) that can simply be inserted into the rod ends and will require another vitamin (glue or epoxy or something) to secure the rod end inside the rod
 
 //THE BEST ROD, HOWEVER APPEARS TO BE THE RED ONE, WHICH USES HILO SCREWS WHICH CAN ACTUALLY THREAD INTO THE ROD ENDS, CREATING A SNUG FIT WITH NO NEW VITAMINS AND NO OVERHANGS
@@ -119,20 +118,22 @@ module BoltSlot(RodLength=100)
 			{	
 				union()
 				{
-					#HiLoBolt(.2,(HiLoBoltLength()-RodEndRodLength())/2);
+					HiLoBolt(.2,(HiLoBoltLength()-RodEndRodLength())/2);
 					cylinder(h=RodChannelLength/5, r=HiLoBoltHeadDiameter()/2, $fn=30);
 				}
 			}
 			translate([0,-HiLoBoltHeadDiameter()/2,-HiLoBoltHeadDiameter()/4])
 			{
-				cube([HiLoBoltHeadHeight()+RodChannelLength,HiLoBoltHeadDiameter(),RodEndRodDiam()*1.5]);
+				cube([HiLoBoltHeadHeight()+RodChannelLength/5,
+				       HiLoBoltHeadDiameter(),
+				       RodEndRodDiam()*1.5]);
 			}
 		}	
 	}	
 }
 
 
-module DeltaFreeArm(RodLength=180)
+module DeltaFreeArm(RodLength=170)
 {
 	translate([0,0,RodEndRodDiam()*.7]){
 		difference()
@@ -156,7 +157,7 @@ module DeltaFreeArm(RodLength=180)
 	}
 }
 
-for ( i = [0 : 1 : 8] ){
+for ( i = [0 : 1 : 1] ){
 	translate([0,i*13,0])
 		DeltaFreeArm();
 

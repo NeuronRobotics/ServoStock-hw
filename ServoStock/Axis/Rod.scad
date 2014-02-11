@@ -124,6 +124,9 @@ module BoltSlot(RodLength=100)
 			}
 			translate([0,-HiLoBoltHeadDiameter()/2,-HiLoBoltHeadDiameter()/4])
 			{
+				translate([0,4,2])
+						rotate([0,82,0])
+							cylinder(r=3.5,h=HiLoBoltHeadHeight()+RodChannelLength);
 				cube([HiLoBoltHeadHeight()+RodChannelLength/5,
 				       HiLoBoltHeadDiameter(),
 				       RodEndRodDiam()*1.5]);

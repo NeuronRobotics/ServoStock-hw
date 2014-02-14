@@ -1,25 +1,25 @@
 $fn=100;
 
-
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/Servo_Connector_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>;
-
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-//ALIGNMENT TESTING:
-//ExtruderTop(.4);
 ExtruderBottom(.4);
 
+//ALIGNMENT TESTING:
+//ExtruderTop(.4);
+
+
 //PRINTING:
-//ExtruderBottom(.4);
 MKIIwheelprint();
 translate([ExtruderX(.4),0,ExtruderZ(.4)]){
 	rotate([0,90,0]){
@@ -113,6 +113,12 @@ module CarriageConnector(){
 				cube([HiLoScrewLength(.4)/1.5,StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
 			}
 		}
+		translate([-ExtruderX(.4)+1.2,ExtruderY(.4)-5,-.5]){
+			cube([HiLoScrewLength(.4),ExtruderX(.4)/2,ExtruderZ(.4)+5]);
+		}
+		translate([ExtruderX(.4),ExtruderY(.4)-5,-.5]){
+			cube([HiLoScrewLength(.4),ExtruderX(.4)/2,ExtruderZ(.4)+5]);
+		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
@@ -126,24 +132,6 @@ module CarriageConnector(){
 		}
 	}
 }
-
-//###########################################################
-//hinge module. Also serves as a pin:
-module ExtruderHinge(){
-	difference(){
-		union(){
-			translate([-HiLoScrewHeadDiameter(.4)/4+.5,0,0]){
-				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
-			}
-			translate([-1,-HiLoScrewDiameter(.4)/2-1,0]){
-				cube([HiLoScrewDiameter(.4)/2+2,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
-			}
-		}
-		translate([-1,0,0]){rotate([0,0,90]){ThruholeScrew(true,.4);}}
-	}
-}
-
-//ExtruderHinge();
 
 //###########################################################
 //Fillet dimensions:
@@ -175,6 +163,23 @@ module BearingChannel(3dPrinterTolerance=.4){
 	}
 }
 
+//###########################################################
+//hinge module. Also serves as a pin:
+module ExtruderHinge(){
+	difference(){
+		union(){
+			translate([-HiLoScrewHeadDiameter(.4)/4+.5,0,0]){
+				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
+			}
+			translate([-1,-HiLoScrewDiameter(.4)/2-1,0]){
+				cube([HiLoScrewDiameter(.4)/2+2,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
+			}
+		}
+		translate([-1,0,-1]){rotate([0,0,90]){ThruholeScrew(false,.4);}}
+	}
+}
+
+//ExtruderHinge();
 
 //###########################################################
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
@@ -197,7 +202,7 @@ difference(){
 			}
 		}
 		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),ExtruderY(.4),ExtruderZ(.4)+5]){
-			cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)+2,HiLoScrewLength(.4)/2]);
+			cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
 		}
 	}
 	union(){
@@ -234,8 +239,8 @@ difference(){
 		}
 	}
 	translate(PinTopVector()){
-		translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.5,HiLoScrewLength(.4)/2+.2]){
-			HiLoScrew(.4);
+		translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.75,HiLoScrewLength(.4)/2+.2]){
+			HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
 		}
 	}
 	translate(WheelVector()){

@@ -1,10 +1,15 @@
 include <../Axis/Parameters.scad>
 use <../../../Vitamins/Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>
+use <ExtruderMKII.scad>
+
 
 
 separation = RodEndSpacing()-RodEndBallSwivelFlangeHeight(.1);  // Distance between ball joint mounting faces.
 offset = separation/2.5;  // Same as DELTA_EFFECTOR_OFFSET in Marlin.
-mount_radius = 12.5;  // Hotend mounting screws, standard would be 25mm.
+mount_radius = StandardExtruderSpacing()/2;  // Hotend mounting screws, standard would be 25mm.
 hotend_radius = 8;  // Hole for the hotend (J-Head diameter is 16mm).
 push_fit_height = 4;  // Length of brass threaded into printed plastic.
 height = 8;
@@ -38,14 +43,16 @@ module effector() {
 	      }
       }
     }
-    translate([0, 0, push_fit_height-height/2])
-      cylinder(r=hotend_radius, h=height, $fn=36);
+    translate([0, 0, push_fit_height-height*2])
+		rotate([0,-90,0])
+      	HotEnd(true,.4);
     translate([0, 0, -6]) # import("m5_internal.stl");
     for (a = [0:60:359]) rotate([0, 0, a]) {
       translate([0, mount_radius, 0])
-      	cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
+      	#cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
     }
   }
 }
 
 translate([0, 0, height/2]) effector();
+%rotate([0,0,90])Extruder();

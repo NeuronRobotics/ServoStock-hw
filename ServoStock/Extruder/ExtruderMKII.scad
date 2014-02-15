@@ -13,20 +13,30 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-ExtruderBottom(.4);
+
 
 //ALIGNMENT TESTING:
-//ExtruderTop(.4);
-
-
-//PRINTING:
-MKIIwheelprint();
-translate([ExtruderX(.4),0,ExtruderZ(.4)]){
-	rotate([0,90,0]){
+module Extruder(){
+translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+24]){
+	rotate([-90,0,0]){
 		ExtruderTop(.4);
+		ExtruderBottom(.4);
+		}
 	}
 }
+Extruder();
 
+//PRINTING:
+module ExtruderPrint(){
+	ExtruderBottom(.4);
+	MKIIwheelprint();
+	translate([ExtruderX(.4),0,ExtruderZ(.4)]){
+		rotate([0,90,0]){
+			ExtruderTop(.4);
+		}
+	}
+}
+//ExtruderPrint();
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;

@@ -49,10 +49,10 @@ module effector() {
     translate([0, 0, -6]) # import("m5_internal.stl");
     for (a = [0:60:359]) rotate([0, 0, a]) {
       translate([0, mount_radius, 0])
-      	#cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
+      	cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
     }
   }
 }
 
 translate([0, 0, height/2]) effector();
-%rotate([0,0,90])Extruder();
+//rotate([0,0,90])Extruder();

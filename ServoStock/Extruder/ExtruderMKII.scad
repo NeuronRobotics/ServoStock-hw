@@ -17,14 +17,14 @@ use <Extruder_Encoder_Keepaway.scad>;
 
 //ALIGNMENT TESTING:
 module Extruder(){
-translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+24]){
+translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 	rotate([-90,0,0]){
 		ExtruderTop(.4);
 		ExtruderBottom(.4);
 		}
 	}
 }
-Extruder();
+//Extruder();
 
 //PRINTING:
 module ExtruderPrint(){
@@ -36,7 +36,7 @@ module ExtruderPrint(){
 		}
 	}
 }
-//ExtruderPrint();
+ExtruderPrint();
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
@@ -120,14 +120,14 @@ module CarriageConnector(){
 	difference(){
 		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-5,ExtruderY(.4),0]){
 			rotate([0,0,90]){
-				cube([HiLoScrewLength(.4)/1.5,StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
+				cube([HiLoScrewLength(.4),StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
 			}
 		}
-		translate([-ExtruderX(.4)+1.2,ExtruderY(.4)-5,-.5]){
-			cube([HiLoScrewLength(.4),ExtruderX(.4)/2,ExtruderZ(.4)+5]);
+		translate([-ExtruderX(.4)+1.2,ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
+			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
 		}
-		translate([ExtruderX(.4),ExtruderY(.4)-5,-.5]){
-			cube([HiLoScrewLength(.4),ExtruderX(.4)/2,ExtruderZ(.4)+5]);
+		translate([ExtruderX(.4),ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
+			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);

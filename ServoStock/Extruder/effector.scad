@@ -23,6 +23,46 @@ m3_nut_radius=6.3/2;
 m3_wide_radius=m3_radius+.5;
 
 
+
+
+
+module effector(useVertical=false) {
+  difference() {
+    union() {
+      cylinder(r=offset-3, h=height, center=true, $fn=60);
+      for (a = [60:120:359]) rotate([0, 0, a]) {
+			
+			if(a==180){
+				translate([0, offset/2, 0]){
+					//%cube([separation, offset, height], center=true);
+				}
+				flatConnector();
+			}else{
+
+				if(useVertical){
+    	  			verticalConnector();
+					translate([0, offset/2, separation/2]){
+						rotate([0,90,0]){
+							//%cube([separation, offset, height], center=true);
+						}
+					}
+				}	
+				else
+					flatConnector();
+			}
+      }
+    }
+    translate([0, 0, push_fit_height-height*2])
+		rotate([0,-90,0])
+      	HotEnd(true,.4);
+
+    for (a = [0:60:359]) rotate([0, 0, a]) {
+      translate([0, mount_radius, 0])
+      	cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
+    }
+  }
+}
+
 module mount(){
 				translate([-cone_h /2,0,0])
 				difference() {
@@ -44,17 +84,31 @@ module mount(){
 }
 
 module flatConnector(verticalRot =0){
-	rotate([0, 0, 0]) 
-		translate([0,offset*.75, 0]){
-	  		cube([RodEndSpacing()*.85, offset*.3, height], center=true);
+	if(verticalRot==0){
+		rotate([0, 0, 0]) 
+			translate([0,offset*.75, 0]){
+	  			cube([RodEndSpacing()*.85, offset*.3, height], center=true);
 			
 		}
+	}else{
+		// vertical rod
+		rotate([0, 0, 0]) 
+			translate([0,offset, height-2]){
+	  			cube([RodEndSpacing()*.86, offset*.3, height], center=true);
+			
+		}
+	}
 	for (s = [-1, 0]) {
 			
 		  translate([separation*s+(separation/2), offset, 0]){
-				 rotate([0,180*s,0])
-					rotate([0,0,0])
+				if(verticalRot==0)
+				 	rotate([0,180*s,0])
 						mount();
+				else{
+					rotate([s*90,verticalRot,0])
+						translate([height/2,0,0])
+							mount();
+				}
 		  }
     }
 }
@@ -67,34 +121,5 @@ module verticalConnector(){
 }
 
 
-module effector() {
-  difference() {
-    union() {
-      cylinder(r=offset-3, h=height, center=true, $fn=60);
-      for (a = [60:120:359]) rotate([0, 0, a]) {
-			
-			if(a==180){
-				translate([0, offset/2, 0])
-					%cube([separation, offset, height], center=true);
-				flatConnector();
-			}else{
-				translate([0, offset/2, separation/2])
-					rotate([0,90,0])
-						%cube([separation, offset, height], center=true);
-    	  		verticalConnector();
-			}
-      }
-    }
-    translate([0, 0, push_fit_height-height*2])
-		rotate([0,-90,0])
-      	HotEnd(true,.4);
-
-    for (a = [0:60:359]) rotate([0, 0, a]) {
-      translate([0, mount_radius, 0])
-      	cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
-    }
-  }
-}
-
-translate([0, 0, height/2]) effector();
+translate([0, 0, height/2]) effector(true);
 %rotate([0,0,90])color("red")Extruder();

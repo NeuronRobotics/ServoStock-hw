@@ -42,19 +42,26 @@ module RodEndClip()
 
 module RodEndClips()
 {
-	translate([-RodEndSpacing()/2,-RodEndClipLength()/2,RodEndClipHeight()/2])
-	{
-		union()
+	translate([0,-RodEndClipLength()/2,RodEndClipHeight()/2]){
+		translate([-RodEndSpacing()/2,0,0])
 		{
-			RodEndClip();
-			
-			translate([RodEndSpacing(),0,0])
+			union()
 			{
-				mirror([1,0,0])
+				RodEndClip();
+			
+				translate([RodEndSpacing(),0,0])
 				{
-					RodEndClip();	
-				}				
-			}	
+					mirror([1,0,0])
+					{
+						RodEndClip();	
+					}				
+				}	
+			}
+		}
+		RodEndClip();	
+		translate([0,0,RodEndSpacing()])
+		{
+			RodEndClip();							
 		}
 	}
 }

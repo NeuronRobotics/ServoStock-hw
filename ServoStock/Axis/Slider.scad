@@ -17,6 +17,43 @@ function BeltClipLength()=StandardServoCylinderHeight()+PulleyBeltOffset()+2XLBe
 
 $fn=100;
 
+module SliderBase(Style=2)
+{
+	braceWidth=ZrodSpacing()-LM8UULinearBearingDiam()-2;
+	union()
+	{
+		translate([LM8UULinearBearingDiam()/2+1,PlasticWidth()/2-GripWidth(),0])
+		{
+			intersection(){
+				translate([braceWidth/2,0,0])
+				cylinder(	r2=RodEndTopWidth(),
+						 	r1=braceWidth/2, 
+							h=RodEndSpacing()+RodEndClipHeight(), 
+							center=false, 
+							$fn=24);
+				union(){
+					translate([braceWidth/2-GripWidth()/2,0,0])
+					cube([GripWidth(),braceWidth,RodEndSpacing()+RodEndClipHeight()]);
+					cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
+					cube([braceWidth,braceWidth,GripWidth()]);
+				}
+			}
+			
+		}
+		translate([0,PlasticWidth()/2,0])
+		{
+		LinearBearingGrip(Style);				
+		}
+		translate([ZrodSpacing(),PlasticWidth()/2,0])
+		{
+			mirror([1,0,0])
+			{
+				LinearBearingGrip(Style);
+			}				
+		}
+	}
+}
+
 module TaperedCylinder()
 {
 	cylinder(LM8UULinearBearingRidgeOffset()+2, LM8UULinearBearingDiam()/2.2, LM8UULinearBearingDiam()/1.9);	
@@ -155,27 +192,7 @@ module BeltClip(HiLo=false, Style=2)
 
 
 
-module SliderBase(Style=2)
-{
-	union()
-	{
-		translate([LM8UULinearBearingDiam()/2+1,PlasticWidth()/2-GripWidth(),0])
-		{
-			cube([ZrodSpacing()-LM8UULinearBearingDiam()-2,GripWidth(),SliderHeight()]);
-		}
-		translate([0,PlasticWidth()/2,0])
-		{
-		LinearBearingGrip(Style);				
-		}
-		translate([ZrodSpacing(),PlasticWidth()/2,0])
-		{
-			mirror([1,0,0])
-			{
-				LinearBearingGrip(Style);
-			}				
-		}
-	}
-}
+
 
 module Flare()
 {

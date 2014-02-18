@@ -23,16 +23,27 @@ m3_nut_radius=6.3/2;
 m3_wide_radius=m3_radius+.5;
 
 
+module verticalConnector(){
+	rotate([0,90,0]){
+		translate([-separation/2,0,height])
+			difference(){
+				flatConnector(90);
+				translate([separation/2+height/4+.1,offset,cone_h/2+5])
+				#cube([height/2+.2,m3_nut_radius*2, m3_nut_radius], center=true);
+			}
+	}
+}
+
 module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
   difference() {
 	union() {
 		//cylinder(r=offset-5, h=height, center=true, $fn=60);
-		translate([offset/3,0,0])
-			#cube([offset*1.5,offset*.85, height], center=true);
-		translate([-offset/4,0,0])
-	  		cube([offset*.8,mount_radius*2.5, height], center=true);
+		translate([offset/3,-5,0])
+			cube([offset*1.5,offset*.7, height], center=true);
+		translate([-offset/4+1,0,0])
+	  		cube([offset*.79,mount_radius*2.5, height], center=true);
       for (a = [77:120:359]) rotate([0, 0, a]) {
 			
 			if(a==197){
@@ -54,9 +65,10 @@ module effector(useVertical=false) {
 			}
       }
     }
+	
     translate([0, 0, push_fit_height-height*2])
 		rotate([0,-90,0])
-      		#HotEnd(true,.4);
+      		HotEnd(true,.4);
 
     for (a = [0:180:359]) rotate([0, 0, a]) {
       translate([0, mount_radius, 0])
@@ -104,7 +116,12 @@ module flatConnector(verticalRot =0){
 					intersection(){
 						cylinder(r1=height*3, r2=cone_h*.75, h=RodEndSpacing(), center=false, $fn=24);
 						translate([height*2,0,(RodEndSpacing()-height)/2])
-	  						cube([height*4, height, RodEndSpacing()-height], center=true);
+							difference(){
+	  							cube([height*4, height, RodEndSpacing()-height], center=true);
+								translate([0,0,-(RodEndSpacing())/2+height])
+									rotate([0, -90, 0])
+										cylinder(r=m3_nut_radius+.1, h=cone_h*3, center=true, $fn=24);
+							}
 					}
 				}
 			
@@ -125,16 +142,11 @@ module flatConnector(verticalRot =0){
     }
 }
 
-module verticalConnector(){
-	rotate([0,90,0]){
-		translate([-separation/2,0,height])
-			flatConnector(90);
-	}
-}
+
 
 
 translate([0, 0, height/2]) effector(true);
-%rotate([0,0,90])color("red")Extruder();
+//%rotate([0,0,90])color("red")Extruder();
 
 
 

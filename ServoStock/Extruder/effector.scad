@@ -22,6 +22,10 @@ m3_radius=2.4/2;
 m3_nut_radius=6.3/2;
 m3_wide_radius=m3_radius+.5;
 
+translate([0, 0, height/2]) effector(true);
+//rotate([0,0,90])color("red")Extruder();
+
+
 
 module verticalConnector(){
 	rotate([0,90,0]){
@@ -39,16 +43,19 @@ module effector(useVertical=false) {
 	echo("Offset = ",offset);
   difference() {
 	union() {
-		//cylinder(r=offset-5, h=height, center=true, $fn=60);
+		cylinder(r=offset-6, h=height, center=true, $fn=60);
 		translate([offset/3,-5,0])
 			cube([offset*1.5,offset*.7, height], center=true);
-		translate([-offset/4+1,0,0])
-	  		cube([offset*.79,mount_radius*2.5, height], center=true);
+
+	  	cube([m3_wide_radius*8,mount_radius*2, height], center=true);
+		rotate([0,0,30])
+			translate([0,offset/3,0])
+	  			cube([m3_wide_radius*8,mount_radius*1.5, height], center=true);
       for (a = [77:120:359]) rotate([0, 0, a]) {
 			
 			if(a==197){
 				translate([0, offset/2, 0]){
-					%cube([separation, offset, height], center=true);
+					//%cube([separation, offset, height], center=true);
 				}
 				flatConnector();
 			}else{
@@ -56,7 +63,7 @@ module effector(useVertical=false) {
     	  			verticalConnector();
 					translate([0, offset/2, separation/2]){
 						rotate([0,90,0]){
-							%cube([separation, offset, height], center=true);
+							//%cube([separation, offset, height], center=true);
 						}
 					}
 				}	
@@ -64,16 +71,22 @@ module effector(useVertical=false) {
 					flatConnector();
 			}
       }
+    	for (a = [0:180:359]) rotate([0, 0, a]) {
+      		translate([0, mount_radius, 0])
+				cylinder(r=m3_wide_radius*4, h=height, center=true, $fn=12);
+    	}
     }
 	
     translate([0, 0, push_fit_height-height*2])
 		rotate([0,-90,0])
       		HotEnd(true,.4);
+		for (a = [0:180:359]) rotate([0, 0, a]) {
+      		translate([0, mount_radius, 0])
 
-    for (a = [0:180:359]) rotate([0, 0, a]) {
-      translate([0, mount_radius, 0])
-      		#cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
-    }
+      			#cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
+				
+    	}
+
   }
 }
 
@@ -145,8 +158,6 @@ module flatConnector(verticalRot =0){
 
 
 
-translate([0, 0, height/2]) effector(true);
-//%rotate([0,0,90])color("red")Extruder();
 
 
 

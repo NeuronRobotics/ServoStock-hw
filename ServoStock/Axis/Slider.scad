@@ -28,7 +28,7 @@ module SliderBase(Style=2)
 		{
 			intersection(){
 				translate([braceWidth/2,0,0])
-				cylinder(	r2=RodEndTopWidth(),
+				cylinder(	r2=RodEndTopWidth()-1.8,
 						 	r1=braceWidth/2, 
 							h=RodEndSpacing()+RodEndClipHeight(), 
 							center=false, 

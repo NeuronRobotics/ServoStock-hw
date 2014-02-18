@@ -20,6 +20,8 @@ $fn=100;
 module SliderBase(Style=2)
 {
 	braceWidth=ZrodSpacing()-LM8UULinearBearingDiam()-2;
+	supportConeHeight=RodEndTopWidth()+3;
+	slotGap=RodEndBallSwivelFlangeHeight()/2+2.4;
 	union()
 	{
 		translate([LM8UULinearBearingDiam()/2+1,PlasticWidth()/2-GripWidth(),0])
@@ -38,6 +40,31 @@ module SliderBase(Style=2)
 					cube([braceWidth,braceWidth,GripWidth()]);
 				}
 			}
+
+			intersection(){
+			translate([braceWidth/2,0,RodEndSpacing()])
+				rotate([180,0,0])
+				cylinder(	r2=0,
+						 	r1=supportConeHeight, 
+							h=supportConeHeight, 
+							center=false, 
+							$fn=24);
+				translate([	RodEndBallSwivelFlangeHeight()+GripWidth()+1,
+							-RodEndTopWidth()+.9,
+							RodEndSpacing()-supportConeHeight])	
+				difference(){
+					translate([0,0,0])
+					cube([	RodEndTopWidth()*2-5.3,
+							RodEndTopWidth()+1,
+							supportConeHeight]);
+					translate([RodEndBallSwivelFlangeHeight()/2-1.7,0,.1])
+					cube([	slotGap,
+							RodEndTopWidth()-3.8,
+							supportConeHeight]);
+				}
+			}
+
+			
 			
 		}
 		translate([0,PlasticWidth()/2,0])

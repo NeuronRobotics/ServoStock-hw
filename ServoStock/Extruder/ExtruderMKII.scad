@@ -116,18 +116,26 @@ module HEscrews(){
 
 //###########################################################
 //hot end and carriage connector module:
+module removalcube(){
+	union(){
+		cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
+		translate([0,15,ExtruderZ(.4)]){
+			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)/2]);
+		}
+	}
+}
 module CarriageConnector(){
 	difference(){
-		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-5,ExtruderY(.4),0]){
+		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-8,ExtruderY(.4),0]){
 			rotate([0,0,90]){
-				cube([HiLoScrewLength(.4),StandardExtruderSpacing()+ExtruderX(.4)-10,ExtruderZ(.4)+4]);
+				cube([HiLoScrewLength(.4),StandardExtruderSpacing()+ExtruderX(.4)-16,ExtruderZ(.4)+4]);
 			}
 		}
 		translate([-ExtruderX(.4)+1.2,ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
-			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
+			removalcube();
 		}
 		translate([ExtruderX(.4),ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
-			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
+			removalcube();
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);

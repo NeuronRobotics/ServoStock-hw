@@ -174,10 +174,12 @@ module HingeFillet(){
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4){
 	union(){
-		translate([-608BallBearingDiam()/2,-608BallBearingDiam()/2-1,-ExtruderX(.4)/2]){
-			cube([608BallBearingDiam(.4),608BallBearingDiam(.4)+2,ExtruderX(.4)*2]);
+		translate([-608BallBearingDiam()/2,-608BallBearingDiam()/2+StandardServoNubDiam(.4)+.75,-ExtruderX(.4)/4]){
+			cube([608BallBearingDiam(.4)/2,StandardServoNubDiam(.4)+2,ExtruderX(.4)]);
 		}
-		//cylinder(h=StandardServoThickness(), r=608BallBearingDiam(3dPrinterTolerance)/2+1);
+		translate([4.5,0,0]){
+			cylinder(h=wheelheight()*2,r=(608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4))/2);
+		}
 	}
 }
 
@@ -213,9 +215,9 @@ difference(){
 			}
 		}
 		translate(WheelVector()){
-			translate([.65,0,-1]){
+			translate([offsetheight()-.1,-608BallBearingDiam(.4)/2-5,-2]){
 				rotate([0,90,0]){
-					cylinder(h=ExtruderX(.4)/2-3,r=608BallBearingDiam(.4)/2+.5);
+					cube([4.5,608BallBearingDiam(.4)+10,ExtruderX(.4)/2-3]);
 				}
 			}
 		}
@@ -299,18 +301,18 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 				
 				CarriageConnector();
 			}
-		//cutout for top to adjust:
+//cutout for top to adjust:
 		translate([ExtruderX(.4)/2+3,-1,ExtruderZ(.4)/2]){
 			cube([ExtruderX(.4)/2-2,ExtruderY(.4)+1,ExtruderZ(.4)]);
 		}
 		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){
-			//Servo:
+//Servo:
 			translate(StandardServoVector()){
 				rotate([0,90,0]){
 					StandardServoMotor(true,2,true,.4);
 				}
 			}	
-			//The opening for the idler wheel bearing to fit in:
+//The opening for the idler wheel bearing to fit in:
 			translate([StandardServoHeightAbvWings()/2+FilamentDiam()*2,0,608BallBearingDiam()-2]){
 				rotate([0,-90,180]){
 					BearingChannel();

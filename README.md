@@ -30,5 +30,5 @@ The ServoStock uses standardized vitamin models found in the Vitamins project. T
 
 Parts lists can be found here:
 
-https://docs.google.com/spreadsheet/ccc?key=0AvROWAz_jAGGdHdnakh3WWF6LXMtMFFtdWdrZkJVZVE&usp=sharing
+https://docs.google.com/spreadsheet/ccc?key=0AvROWAz_jAGGdHdnakh3WWF6LXMtMFFtdWdrZkJVZVE&usp=drive_web#gid=3
 

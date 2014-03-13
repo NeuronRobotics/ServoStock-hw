@@ -13,7 +13,7 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-
+ExtruderBottom(.4);
 
 //ALIGNMENT TESTING:
 module Extruder(){
@@ -36,7 +36,7 @@ module ExtruderPrint(){
 		}
 	}
 }
-ExtruderPrint();
+//ExtruderPrint();
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
@@ -99,7 +99,7 @@ module ScrewPattern(3dPrinterTolerance=.4){
 	
 //###########################################################
 //Hot End and its connecting screws:
-function HEScrewVector()=[HotEndLength()-HotEndRecessOffset()+HiLoScrewDiameter(.4)/2,HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5];
+function HEScrewVector()=[HotEndLength()+HotEndRecessLength()/2-HotEndRecessOffset(),HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5];
 module HEscrews(){
 	union(){
 		HotEnd(false,.4);
@@ -116,11 +116,25 @@ module HEscrews(){
 
 //###########################################################
 //hot end and carriage connector module:
-module removalcube(){
-	union(){
-		cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
-		translate([0,15,ExtruderZ(.4)]){
-			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)/2]);
+module removalcube(anglecube=true){
+	if(anglecube==true){	
+		union(){
+			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
+			translate([0,15,ExtruderZ(.4)]){
+				cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)/2]);
+			}
+			translate([ExtruderX(.4)/2+HiLoScrewDiameter(.4),15,-ExtruderY(.4)/4-HiLoScrewDiameter(.4)]){
+				rotate([0,-45,0]){
+					cube([HiLoScrewLength(.4)+4,ExtruderX(.4),ExtruderZ(.4)]);
+				}
+			}
+		}
+	}else{
+		union(){
+			cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)+5]);
+			translate([0,15,ExtruderZ(.4)]){
+				cube([HiLoScrewLength(.4),ExtruderX(.4),ExtruderZ(.4)/2]);
+			}
 		}
 	}
 }
@@ -132,15 +146,15 @@ module CarriageConnector(){
 			}
 		}
 		translate([-ExtruderX(.4)+1.2,ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
-			removalcube();
+			removalcube(false);
 		}
 		translate([ExtruderX(.4),ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
-			removalcube();
+			removalcube(true);
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
-		translate([ExtruderX(.4)/2,HotEndLength()*2+HiLoScrewHeadHeight(.4)*2+1,ExFilZ()]){
+		translate([ExtruderX(.4)/2,ExtruderY(.4)*2+HotEndRecessOffset()/4,ExFilZ()]){
 			rotate([0,0,-90]){
 				HEscrews();
 			}

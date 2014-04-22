@@ -235,7 +235,7 @@ module Flare()
 //%cube(size=[RodEndSpacing(), RodEndSpacing(), 20,], center=true);
 
 
-module Slider(HiLo=false, Style=2)
+module Slider(HiLo=true, Style=1)
 {
 	union()
 	{
@@ -259,7 +259,7 @@ module Slider(HiLo=false, Style=2)
 	}
 }
 
-Slider(false, 1);
+Slider(true, 1);
 
 //to check if pulley lines up
 //use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>

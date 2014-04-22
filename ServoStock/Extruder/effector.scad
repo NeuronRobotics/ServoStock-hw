@@ -7,7 +7,9 @@ use <ExtruderMKII.scad>
 
 
 // Distance between ball joint mounting faces.
-separation = RodEndSpacing()-RodEndBallSwivelFlangeHeight(.1);  
+separation = RodEndSpacing()-RodEndBallSwivelFlangeHeight(.1);
+
+heightOfPilar = RodEndSpacing();
 
 offset = 25;  
 // Hotend mounting screws, standard would be 25mm.
@@ -29,10 +31,10 @@ translate([0, 0, height/2]) effector(true);
 
 module verticalConnector(){
 	rotate([0,90,0]){
-		translate([-separation/2,0,height])
+		translate([-heightOfPilar/2,0,height])
 			difference(){
 				flatConnector(90);
-				translate([separation/2+height/4+.1,offset,cone_h/2+5])
+				translate([heightOfPilar/2+height/4+.1,offset,cone_h/2+5])
 				#cube([height/2+.2,m3_nut_radius*2, m3_nut_radius], center=true);
 			}
 	}
@@ -61,9 +63,9 @@ module effector(useVertical=false) {
 			}else{
 				if(useVertical){
     	  			verticalConnector();
-					translate([0, offset/2, separation/2]){
+					translate([0, offset/2, heightOfPilar/2]){
 						rotate([0,90,0]){
-							//%cube([separation, offset, height], center=true);
+							%cube([heightOfPilar, offset, height], center=true);
 						}
 					}
 				}	

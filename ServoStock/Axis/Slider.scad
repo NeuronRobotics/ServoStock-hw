@@ -17,6 +17,10 @@ function BeltClipLength()=StandardServoCylinderHeight()+PulleyBeltOffset()+2XLBe
 
 $fn=100;
 
+module supportCone(){
+	
+}
+
 module SliderBase(Style=2)
 {
 	braceWidth=ZrodSpacing()-LM8UULinearBearingDiam()-2;
@@ -39,32 +43,7 @@ module SliderBase(Style=2)
 					cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
 					cube([braceWidth,braceWidth,GripWidth()]);
 				}
-			}
-
-			intersection(){
-			translate([braceWidth/2,0,RodEndSpacing()])
-				rotate([180,0,0])
-				cylinder(	r2=0,
-						 	r1=supportConeHeight, 
-							h=supportConeHeight, 
-							center=false, 
-							$fn=24);
-				translate([	RodEndBallSwivelFlangeHeight()+GripWidth()+1,
-							-RodEndTopWidth()+.9,
-							RodEndSpacing()-supportConeHeight])	
-				difference(){
-					translate([0,0,0])
-					cube([	RodEndTopWidth()*2-5.3,
-							RodEndTopWidth()+1,
-							supportConeHeight]);
-					translate([RodEndBallSwivelFlangeHeight()/2-1.7,0,.1])
-					cube([	slotGap,
-							RodEndTopWidth()-3.8,
-							supportConeHeight]);
-				}
-			}
-
-			
+			}			
 			
 		}
 		translate([0,PlasticWidth()/2,0])

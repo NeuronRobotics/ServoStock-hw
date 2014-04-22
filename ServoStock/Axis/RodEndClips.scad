@@ -6,6 +6,33 @@ function RodEndClipLength()=RodEndBallSwivelFlangeHeight()*1.2;
 function RodEndClipWidth()=MotorScrewBoltLength()*.9;
 function RodEndClipHeight()=RodEndTopWidth();
 
+module RodEndSupport(supportHeight=10){
+	translate([0,0,-RodEndClipHeight()/2])
+	intersection(){
+		union(){
+			translate([RodEndClipWidth()/2,RodEndClipLength()/2,0])
+				rotate([180,0,0])
+					cylinder(	r2=0,
+							 	r1=supportHeight, 
+								h=supportHeight, 
+								center=false, 
+								$fn=24);
+			translate([-RodEndClipWidth()/2,RodEndClipLength()/2,0])
+				rotate([180,0,0])
+					cylinder(	r2=0,
+							 	r1=supportHeight, 
+								h=supportHeight, 
+								center=false, 
+								$fn=24);
+		}
+		translate([0,0,-supportHeight])
+			linear_extrude(height = supportHeight, center = false, convexity = 10)
+				projection(cut = true) 
+					translate([0,0,RodEndClipHeight()/2-1])
+						RodEndClip();
+	}
+}
+
 module RodEndClip()
 {
 	rotate([0,180,90])
@@ -61,7 +88,8 @@ module RodEndClips()
 		RodEndClip();	
 		translate([0,0,RodEndSpacing()])
 		{
-			RodEndClip();							
+			RodEndClip();
+			RodEndSupport();
 		}
 	}
 }

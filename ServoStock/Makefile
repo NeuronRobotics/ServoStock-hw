@@ -1,4 +1,4 @@
-CFILES :=	$(wildcard *.scad) 
+CFILES :=	$(wildcard */*.scad) 
 OFILES := 	$(CFILES:%.scad=%.stl)
 
 all:clean $(OFILES)
@@ -14,3 +14,7 @@ extruder:clean
 
 clean:
 	rm -rf $(OFILES)
+	
+axisTest:
+	#openscad -o  Slider.stl Axis/Slider.scad
+	openscad -o  effector.stl Extruder/effector.scad

@@ -21,7 +21,7 @@ cone_r1 = 2.5;
 cone_r2 = 21;
 cone_h = cone_r2;
 m3_radius=2.4/2;
-m3_nut_radius=6.3/2;
+m3_nut_radius=7/2;
 m3_wide_radius=m3_radius+.5;
 
 translate([0, 0, height/2]) effector(true);
@@ -31,11 +31,11 @@ translate([0, 0, height/2]) effector(true);
 
 module verticalConnector(){
 	rotate([0,90,0]){
-		translate([-heightOfPilar/2,0,height])
+		translate([-separation/2,0,height])
 			difference(){
 				flatConnector(90);
-				translate([heightOfPilar/2+height/4+.1,offset,cone_h/2+5])
-				#cube([height/2+.2,m3_nut_radius*2, m3_nut_radius], center=true);
+				translate([separation/2+height/4+.1,offset,cone_h/2+5])
+				cube([height/2+.2,m3_nut_radius*2, m3_nut_radius], center=true);
 			}
 	}
 }
@@ -65,7 +65,7 @@ module effector(useVertical=false) {
     	  			verticalConnector();
 					translate([0, offset/2, heightOfPilar/2]){
 						rotate([0,90,0]){
-							%cube([heightOfPilar, offset, height], center=true);
+							//%cube([heightOfPilar, offset, height], center=true);
 						}
 					}
 				}	
@@ -112,6 +112,32 @@ module mount(){
 				}
 }
 
+module myMount(vert=0,verticalRot =0){
+	
+	  translate([vert*-1+(vert/2), offset, 0]){
+			if(verticalRot==0)
+			 	rotate([0,180*-1,0])
+					mount();
+			else{
+				rotate([-1*90,verticalRot,0])
+					translate([height/2,0,0])
+						mount();
+			}
+	  }
+	  
+	  translate([(separation/2), offset, 0]){
+			if(verticalRot==0)
+			 	rotate([0,0,0])
+					mount();
+			else{
+				rotate([0,verticalRot,0])
+					translate([height/2,0,0])
+						mount();
+			}
+	  }
+  
+}
+
 module flatConnector(verticalRot =0){
 	if(verticalRot==0){
 		//horozontal rod
@@ -120,6 +146,8 @@ module flatConnector(verticalRot =0){
 	  			cube([RodEndSpacing()-cone_h*2, height*1.2, height], center=true);
 			
 		}
+		
+		myMount(separation,verticalRot);
 	}else{
 			// vertical rod
 			rotate([0, 0, 0]) 
@@ -127,12 +155,12 @@ module flatConnector(verticalRot =0){
 	  				cube([RodEndSpacing()*.86, height, height], center=true);
 				}
 			rotate([0, -90, 0]) 
-				translate([0,offset,(-RodEndSpacing()/2)+.5]){
+				translate([0,offset,(-RodEndSpacing()/2)-.2]){
 					intersection(){
-						cylinder(r1=height*3, r2=cone_h*.75, h=RodEndSpacing(), center=false, $fn=24);
+						cylinder(r1=height*3+5, r2=cone_h*.75, h=RodEndSpacing()+(RodEndBallSwivelFlangeHeight(.1)), center=false, $fn=24);
 						translate([height*2,0,(RodEndSpacing()-height)/2])
 							difference(){
-	  							cube([height*4, height, RodEndSpacing()-height], center=true);
+	  							cube([height*4, height, RodEndSpacing()+height], center=true);
 								translate([0,0,-(RodEndSpacing())/2+height])
 									rotate([0, -90, 0])
 										cylinder(r=m3_nut_radius+.1, h=cone_h*3, center=true, $fn=24);
@@ -140,21 +168,9 @@ module flatConnector(verticalRot =0){
 					}
 				}
 			
-		
+			myMount(heightOfPilar+RodEndBallSwivelFlangeHeight(.1),verticalRot);
 	}
-	for (s = [-1, 0]) {
-			
-		  translate([separation*s+(separation/2), offset, 0]){
-				if(verticalRot==0)
-				 	rotate([0,180*s,0])
-						mount();
-				else{
-					rotate([s*90,verticalRot,0])
-						translate([height/2,0,0])
-							mount();
-				}
-		  }
-    }
+
 }
 
 

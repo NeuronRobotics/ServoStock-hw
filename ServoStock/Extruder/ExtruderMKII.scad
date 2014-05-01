@@ -13,7 +13,8 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-ExtruderBottom(.4);
+ExtruderTop(.4);
+//ExtruderBottom(.4);
 
 //ALIGNMENT TESTING:
 module Extruder(){
@@ -162,24 +163,32 @@ module CarriageConnector(){
 		translate([ExtruderX(.4)/2+HiLoScrewHeadDiameter(.4),ExtruderY(.4)+HiLoScrewHeadDiameter(.4)/2-.5,ExFilZ()/2]){
 			ThruholeScrew(false,.4);
 		}
+		translate([-StandardExtruderSpacing()/2+rad,ExtruderY(.4)+HiLoScrewLength(.4)/2-4,0]){
+			HingeFillet();
+		}
+		translate([-StandardExtruderSpacing()/2+rad,ExtruderY(.4)+HiLoScrewLength(.4)+fRad/2+rad/2-.25,0]){
+			rotate([0,0,-90]){
+				HingeFillet();
+			}
+		}
 	}
 }
 
 //###########################################################
 //Fillet dimensions:
-pad = 0.1;
+
 tHk = HiLoScrewDiameter(.4)+2;
 fPer = HiLoScrewDiameter(.4)/2;
 fRad = HiLoScrewDiameter(.4)*2;
-
+rad = HiLoScrewDiameter(.4)/1.5+0.1;
 //Fillet:
 module HingeFillet(){
 	difference(){
-		translate([-pad,-pad,-pad]){
-			cube([fRad,fRad,ExtruderX(.4)/2+1]);
+		translate([-0.1,-0.1,-0.1]){
+			cube([fRad,fRad,ExtruderX(.4)]);
 		}
-		translate([fRad-.25,fRad-.25,-(pad*2)]){
-			cylinder(h=ExtruderX(.4)/2+2,r=HiLoScrewDiameter(.4)/1.5+pad);
+		translate([fRad-.25,fRad-.25,-(0.1*2)]){
+			cylinder(h=ExtruderX(.4)+1,r=rad);
 		}
 	}
 }
@@ -246,7 +255,7 @@ difference(){
 			}
 		}
 		translate(WheelVector()){
-			translate([offsetheight(),0,0]){
+			translate([offsetheight()+608BallBearingHeight(.4),0,0]){
 				rotate([180,90,0,]){
 					608BearingKeepaway(.4);
 				}

@@ -13,7 +13,7 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <Extruder_Encoder_Keepaway.scad>;
 
-ExtruderTop(.4);
+//ExtruderTop(.4);
 //ExtruderBottom(.4);
 
 //ALIGNMENT TESTING:
@@ -25,7 +25,7 @@ translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 		}
 	}
 }
-//Extruder();
+Extruder();
 
 //PRINTING:
 module ExtruderPrint(){
@@ -46,25 +46,20 @@ function ExtruderY(3dPrinterTolerance=.4) = StandardServoLength()+HiLoScrewHeadH
 echo("ExtruderY is",(ExtruderY(.4)));
 function ExtruderZ(3dPrinterTolerance=.4) = StandardServoThickness()+FilamentDiam()+3dPrinterTolerance;
 echo("ExtruderZ is",(ExtruderZ(.4)));
-//###########################################################
+
+
 //defining some standard vectors:
 
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
-
 function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-
 function HingeBottomVector() =[.9,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-
 function PinTopVector() = [ExtruderX(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-
 function PinBottomVector() = [.9,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-
 function StandardServoVector() = [StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+1];
-
-function ExFilZ() = StandardServoThickness()/2+StandardServoNubDiam()+.4;//the height of the filament
+function ExFilZ() = StandardServoThickness()/2+StandardServoNubDiam()+.4;
 function FilamentVector() = [ExtruderX(.4)/2,FilamentHeight()/2,ExFilZ()];
 
-//###########################################################
+
 //Thru-hole screw module:
 module ThruholeScrew(teardrop=true, 3dPrinterTolerance=.4){
 	module teardrop(radius, length, angle){
@@ -88,7 +83,7 @@ if (teardrop==true){
 }
 }
 
-//###########################################################
+
 //alignment of the Carriage mounting screws:
 function SVHS() = [(ExtruderX(.4)+StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Hinge Side
 function SVFS() = [(ExtruderX(.4)-StandardExtruderSpacing())/2,ExFilZ(),-HiLoScrewLength()*4]; //Screw Vector Feed Side
@@ -98,7 +93,7 @@ module ScrewPattern(3dPrinterTolerance=.4){
 		translate(SVFS()){ThruholeScrew(true,.4);}
 }
 	
-//###########################################################
+
 //Hot End and its connecting screws:
 function HEScrewVector()=[HotEndLength()+HotEndRecessLength()/2-HotEndRecessOffset(),HotEndRecessDiam()+HiLoScrewDiameter(.4)/2-.25,HiLoScrewLength()/2-.5];
 module HEscrews(){
@@ -115,7 +110,7 @@ module HEscrews(){
 	}
 }
 
-//###########################################################
+
 //hot end and carriage connector module:
 module removalcube(anglecube=true){
 	if(anglecube==true){	
@@ -174,7 +169,7 @@ module CarriageConnector(){
 	}
 }
 
-//###########################################################
+
 //Fillet dimensions:
 
 tHk = HiLoScrewDiameter(.4)+2;
@@ -193,7 +188,7 @@ module HingeFillet(){
 	}
 }
 
-//###########################################################	
+
 //channel for bearing:
 module BearingChannel(3dPrinterTolerance=.4){
 	union(){
@@ -206,7 +201,7 @@ module BearingChannel(3dPrinterTolerance=.4){
 	}
 }
 
-//###########################################################
+
 //hinge module. Also serves as a pin:
 module ExtruderHinge(){
 	difference(){
@@ -214,23 +209,22 @@ module ExtruderHinge(){
 			translate([-HiLoScrewHeadDiameter(.4)/4+.5,0,0]){
 				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
 			}
-			translate([-1,-HiLoScrewDiameter(.4)/2-1,0]){
-				cube([HiLoScrewDiameter(.4)/2+2,HiLoScrewDiameter(.4)+2,ExtruderX(.4)/2-.9]);
+			translate([-5,-HiLoScrewDiameter(.4)/2-1,0]){
+				cube([HiLoScrewDiameter(.4)*2,HiLoScrewDiameter(.4)+2.19,ExtruderX(.4)/2-.9]);
 			}
 		}
-		translate([-1,0,-1]){rotate([0,0,90]){ThruholeScrew(false,.4);}}
+		translate([-1,0,-1]){rotate([0,0,90]){ThruholeScrew(true,.4);}}
 	}
 }
 
 //ExtruderHinge();
 
-//###########################################################
 //The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
 	union(){
 		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){
-			cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)]);
+			cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)+ExtruderZ(.4)/5]);
 		}
 		translate(HingeTopVector()){
 			rotate([0,90,0]){
@@ -238,9 +232,9 @@ difference(){
 			}
 		}
 		translate(WheelVector()){
-			translate([offsetheight()-.1,-608BallBearingDiam(.4)/2-5,-2]){
+			translate([offsetheight()-.1,-608BallBearingDiam(.4)/2-7,-2]){
 				rotate([0,90,0]){
-					cube([4.5,608BallBearingDiam(.4)+10,ExtruderX(.4)/2-3]);
+					cube([ExtruderX(.4)/5,608BallBearingDiam(.4)+14,ExtruderX(.4)/2-3]);
 				}
 			}
 		}
@@ -310,7 +304,7 @@ difference(){
 }
 } 
 
-//###########################################################
+
 //The extruder bottom.  This includes the servo,screws, hot end, and filament subtractions:
 module ExtruderBottom(3dPrinterTolerance=.4){
 	difference(){

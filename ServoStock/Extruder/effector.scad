@@ -65,7 +65,7 @@ module effector(useVertical=false) {
     	  			verticalConnector();
 					translate([0, offset/2, heightOfPilar/2]){
 						rotate([0,90,0]){
-							//%cube([heightOfPilar, offset, height], center=true);
+							%cube([heightOfPilar, offset, height], center=true);
 						}
 					}
 				}	

@@ -17,7 +17,7 @@ $fn = 60;
 shaftDiameter = 608BallBearingInnerDiam(); 
 flanges = 2; // the rims that keep the belt from going anywhere
 flangeHeight = 2;
-numTeeth = 20; // usually 16 // this value together with the pitch determines the pulley diameter
+numTeeth = 14; // usually 16 // this value together with the pitch determines the pulley diameter
 toothType = 3; // 1 = slightly rounded, 2 = oval sharp, 3 = square. For square, set the toothWith a little low.
 splineToPulleyHeight = 4;	//Clearance for servo spline from x-y plane
 
@@ -243,7 +243,7 @@ module shaft(MagnetType=true){
 			//	cylinder(r = bearingStopRadius, h = bearingDistance-splineToPulleyHeight, center = false);
 			//Stress relief
 			translate([0,0,StressReliefOffsetHeight()])
-				cylinder(h = PulleyHubHeight(), r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
+				cylinder(h = PulleyHubHeight()+1, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
 
 		}
 		

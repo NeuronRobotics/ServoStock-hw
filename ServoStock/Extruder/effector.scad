@@ -11,7 +11,7 @@ separation = RodEndSpacing()-RodEndBallSwivelFlangeHeight(.1);
 
 heightOfPilar = RodEndSpacing();
 
-offset = 25;  
+offset = getEffectorRadius();  
 // Hotend mounting screws, standard would be 25mm.
 mount_radius = StandardExtruderSpacing()/2; 
 hotend_radius = 8;  // Hole for the hotend (J-Head diameter is 16mm).

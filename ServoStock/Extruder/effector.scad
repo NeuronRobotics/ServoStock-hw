@@ -20,15 +20,15 @@ height = 12;
 cone_r1 = 2.5;
 cone_r2 = 21;
 cone_h = cone_r2;
-m3_radius=(2.8+.3)/2;
-m3_nut_radius=7/2;
+m3_radius=(3.8+.3)/2;
+m3_nut_radius=(7.5/2);
 m3_wide_radius=m3_radius+.5;
 
 translate([0, 0, height/2])
 	effector(true);
-//
-//rotate([0,0,90])
-//	#Extruder();
+
+rotate([0,0,90])
+	#Extruder();
 
 
 
@@ -52,10 +52,10 @@ module effector(useVertical=false) {
 		translate([offset/3,-5,0])
 			cube([offset*1.5,offset*.7, height], center=true);
 
-	  	cube([m3_wide_radius*8,mount_radius*2, height], center=true);
+	  	cube([m3_wide_radius*6,mount_radius*2, height], center=true);
 		rotate([0,0,30])
 			translate([0,offset/3,0])
-	  			cube([m3_wide_radius*8,mount_radius*1.5, height], center=true);
+	  			cube([m3_wide_radius*6,mount_radius*1.5, height], center=true);
       for (a = [startAngle:120:359]) rotate([0, 0, a]) {
 			
 			if(a==197){
@@ -78,7 +78,7 @@ module effector(useVertical=false) {
       }
     	for (a = [0:180:359]) rotate([0, 0, a]) {
       		translate([0, mount_radius, 0])
-					cylinder(r=m3_wide_radius*4, h=height, center=true, $fn=12);
+				cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
     	}
     }
 	for (a = [startAngle:120:359]) rotate([0, 90, a]) {
@@ -86,7 +86,7 @@ module effector(useVertical=false) {
 		translate([0+.1,
 		           offset,
 		           cone_h/2+2+height])
-			#cube([height,m3_nut_radius*2+.2, m3_nut_radius], center=true);
+			cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
 	}
     translate([0, 0, push_fit_height-height*2])
 		rotate([0,-90,0])
@@ -94,7 +94,7 @@ module effector(useVertical=false) {
 		for (a = [0:180:359]) rotate([0, 0, a]) {
       		translate([0, mount_radius, 0])
 
-      			cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
+				cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
 				
     	}
 
@@ -114,7 +114,7 @@ module mount(){
 						}
 		    		}
 		    		rotate([0, 90, 0])
-		      			cylinder(r=m3_radius, h=separation+1, center=true, $fn=12);
+		    			cylinder(r=m3_radius, h=separation+1, center=true, $fn=12);
 		    		rotate([90, 0, 90])
 						translate([0,0,-cone_h+6])
 		      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);

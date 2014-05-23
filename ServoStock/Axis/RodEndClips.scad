@@ -5,6 +5,8 @@ use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vita
 function RodEndClipLength()=RodEndBallSwivelFlangeHeight()*1.2;
 function RodEndClipWidth()=MotorScrewBoltLength()*.9;
 function RodEndClipHeight()=RodEndTopWidth();
+function getRodEndConnectionOffsetDimention()=RodEndClipLength()/2+PlasticWidth()*2;
+
 
 module RodEndSupport(supportHeight=10){
 	translate([0,0,-RodEndClipHeight()/2])
@@ -57,7 +59,7 @@ module RodEndClip()
 			{
 				union()
 				{
-				#RodEnd();
+				//#RodEnd();
 				RodEndSlot();
 				}
 			}

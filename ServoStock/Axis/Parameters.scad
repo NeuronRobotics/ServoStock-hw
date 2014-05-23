@@ -9,7 +9,16 @@ function mm(i) = i*25.4;
 //(bearing diameter is dependent on rod diameter)
 
 
-function RodEndSpacing()= 108.5;// this is a magic number
+function RodEndSpacing() = 108.5;// this is a magic number
+
+function getCabnetHeight() = 786;
+
+//These are the values to use in the kinematics
+function getFreeRodLength() = 203.82;
+function getBaseRadius() = 120;
+function getEffectorRadius() = 25;
+
+
 
 function ZrodSpacing()=RodEndSpacing()-LM8UULinearBearingDiam()*2-PlasticWidth()*4;
 echo(ZrodSpacing());

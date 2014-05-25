@@ -27,8 +27,8 @@ m3_wide_radius=m3_radius+.5;
 translate([0, 0, height/2])
 	effector(true);
 //
-rotate([0,0,90])translate([0,0,height/2])
-	Extruder();
+//rotate([0,0,90])translate([0,0,height/2])
+//	Extruder();
 
 
 
@@ -79,6 +79,15 @@ module effector(useVertical=false) {
     	for (a = [0:180:359]) rotate([0, 0, a]) {
       		translate([0, mount_radius, 0])
 					cylinder(r=m3_wide_radius*4, h=height, center=true, $fn=12);
+    	}
+    	//cross bracing
+		translate([offset/3,offset-8 ,RodEndSpacing()/2])
+		rotate([0,0,-30])
+    	union(){
+    		rotate([0,45,0])
+    				cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
+    		rotate([0,-45,0])
+					cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
     	}
     }
 	for (a = [startAngle:120:359]) rotate([0, 90, a]) {

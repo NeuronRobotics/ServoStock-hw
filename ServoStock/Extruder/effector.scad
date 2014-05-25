@@ -27,8 +27,8 @@ m3_wide_radius=m3_radius+.5;
 translate([0, 0, height/2])
 	effector(true);
 //
-//rotate([0,0,90])
-//	#Extruder();
+rotate([0,0,90])translate([0,0,height/2])
+	Extruder();
 
 
 
@@ -47,7 +47,7 @@ module effector(useVertical=false) {
 	echo("Offset = ",offset);
 	startAngle = 77;
   difference() {
-	union() {
+	union() translate([0,0,-.1]){
 		cylinder(r=offset-6, h=height, center=true, $fn=60);
 		translate([offset/3,-5,0])
 			cube([offset*1.5,offset*.7, height], center=true);
@@ -88,6 +88,8 @@ module effector(useVertical=false) {
 		           cone_h/2+2+height])
 			#cube([height,m3_nut_radius*2+.2, m3_nut_radius], center=true);
 	}
+	translate([0,0,-height/2-1])
+		cylinder(r=RodEndSpacing(),h=1,center=false);
     translate([0, 0, push_fit_height-height*2])
 		rotate([0,-90,0])
 			HotEnd(true,.4);

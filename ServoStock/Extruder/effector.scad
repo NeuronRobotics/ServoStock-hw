@@ -27,9 +27,9 @@ m3_wide_radius=m3_radius+.5;
 translate([0, 0, height/2])
 	effector(true);
 
-//
-//rotate([0,0,90])translate([0,0,height/2])
-//	Extruder();
+
+rotate([0,0,90])translate([0,0,height/2])
+	Extruder();
 
 
 module verticalConnector(){
@@ -81,8 +81,8 @@ module effector(useVertical=false) {
 				cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
     	}
     	//cross bracing
-		translate([offset/3,offset-8 ,RodEndSpacing()/2])
-		rotate([0,0,-30])
+		translate([offset/3,offset-3,RodEndSpacing()/2])
+		rotate([0,0,-25])
     	union(){
     		rotate([0,45,0])
     				cylinder(r=height/3,h=RodEndSpacing()-20,center=true);

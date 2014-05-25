@@ -28,8 +28,8 @@ translate([0, 0, height/2])
 	effector(true);
 
 
-rotate([0,0,90])translate([0,0,height/2])
-	Extruder();
+//rotate([0,0,90])translate([0,0,height/2])
+//	Extruder();
 
 
 module verticalConnector(){

@@ -136,7 +136,7 @@ module StructuralFeet(EncoderScrews=false)
 				{
 					rotate([90,0,0])
 					{
-						#StandardServoMotor(true, 1, false, .4);
+						StandardServoMotor(true, 1, false, .4);
 					}
 				}
 			}
@@ -179,13 +179,13 @@ module StructuralFeet(EncoderScrews=false)
 							union()
 							{
 								Encoder_Keepaway(false,.8);
-								#Encoder(true,.8);		
+								Encoder(true,.8);		
 							}
 						}else{
 							union()
 							{
 								Encoder_Keepaway(true, .8);
-								#Encoder(false,.8);		
+								Encoder(false,.8);		
 							}	
 						}					
 					}

@@ -8,7 +8,7 @@ use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitam
 
 use <BearingCap.scad>	
 use <Clips.scad>	
-
+use <RodEndClips.scad>
 
 function EncoderShelfWidth() = PlasticWidth()*3+608BallBearingHeight()+EncoderThickness();
 function EncoderShelfDistance() = StandardServoOutcrop()-PlasticWidth()*2+WorkingPulleyHeight()+PulleyHubHeight()/2;
@@ -124,6 +124,7 @@ module EncoderMount()
 //this is the actual module for the finished foot, it pulls down the clips and adds the wings to make a bed mount, and cuts holes to accomodate the motor
 module StructuralFeet(EncoderScrews=false)
 {
+	translate([0,getRodEndConnectionOffsetDimention(),0])
 	difference()
 	{
 		union()

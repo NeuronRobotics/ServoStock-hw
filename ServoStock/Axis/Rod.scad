@@ -136,8 +136,9 @@ module BoltSlot(RodLength=100)
 }
 
 
-module DeltaFreeArm(RodLength=170)
+module DeltaFreeArm()
 {
+	RodLength= getFreeRodLength() - (RodEndEffectiveLegnth()*2);
 	translate([0,0,RodEndRodDiam()*.7]){
 		difference()
 		{

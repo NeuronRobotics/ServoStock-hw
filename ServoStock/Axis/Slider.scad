@@ -158,9 +158,9 @@ module BeltClip(HiLo=false, Style=2)
 						cube([2XLBeltGripHeight()*3.5, BeltClipLength()*1.3, SliderHeight()], center=true);
 					}
 				}else{
-					{
+					
 						cube([2XLBeltGripHeight()*3.5, BeltClipLength(), SliderHeight()], center=true);
-					}
+					
 				}
 				if(Style==1)
 				{

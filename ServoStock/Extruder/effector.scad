@@ -95,7 +95,11 @@ module effector(useVertical=false) {
 			translate([0+.1,
 					   offset,
 					   cone_h/2+2+height])
-				cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
+			cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
+			translate([0,
+								   offset,
+								   0])
+			cylinder(r=m3_radius, h=RodEndSpacing(), center=true);
 		}
 		translate([0,0,-height/2-1])
 			cylinder(r=RodEndSpacing(),h=1,center=false);

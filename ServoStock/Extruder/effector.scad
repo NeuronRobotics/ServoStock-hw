@@ -46,68 +46,68 @@ module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
 	startAngle = 77;
-  difference() {
-	union() translate([0,0,-.1]){
-		cylinder(r=offset-6, h=height, center=true, $fn=60);
-		translate([offset/3,-5,0])
-			cube([offset*1.5,offset*.7, height], center=true);
-
-	  	cube([m3_wide_radius*6,mount_radius*2, height], center=true);
-		rotate([0,0,30])
-			translate([0,offset/3,0])
-	  			cube([m3_wide_radius*6,mount_radius*1.5, height], center=true);
-      for (a = [startAngle:120:359]) rotate([0, 0, a]) {
-			
-			if(a==197){
-				translate([0, offset/2, 0]){
-					//%cube([separation, offset, height], center=true);
-				}
-				flatConnector();
-			}else{
-				if(useVertical){
-    	  			verticalConnector();
-					translate([0, offset/2, heightOfPilar/2]){
-						rotate([0,90,0]){
-							//%cube([heightOfPilar, offset, height], center=true);
-						}
+	difference() {
+		union() translate([0,0,-.1]){
+			cylinder(r=offset-6, h=height, center=true, $fn=60);
+			translate([offset/3,-5,0])
+				cube([offset*1.5,offset*.7, height], center=true);
+	
+			cube([m3_wide_radius*6,mount_radius*2, height], center=true);
+			rotate([0,0,30])
+				translate([0,offset/3,0])
+					cube([m3_wide_radius*6,mount_radius*1.5, height], center=true);
+			for (a = [startAngle:120:359]) rotate([0, 0, a]) {
+				
+				if(a==197){
+					translate([0, offset/2, 0]){
+						//%cube([separation, offset, height], center=true);
 					}
-				}	
-				else
 					flatConnector();
+				}else{
+					if(useVertical){
+						verticalConnector();
+						translate([0, offset/2, heightOfPilar/2]){
+							rotate([0,90,0]){
+								//%cube([heightOfPilar, offset, height], center=true);
+							}
+						}
+					}	
+					else
+						flatConnector();
+				}
 			}
-      }
-    	for (a = [0:180:359]) rotate([0, 0, a]) {
-      		translate([0, mount_radius, 0])
-				cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
-    	}
-    	//cross bracing
-		translate([offset/3,offset-3,RodEndSpacing()/2])
-		rotate([0,0,-25])
-    	union(){
-    		rotate([0,45,0])
-    				cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
-    		rotate([0,-45,0])
-					cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
-    	}
-    }
-	for (a = [startAngle:120:359]) rotate([0, 90, a]) {
-		
-		translate([0+.1,
-		           offset,
-		           cone_h/2+2+height])
-			cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
-	}
-	translate([0,0,-height/2-1])
-		cylinder(r=RodEndSpacing(),h=1,center=false);
-    translate([0, 0, push_fit_height-height*2])
-		rotate([0,-90,0])
-			HotEnd(true,.4);
+			for (a = [0:180:359]) rotate([0, 0, a]) {
+				translate([0, mount_radius, 0])
+					cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
+			}
+			//cross bracing
+			translate([offset/3,offset-3,RodEndSpacing()/2])
+				rotate([0,0,-25])
+					union(){
+						rotate([0,45,0])
+								cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
+						rotate([0,-45,0])
+								cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
+					}
+		}
+		for (a = [startAngle:120:359]) rotate([0, 90, a]) {
+			
+			translate([0+.1,
+					   offset,
+					   cone_h/2+2+height])
+				cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
+		}
+		translate([0,0,-height/2-1])
+			cylinder(r=RodEndSpacing(),h=1,center=false);
+		translate([0, 0, push_fit_height-height*2])
+			rotate([0,-90,0])
+				HotEnd(true,.4);
 		for (a = [0:180:359]) rotate([0, 0, a]) {
-      		translate([0, mount_radius, 0])
+			translate([0, mount_radius, 0])
 
 				cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
 				
-    	}
+		}
 
   }
 }

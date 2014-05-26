@@ -23,6 +23,8 @@ cone_h = cone_r2;
 m3_radius=(3.8+.3)/2;
 m3_nut_radius=(7.5/2);
 m3_wide_radius=m3_radius+.5;
+bracelen=RodEndSpacing()-50;
+
 
 translate([0, 0, height/2])
 	effector(true);
@@ -42,10 +44,22 @@ module verticalConnector(){
 	}
 }
 
+module braceRod(){
+	translate([0,0,bracelen/2]){
+		cylinder(r1=height/3,r2=0,h=bracelen/4,center=false);
+	}
+	translate([0,0,bracelen/2]){
+		cylinder(r1=height/3,r2=0,h=bracelen/4,center=false);
+	}
+	translate([0,0,-10])
+	cylinder(r=height/3,h=bracelen+20,center=true);
+}
+
 module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
 	startAngle = 77;
+	boltLength=1.5*25.4;
 	difference() {
 		union() translate([0,0,-.1]){
 			cylinder(r=offset-6, h=height, center=true, $fn=60);
@@ -85,9 +99,9 @@ module effector(useVertical=false) {
 				rotate([0,0,-25])
 					union(){
 						rotate([0,45,0])
-								cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
+							braceRod();
 						rotate([0,-45,0])
-								cylinder(r=height/3,h=RodEndSpacing()-20,center=true);
+							braceRod();
 					}
 		}
 		for (a = [startAngle:120:359]) rotate([0, 90, a]) {
@@ -100,6 +114,13 @@ module effector(useVertical=false) {
 								   offset,
 								   0])
 			cylinder(r=m3_radius, h=RodEndSpacing(), center=true);
+			if( a== startAngle || a == 240+startAngle){
+				translate([0,
+						   offset,
+						   -boltLength+RodEndBallSwivelFlangeHeight(.1)])
+
+				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
+			}
 		}
 		translate([0,0,-height/2-1])
 			cylinder(r=RodEndSpacing(),h=1,center=false);

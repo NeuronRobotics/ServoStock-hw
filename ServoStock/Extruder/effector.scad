@@ -58,21 +58,23 @@ module braceRod(){
 module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
-	startAngle = 77;
-	boltLength=1.5*25.4;
+	startAngle = 60;
+	boltLength=1.35*25.4;
+	hotEndOffset=-15;
 	difference() {
 		union() translate([0,0,-.1]){
-			cylinder(r=offset-6, h=height, center=true, $fn=60);
-			translate([offset/3,-5,0])
+			translate([0, hotEndOffset, 0])
+					cylinder(r=offset-2, h=height, center=true, $fn=60);
+			translate([offset/3+2,-5,0])
 				cube([offset*1.5,offset*.7, height], center=true);
-	
-			cube([m3_wide_radius*6,mount_radius*2, height], center=true);
-			rotate([0,0,30])
-				translate([0,offset/3,0])
-					cube([m3_wide_radius*6,mount_radius*1.5, height], center=true);
+			translate([0, hotEndOffset, 0])
+				cube([m3_wide_radius*6,mount_radius*2, height], center=true);
+			rotate([0,0,7])
+				translate([0,offset/2,0])
+					cube([m3_wide_radius*6,mount_radius*2.3, height], center=true);
 			for (a = [startAngle:120:359]) rotate([0, 0, a]) {
 				
-				if(a==197){
+				if(a==120+startAngle){
 					translate([0, offset/2, 0]){
 						//%cube([separation, offset, height], center=true);
 					}
@@ -90,13 +92,15 @@ module effector(useVertical=false) {
 						flatConnector();
 				}
 			}
+			translate([0, hotEndOffset, 0])
 			for (a = [0:180:359]) rotate([0, 0, a]) {
 				translate([0, mount_radius, 0])
 					cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
 			}
 			//cross bracing
-			translate([offset/3,offset-3,RodEndSpacing()/2])
-				rotate([0,0,-25])
+			rotate([0,0,-startAngle/1.7])
+				translate([offset/3-6,offset-6,RodEndSpacing()/2])
+
 					union(){
 						rotate([0,45,0])
 							braceRod();
@@ -106,10 +110,7 @@ module effector(useVertical=false) {
 		}
 		for (a = [startAngle:120:359]) rotate([0, 90, a]) {
 			
-			translate([0+.1,
-					   offset,
-					   cone_h/2+2+height])
-			cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
+
 			translate([0,
 								   offset,
 								   0])
@@ -120,18 +121,22 @@ module effector(useVertical=false) {
 						   -boltLength+RodEndBallSwivelFlangeHeight(.1)])
 
 				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
+				translate([0+.1,
+						   offset,
+						   cone_h/2+5+height])
+							cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
 			}
 		}
 		translate([0,0,-height/2-1])
 			cylinder(r=RodEndSpacing(),h=1,center=false);
-		translate([0, 0, push_fit_height-height*2])
+		translate([0, hotEndOffset, push_fit_height-height*2])
 			rotate([0,-90,0])
 				HotEnd(true,.4);
+		
+		translate([0, hotEndOffset, 0])
 		for (a = [0:180:359]) rotate([0, 0, a]) {
 			translate([0, mount_radius, 0])
-
-				cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
-				
+					cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);				
 		}
 
   }
@@ -188,8 +193,8 @@ module flatConnector(verticalRot =0){
 	if(verticalRot==0){
 		//horozontal rod
 		rotate([0, 0, 0]) 
-			translate([0,offset-height-1, 0]){
-	  			cube([RodEndSpacing()-cone_h*2, height*1.2, height], center=true);
+			translate([0,offset-height+4, 0]){
+				cube([RodEndSpacing()-cone_h*2, height*.75, height], center=true);
 			
 		}
 		

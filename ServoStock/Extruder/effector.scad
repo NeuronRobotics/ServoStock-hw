@@ -59,12 +59,12 @@ module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
 	startAngle = 60;
-	boltLength=1.35*25.4;
+	boltLength=1.2*25.4;
 	hotEndOffset=-15;
 	difference() {
 		union() translate([0,0,-.1]){
 			translate([0, hotEndOffset, 0])
-					cylinder(r=offset-2, h=height, center=true, $fn=60);
+					cylinder(r=offset, h=height, center=true, $fn=60);
 			translate([offset/3+2,-5,0])
 				cube([offset*1.5,offset*.7, height], center=true);
 			translate([0, hotEndOffset, 0])
@@ -129,10 +129,9 @@ module effector(useVertical=false) {
 		}
 		translate([0,0,-height/2-1])
 			cylinder(r=RodEndSpacing(),h=1,center=false);
-		translate([0, hotEndOffset, push_fit_height-height*2])
-			rotate([0,-90,0])
-				HotEnd(true,.4);
-		
+		//Hot End Hole
+		translate([0, hotEndOffset, -height/2-.1])
+			cylinder(r1=HotEndDiam()/1.2 ,r2=HotEndDiam()/2 ,h=height+1)	;	
 		translate([0, hotEndOffset, 0])
 		for (a = [0:180:359]) rotate([0, 0, a]) {
 			translate([0, mount_radius, 0])

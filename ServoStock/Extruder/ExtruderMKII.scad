@@ -25,19 +25,21 @@ translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 		}
 	}
 }
-Extruder();
+//Extruder();
 
 //PRINTING:
 module ExtruderPrint(){
 	ExtruderBottom(.4);
-	MKIIwheelprint();
+	translate([ExtruderX(.4)+6,ExtruderY(.4)+HiLoScrewLength(.4)+4,0]){
+		MKIIwheelprint();
+	}
 	translate([ExtruderX(.4),0,ExtruderZ(.4)]){
 		rotate([0,90,0]){
 			ExtruderTop(.4);
 		}
 	}
 }
-//ExtruderPrint();
+ExtruderPrint();
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
@@ -145,7 +147,7 @@ module CarriageConnector(){
 			removalcube(false);
 		}
 		translate([ExtruderX(.4),ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
-			removalcube(true);
+			removalcube(false);
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);
@@ -165,6 +167,19 @@ module CarriageConnector(){
 			rotate([0,0,-90]){
 				HingeFillet();
 			}
+		}
+		mirror([1,0,0]){
+		translate([ExtruderX(.4)/2+HiLoScrewHeadDiameter(.4),ExtruderY(.4)+HiLoScrewHeadDiameter(.4)/2-.5,ExFilZ()/2]){
+			ThruholeScrew(false,.4);
+		}
+		translate([-StandardExtruderSpacing()+rad+1.5,ExtruderY(.4)+HiLoScrewLength(.4)/2-4,0]){
+			HingeFillet();
+		}
+		translate([-StandardExtruderSpacing()+rad+1.5,ExtruderY(.4)+HiLoScrewLength(.4)+fRad/2+rad/2-.25,0]){
+			rotate([0,0,-90]){
+				HingeFillet();
+			}
+		}
 		}
 	}
 }

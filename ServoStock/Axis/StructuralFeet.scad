@@ -4,7 +4,7 @@ use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-
+use <../../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
 
 use <BearingCap.scad>	
 use <Clips.scad>	
@@ -21,6 +21,30 @@ function EncoderMountWidth() = EncoderWidth()+PlasticWidth();
 $fn=50;
 
 echo(PlasticWidth());
+
+module mountHoleSet(){
+	translate([-ZrodSpacing()/2,0,0]){
+		circle(r=HiLoScrewDiameter(.6)/2);
+		translate([0,36,0]){
+			circle(r=HiLoScrewDiameter(.6)/2);
+		}
+		translate([0,-12,0]){
+			circle(r=8mmRodDiameter(.8)/2, $fn=50);
+		}
+	}
+}
+
+module getStructuralFeetInterface(){
+	rectL=ZrodSpacing()/2+PlasticWidth()+3;
+	rectW=ZrodSpacing()/2-3;
+	translate([-rectL/2 ,-getRodEndConnectionOffsetDimention()-rectW ,0]){
+		square(size=[rectL,rectW ]);
+	}
+	mountHoleSet();
+	mirror([1,0,0]){
+		mountHoleSet();		
+	}
+}
 
 module wing()
 {
@@ -43,7 +67,7 @@ module wing()
 				cylinder(h=MotorBracketHeight(), r=PlasticWidth());
 				translate([0,0,-1]){
 				//cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.66)/2);
-					#cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.6)/2, $fn=50);
+					cylinder(h=MotorBracketHeight()*2, r=HiLoScrewDiameter(.6)/2, $fn=50);
 				}
 			}
 		}
@@ -124,7 +148,8 @@ module EncoderMount()
 //this is the actual module for the finished foot, it pulls down the clips and adds the wings to make a bed mount, and cuts holes to accomodate the motor
 module StructuralFeet(EncoderScrews=false)
 {
-	translate([0,getRodEndConnectionOffsetDimention(),0])
+	translate([0,-getRodEndConnectionOffsetDimention(),MotorBracketHeight()])
+	rotate([0,180,90])
 	difference()
 	{
 		union()
@@ -204,13 +229,9 @@ module StructuralFeet(EncoderScrews=false)
 
 
 //rotating the module, as it would be rotated for printing
-translate([0,0, MotorBracketHeight()])
-{
-	rotate([0,180,90])
-	{
-		StructuralFeet();
-	}
-}
+
+StructuralFeet();
+//getStructuralFeetInterface();
 
 //check it out the pulley fits and everything
 
@@ -224,7 +245,7 @@ rotate([0,-90,0])
 
 translate([-EncoderShelfDistance(),0,29])
 {	
-//	#BearingCap();		
+//	BearingCap();		
 }
 
 

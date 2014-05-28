@@ -12,10 +12,12 @@ function BearingBracketHeight()=608BallBearingDiam()*1.5;
 function SlotWidth()= PlasticWidth()/2;
 function ClipWidth()=StandardServoHeightAbvWings()-1.5;
 
+function getClipHolePlacement()=PlasticWidth()+8mmRodDiameter(.8)/4-ClipWidth();
+
 module placeClipMountHoleCenter(){
 	translate(	[-12,0,0]){
 			for (i = [0 : $children-1]){
-				translate([	PlasticWidth()+8mmRodDiameter(.8)/4-ClipWidth(),
+				translate([	getClipHolePlacement(),
 							0,
 							0]){
 					child(i);
@@ -25,7 +27,7 @@ module placeClipMountHoleCenter(){
 }
 
 module placeRodHoleCenter(){
-	translate([	PlasticWidth()+8mmRodDiameter(.8)/4-ClipWidth(),
+	translate([	getClipHolePlacement(),
 				0,
 				0]
 	){
@@ -99,7 +101,7 @@ module sidebolts(Height = MotorBracketHeight())
 		{
 			rotate([-90,0,180])
 			{
-				#HiLoBolt(.4, PlasticWidth());
+				HiLoBolt(.4, PlasticWidth());
 			}
 		}
 		//translate([SideWidth()*2-PlasticWidth()*1.5,-PlasticWidth()-HiLoBoltHeadHeight()/2-1,2*Height/3])
@@ -112,7 +114,7 @@ module sidebolts(Height = MotorBracketHeight())
 		{
 			rotate([-90,0,180])
 			{
-				#HiLoBolt(.4, PlasticWidth());
+				HiLoBolt(.4, PlasticWidth());
 			}
 		}		
 	}

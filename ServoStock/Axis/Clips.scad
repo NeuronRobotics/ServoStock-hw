@@ -15,7 +15,9 @@ function ClipWidth()=StandardServoHeightAbvWings()-1.5;
 module placeClipMountHoleCenter(){
 	translate(	[-12,0,0]){
 			for (i = [0 : $children-1]){
-				placeRodHoleCenter(){
+				translate([	PlasticWidth()+8mmRodDiameter(.8)/4-ClipWidth(),
+							0,
+							0]){
 					child(i);
 				}
 			 }	

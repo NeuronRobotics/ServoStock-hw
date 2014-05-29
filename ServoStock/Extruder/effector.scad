@@ -219,12 +219,14 @@ module flatConnector(verticalRot =0){
 							difference(){
 								union(){
 									translate([pillarOffset,0,0]){
-										for (a = [0:60:120])rotate([0,0,a]){
-											translate([0,-height/2,0])
-														cube([height*4, height, RodEndSpacing()+height], center=false);
+										for (a = [-20:45:90])rotate([0,0,a]){
+											translate([0,-height/4,0])
+														cube([height*4, height/2, RodEndSpacing()+height], center=false);
 										}
 									}
-									cube([height*6, height*6, height], center=false);
+									translate([10,0,0])
+									rotate([0,0,-45/2])
+									#cube([height*6, height*6, height], center=false);
 								}
 								translate([height*2,0,height*.5])
 									rotate([0, -90, 0])

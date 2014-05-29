@@ -21,9 +21,9 @@ cone_r1 = 2.5;
 cone_r2 = 21;
 cone_h = cone_r2;
 m3_radius=(3.8+.3)/2;
-m3_nut_radius=(7.5/2);
+m3_nut_radius=(7.75/2);
 m3_wide_radius=m3_radius+.5;
-bracelen=RodEndSpacing()-50;
+bracelen=RodEndSpacing()-30;
 
 
 translate([0, 0, height/2])
@@ -51,8 +51,8 @@ module braceRod(){
 	translate([0,0,bracelen/2]){
 		cylinder(r1=height/3,r2=0,h=bracelen/4,center=false);
 	}
-	translate([0,0,-10])
-	cylinder(r=height/3,h=bracelen+20,center=true);
+	translate([0,0,-20])
+	cylinder(r=height/3,h=bracelen+40,center=true);
 }
 
 module effector(useVertical=false) {
@@ -102,9 +102,9 @@ module effector(useVertical=false) {
 				translate([offset/3-6,offset-6,RodEndSpacing()/2])
 
 					union(){
-						rotate([0,45,0])
+						rotate([0,30,0])
 							braceRod();
-						rotate([0,-45,0])
+						rotate([0,-30,0])
 							braceRod();
 					}
 		}
@@ -121,14 +121,20 @@ module effector(useVertical=false) {
 						   -boltLength+RodEndBallSwivelFlangeHeight(.1)])
 
 				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
-				translate([0+.1,
+				translate([0,
 						   offset,
-						   cone_h/2+5+height])
-							cube([height,m3_nut_radius*2, m3_nut_radius*2], center=true);
+						   cone_h/2+5+height]){
+							translate([2.2,0,0])
+								cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
+				    		rotate([0, 0, 0])
+							translate([0,0,0])
+			      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+				}
 			}
 		}
-		translate([0,0,-height/2-1])
-			cylinder(r=RodEndSpacing(),h=1,center=false);
+		translate([0,0,-height/2])
+		rotate([0,180,0])
+			cylinder(r=RodEndSpacing(),h=20,center=false);
 		//Hot End Hole
 		translate([0, hotEndOffset, -height/2-.1])
 			cylinder(r1=HotEndDiam()/1.2 ,r2=HotEndDiam()/2 ,h=height+1)	;	
@@ -155,7 +161,7 @@ module mount(){
 		    		}
 		    		rotate([0, 90, 0])
 		    			cylinder(r=m3_radius, h=separation+1, center=true, $fn=12);
-		    		rotate([90, 0, 90])
+		    		rotate([90, 30, 90])
 						translate([0,0,-cone_h+6])
 		      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
 				}
@@ -226,7 +232,7 @@ module flatConnector(verticalRot =0){
 									}
 									translate([10,0,0])
 									rotate([0,0,-45/2])
-									#cube([height*6, height*6, height], center=false);
+										cube([height*6, height*6, height], center=false);
 								}
 								translate([height*2,0,height*.5])
 									rotate([0, -90, 0])

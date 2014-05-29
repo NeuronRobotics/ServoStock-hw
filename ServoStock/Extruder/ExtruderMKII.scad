@@ -11,7 +11,7 @@ use <../../../Vitamins/Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>;
 use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>;
 use <MKIIwheel.scad>;
-use <Extruder_Encoder_Keepaway.scad>;
+use <ExtruderEncoderKeepaway.scad>;
 
 //ExtruderTop(.4);
 //ExtruderBottom(.4);
@@ -25,7 +25,7 @@ translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 		}
 	}
 }
-//Extruder();
+Extruder();
 
 //PRINTING:
 module ExtruderPrint(){
@@ -38,8 +38,11 @@ module ExtruderPrint(){
 			ExtruderTop(.4);
 		}
 	}
+	translate([ExtruderY(.4)+6,ExtruderY(.4)+HiLoScrewLength(.4)+4,0]){
+		encoderkeepaway();
+	}
 }
-ExtruderPrint();
+//ExtruderPrint();
 
 //core dimensions depend on the servo and filament.  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
@@ -273,7 +276,7 @@ difference(){
 		translate(WheelVector()){
 			translate([MKIIwheelheight(),0,0]){
 				rotate([180,90,0]){
-					cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2);
+					cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2+.5);
 				}
 			}
 		}

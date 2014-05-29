@@ -17,8 +17,18 @@ function BeltClipLength()=StandardServoCylinderHeight()+PulleyBeltOffset()+2XLBe
 
 $fn=100;
 
-module supportCone(){
-	
+module clipBase(Style=2){
+	translate([0,PlasticWidth()/2,0])
+	{
+	LinearBearingGrip(Style);				
+	}
+	translate([ZrodSpacing(),PlasticWidth()/2,0])
+	{
+		mirror([1,0,0])
+		{
+			LinearBearingGrip(Style);
+		}				
+	}
 }
 
 module SliderBase(Style=2)
@@ -32,30 +42,35 @@ module SliderBase(Style=2)
 		{
 			intersection(){
 				translate([braceWidth/2,0,0])
-				cylinder(	r2=RodEndTopWidth()-1.8,
-						 	r1=braceWidth/2, 
-							h=RodEndSpacing()+RodEndClipHeight(), 
-							center=false, 
-							$fn=24);
+				union(){
+					cylinder(	r2=RodEndTopWidth()-1.8,
+								r1=braceWidth/2, 
+								h=RodEndSpacing()+RodEndClipHeight(), 
+								center=false, 
+								$fn=24);
+					translate([-braceWidth/2,0,0])
+					#cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
+				}
 				union(){
 					translate([braceWidth/2-GripWidth()/2,0,0])
-					cube([GripWidth(),braceWidth,RodEndSpacing()+RodEndClipHeight()]);
+						cube([GripWidth(),braceWidth,RodEndSpacing()+RodEndClipHeight()]);
 					cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
 					cube([braceWidth,braceWidth,GripWidth()]);
 				}
 			}			
 			
 		}
-		translate([0,PlasticWidth()/2,0])
-		{
-		LinearBearingGrip(Style);				
+		
+		clipBase(Style);
+		translate([0,0,LM8UULinearBearingHeight()]){
+		linear_extrude(height = ZrodSpacing()+(LM8UULinearBearingHeight()*.51), center = false, convexity = 10)
+							projection(cut = true) 
+								translate([0,0,0])
+									clipBase(Style);
 		}
-		translate([ZrodSpacing(),PlasticWidth()/2,0])
-		{
-			mirror([1,0,0])
-			{
-				LinearBearingGrip(Style);
-			}				
+		translate([0,0,ZrodSpacing()+LM8UULinearBearingHeight()*1.5]){
+			clipBase(Style);
+			
 		}
 	}
 }

@@ -49,7 +49,7 @@ module SliderBase(Style=2)
 								center=false, 
 								$fn=24);
 					translate([-braceWidth/2,0,0])
-					#cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
+					cube([braceWidth,GripWidth(),RodEndSpacing()+RodEndClipHeight()]);
 				}
 				union(){
 					translate([braceWidth/2-GripWidth()/2,0,0])
@@ -62,8 +62,8 @@ module SliderBase(Style=2)
 		}
 		
 		clipBase(Style);
-		translate([0,0,LM8UULinearBearingHeight()]){
-		linear_extrude(height = ZrodSpacing()+(LM8UULinearBearingHeight()*.51), center = false, convexity = 10)
+		translate([0,0,LM8UULinearBearingHeight(-.1)]){
+		linear_extrude(height = ZrodSpacing()+(LM8UULinearBearingHeight()*.6), center = false, convexity = 10)
 							projection(cut = true) 
 								translate([0,0,0])
 									clipBase(Style);

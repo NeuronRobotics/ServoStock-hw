@@ -68,7 +68,7 @@ module SliderBase(Style=2)
 								translate([0,0,0])
 									clipBase(Style);
 		}
-		translate([0,0,ZrodSpacing()+LM8UULinearBearingHeight()*1.5]){
+		translate([0,0,ZrodSpacing()+LM8UULinearBearingHeight()*1.4]){
 			clipBase(Style);
 			
 		}

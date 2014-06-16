@@ -20,7 +20,7 @@ use <ExtruderEncoderKeepaway.scad>;
 module Extruder(){
 translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 	rotate([-90,0,0]){
-		ExtruderTop(.4);
+		%ExtruderTop(.4);
 		ExtruderBottom(.4);
 		}
 	}
@@ -43,8 +43,7 @@ module ExtruderPrint(){
 	}
 }
 //ExtruderPrint();
-
-//core dimensions depend on the servo and filament.  
+ 
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
 echo("ExtruderX is",(ExtruderX(.4)));
 function ExtruderY(3dPrinterTolerance=.4) = StandardServoLength()+HiLoScrewHeadHeight(.4)+3dPrinterTolerance;
@@ -141,7 +140,7 @@ module removalcube(anglecube=true){
 }
 module CarriageConnector(){
 	difference(){
-		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-8,ExtruderY(.4),0]){
+		translate([StandardExtruderSpacing()/2+ExtruderX(.4)-8,ExtruderY(.4)-HiLoScrewHeadHeight(.4),0]){
 			rotate([0,0,90]){
 				cube([HiLoScrewLength(.4),StandardExtruderSpacing()+ExtruderX(.4)-16,ExtruderZ(.4)+4]);
 			}
@@ -155,7 +154,7 @@ module CarriageConnector(){
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
-		translate([ExtruderX(.4)/2,ExtruderY(.4)*2+HotEndRecessOffset()/4,ExFilZ()]){
+		translate([ExtruderX(.4)/2,ExtruderY(.4)*2-HiLoScrewHeadHeight(.4)+HotEndRecessOffset()/4,ExFilZ()]){
 			rotate([0,0,-90]){
 				HEscrews();
 			}
@@ -189,7 +188,6 @@ module CarriageConnector(){
 
 
 //Fillet dimensions:
-
 tHk = HiLoScrewDiameter(.4)+2;
 fPer = HiLoScrewDiameter(.4)/2;
 fRad = HiLoScrewDiameter(.4)*2;
@@ -237,11 +235,11 @@ module ExtruderHinge(){
 
 //ExtruderHinge();
 
-//The extruder top.  This is the mount for the Idler Wheel, bearing, and encoder:
+//The extruder top. Mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
 	union(){
-		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),0,ExtruderZ(.4)]){
+		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),-HiLoScrewHeadHeight(.4),ExtruderZ(.4)]){
 			cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)+ExtruderZ(.4)/5]);
 		}
 		translate(HingeTopVector()){
@@ -250,14 +248,19 @@ difference(){
 			}
 		}
 		translate(WheelVector()){
-			translate([offsetheight()-.1,-608BallBearingDiam(.4)/2-7,-2]){
+			translate([offsetheight()-.1,-608BallBearingDiam(.4)/2-7.5,-2]){
 				rotate([0,90,0]){
 					cube([ExtruderX(.4)/5,608BallBearingDiam(.4)+14,ExtruderX(.4)/2-3]);
 				}
 			}
 		}
-		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),ExtruderY(.4),ExtruderZ(.4)+5]){
-			cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
+		difference(){
+			translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),ExtruderY(.4)-HiLoScrewHeadHeight(.4),ExtruderZ(.4)+5]){
+				cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
+			}
+			translate([(ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight())+(HiLoScrewHeadDiameter(.4)/1.5-.4),(ExtruderY(.4)-HiLoScrewHeadHeight(.4))+(HiLoScrewHeadDiameter(.4)/2),(ExtruderZ(.4)+5)+(HiLoScrewLength(.4)/2+.2)]){
+				HiLoScrew(.4);//HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
+			}
 		}
 	}
 	union(){
@@ -289,15 +292,15 @@ difference(){
 		}
 	}
 	translate(PinTopVector()){
-		translate([HiLoScrewHeadDiameter(.4)/2-2,HiLoScrewHeadDiameter(.4)/3,HiLoScrewLength(.4)/2+.15]){
+		translate([HiLoScrewHeadDiameter(.4)/2-2,HiLoScrewHeadDiameter(.4)/3-1,HiLoScrewLength(.4)/2+.15]){
 			cube([ExtruderX(.4)/2,HiLoScrewHeadDiameter(.4)*2,HiLoScrewHeadDiameter(.4)*2]);
 		}
 	}
-	translate(PinTopVector()){
-		translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.75,HiLoScrewLength(.4)/2+.2]){
-			HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
-		}
-	}
+	//translate(PinTopVector()){
+		//translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.75,HiLoScrewLength(.4)/2+.2]){
+			
+		//}
+	//}
 	translate(WheelVector()){
 		translate([ExtruderX(.4)/2-2.3,0,0]){
 			rotate([180,-90,0]){
@@ -323,11 +326,13 @@ difference(){
 } 
 
 
-//The extruder bottom.  This includes the servo,screws, hot end, and filament subtractions:
+//The extruder bottom.This includes the servo,screws,and carriage connector:
 module ExtruderBottom(3dPrinterTolerance=.4){
 	difference(){
 			union(){
-				cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+				translate([0,-HiLoScrewHeadHeight(.4),0]){
+					cube([ExtruderX(.4),ExtruderY(.4),ExtruderZ(.4)]);
+				}
 				translate(HingeBottomVector()){
 					rotate([0,90,0]){
 						ExtruderHinge(.4);
@@ -337,7 +342,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 				CarriageConnector();
 			}
 //cutout for top to adjust:
-		translate([ExtruderX(.4)/2+3,-1,ExtruderZ(.4)/2]){
+		translate([ExtruderX(.4)/2+3,-3,ExtruderZ(.4)/2]){
 			cube([ExtruderX(.4)/2-2,ExtruderY(.4)+1,ExtruderZ(.4)]);
 		}
 		translate([0,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,0]){

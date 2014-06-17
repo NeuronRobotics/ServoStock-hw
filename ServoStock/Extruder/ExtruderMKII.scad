@@ -150,7 +150,7 @@ module CarriageConnector(){
 			removalcube(false);
 		}
 		translate([ExtruderX(.4)/2-5,ExtruderY(.4)+HotEndRecessOffset()-2,ExtruderZ(.4)]){
-			#cube([10,HotEndRecessOffset()+2,6]);
+			cube([10,HotEndRecessOffset()+2,6]);
 		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);

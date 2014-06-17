@@ -13,19 +13,19 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <ExtruderEncoderKeepaway.scad>;
 
-//ExtruderTop(.4);
-//ExtruderBottom(.4);
+ExtruderTop(.4);
+ExtruderBottom(.4);
 
 //ALIGNMENT TESTING:
 module Extruder(){
 translate([-ExtruderX(.4)/2,-ExFilZ(),ExtruderY(.4)+HiLoScrewLength(.4)+8]){
 	rotate([-90,0,0]){
-		%ExtruderTop(.4);
+		ExtruderTop(.4);
 		ExtruderBottom(.4);
 		}
 	}
 }
-Extruder();
+//Extruder();
 
 //PRINTING:
 module ExtruderPrint(){
@@ -55,10 +55,8 @@ echo("ExtruderZ is",(ExtruderZ(.4)));
 //defining some standard vectors:
 
 function WheelVector() = [ExtruderX(.4)-StandardServoNubHeight()*2-FilamentDiam()/2,StandardServoWingsHeight()+StandardServoCylinderDist()+1.1,ExtruderZ(.4)+FilamentDiam()+.2];
-function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
+function HingeTopVector() = [ExtruderX(.4)/2,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+1];
 function HingeBottomVector() =[.9,HiLoScrewDiameter(.4)/2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-function PinTopVector() = [ExtruderX(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
-function PinBottomVector() = [.9,ExtruderY(.4)-HiLoScrewHeadHeight(.4)*2+1,ExtruderZ(.4)+HiLoScrewDiameter(.4)/2+.9];
 function StandardServoVector() = [StandardServoNubHeight()+StandardServoHeightAbvWings()+FilamentDiam()/2,0,StandardServoThickness()/2+FilamentDiam()+1];
 function ExFilZ() = StandardServoThickness()/2+StandardServoNubDiam()+.4;
 function FilamentVector() = [ExtruderX(.4)/2,FilamentHeight()/2,ExFilZ()];
@@ -151,6 +149,9 @@ module CarriageConnector(){
 		translate([ExtruderX(.4),ExtruderY(.4)-HiLoScrewLength(.4)/2,-.5]){
 			removalcube(false);
 		}
+		translate([ExtruderX(.4)/2-5,ExtruderY(.4)+HotEndRecessOffset()-2,ExtruderZ(.4)]){
+			#cube([10,HotEndRecessOffset()+2,6]);
+		}
 		rotate([90,0,0]){
 			ScrewPattern(.4);
 		}
@@ -159,13 +160,13 @@ module CarriageConnector(){
 				HEscrews();
 			}
 		}
-		translate([ExtruderX(.4)/2+HiLoScrewHeadDiameter(.4),ExtruderY(.4)+HiLoScrewHeadDiameter(.4)/2-.5,ExFilZ()/2]){
+		translate([ExtruderX(.4)/2+HiLoScrewHeadDiameter(.4)+.25,ExtruderY(.4)+.6,ExFilZ()/2]){
 			ThruholeScrew(false,.4);
 		}
 		translate([-StandardExtruderSpacing()/2+rad,ExtruderY(.4)+HiLoScrewLength(.4)/2-4,0]){
 			HingeFillet();
 		}
-		translate([-StandardExtruderSpacing()/2+rad,ExtruderY(.4)+HiLoScrewLength(.4)+fRad/2+rad/2-.25,0]){
+		translate([-StandardExtruderSpacing()/2+rad,ExtruderY(.4)+HiLoScrewLength(.4)+rad-.5,0]){
 			rotate([0,0,-90]){
 				HingeFillet();
 			}
@@ -177,7 +178,7 @@ module CarriageConnector(){
 		translate([-StandardExtruderSpacing()+rad+1.5,ExtruderY(.4)+HiLoScrewLength(.4)/2-4,0]){
 			HingeFillet();
 		}
-		translate([-StandardExtruderSpacing()+rad+1.5,ExtruderY(.4)+HiLoScrewLength(.4)+fRad/2+rad/2-.25,0]){
+		translate([-StandardExtruderSpacing()+rad+1.5,ExtruderY(.4)+HiLoScrewLength(.4)+rad-.5,0]){
 			rotate([0,0,-90]){
 				HingeFillet();
 			}
@@ -218,22 +219,20 @@ module BearingChannel(3dPrinterTolerance=.4){
 }
 
 
-//hinge module. Also serves as a pin:
+//hinge module:
 module ExtruderHinge(){
 	difference(){
 		union(){
-			translate([-HiLoScrewHeadDiameter(.4)/4+.5,0,0]){
-				cylinder(h=ExtruderX(.4)/2-.9,r=HiLoScrewDiameter(.4)/2+1);
-			}
-			translate([-5,-HiLoScrewDiameter(.4)/2-1,0]){
-				cube([HiLoScrewDiameter(.4)*2,HiLoScrewDiameter(.4)+2.19,ExtruderX(.4)/2-.9]);
+			translate([-5,-HiLoScrewDiameter(.4)-1.9,0]){
+				cube([HiLoScrewDiameter(.4)*2,HiLoScrewHeadDiameter(.4)+HiLoScrewDiameter(.4)/2,ExtruderX(.4)/2-.9]);
 			}
 		}
-		translate([-1,0,-1]){rotate([0,0,90]){ThruholeScrew(true,.4);}}
+		translate([-1,-1.5,-1]){
+			rotate([0,0,90]){
+				ThruholeScrew(true,.4);}}
 	}
 }
 
-//ExtruderHinge();
 
 //The extruder top. Mount for the Idler Wheel, bearing, and encoder:
 module ExtruderTop(3dPrinterTolerance=.4){
@@ -255,11 +254,11 @@ difference(){
 			}
 		}
 		difference(){
-			translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),ExtruderY(.4)-HiLoScrewHeadHeight(.4),ExtruderZ(.4)+5]){
-				cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2+offsetheight(),HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
+			translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4),ExtruderZ(.4)+5]){
+				cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2,HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
 			}
 			translate([(ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight())+(HiLoScrewHeadDiameter(.4)/1.5-.4),(ExtruderY(.4)-HiLoScrewHeadHeight(.4))+(HiLoScrewHeadDiameter(.4)/2),(ExtruderZ(.4)+5)+(HiLoScrewLength(.4)/2+.2)]){
-				HiLoScrew(.4);//HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
+				HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
 			}
 		}
 	}
@@ -285,22 +284,12 @@ difference(){
 		}
 	}
 	translate(HingeTopVector()){
-		translate([HiLoScrewLength(.4),0,1]){
-			rotate([0,-90,0]){
-				ThruholeScrew(false,.4);
+		translate([HiLoScrewLength(.4),-1.5,1]){
+			rotate(a=[90,0,90]){
+				ThruholeScrew(true,.4);
 			}
 		}
 	}
-	translate(PinTopVector()){
-		translate([HiLoScrewHeadDiameter(.4)/2-2,HiLoScrewHeadDiameter(.4)/3-1,HiLoScrewLength(.4)/2+.15]){
-			cube([ExtruderX(.4)/2,HiLoScrewHeadDiameter(.4)*2,HiLoScrewHeadDiameter(.4)*2]);
-		}
-	}
-	//translate(PinTopVector()){
-		//translate([HiLoScrewHeadDiameter(.4),HiLoScrewHeadDiameter(.4)+.75,HiLoScrewLength(.4)/2+.2]){
-			
-		//}
-	//}
 	translate(WheelVector()){
 		translate([ExtruderX(.4)/2-2.3,0,0]){
 			rotate([180,-90,0]){
@@ -310,14 +299,9 @@ difference(){
 			}
 		}
 	}
-	translate(HingeTopVector()){
-		translate([0,-fRad,-fRad]){
+	translate([HingeTopVector()]){
+		translate([1,-fRad,18]){
 			rotate([90,0,90]){
-				HingeFillet();
-			}
-		}
-		translate([2.85,fRad,-fRad]){
-			rotate([90,0,-90]){
 				HingeFillet();
 			}
 		}
@@ -363,10 +347,7 @@ module ExtruderBottom(3dPrinterTolerance=.4){
 				rotate([90,0,0]){
 					FilamentTeardrop();
 				}
-			}//The Filament
-			//translate(FilamentVector()){
-				//rotate([90,0,0]){
-					//Filament(.4);}}
+			}
 		}
 	}
 }

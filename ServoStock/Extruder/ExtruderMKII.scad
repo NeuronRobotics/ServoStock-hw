@@ -13,8 +13,8 @@ use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitami
 use <MKIIwheel.scad>;
 use <ExtruderEncoderKeepaway.scad>;
 
-ExtruderTop(.4);
-ExtruderBottom(.4);
+//ExtruderTop(.4);
+//ExtruderBottom(.4);
 
 //ALIGNMENT TESTING:
 module Extruder(){
@@ -42,7 +42,7 @@ module ExtruderPrint(){
 		encoderkeepaway();
 	}
 }
-//ExtruderPrint();
+ExtruderPrint();
  
 function ExtruderX(3dPrinterTolerance=.4) = StandardServoHeightAbvWings(.6)+FilamentDiam()+StandardServoNubHeight()+HiLoScrewDiameter(.4)*2+3dPrinterTolerance;
 echo("ExtruderX is",(ExtruderX(.4)));

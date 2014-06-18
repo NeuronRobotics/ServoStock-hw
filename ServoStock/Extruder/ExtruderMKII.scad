@@ -235,11 +235,12 @@ module ExtruderHinge(){
 
 
 //The extruder top. Mount for the Idler Wheel, bearing, and encoder:
+function ExtruderTopX()=ExtruderX(.4)/2-3;
 module ExtruderTop(3dPrinterTolerance=.4){
 difference(){
 	union(){
 		translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight(),-HiLoScrewHeadHeight(.4),ExtruderZ(.4)]){
-			cube([ExtruderX(.4)/2-3,ExtruderY(.4),ExtruderZ(.4)+ExtruderZ(.4)/5]);
+			cube([ExtruderTopX(),ExtruderY(.4),ExtruderZ(.4)+ExtruderZ(.4)/5]);
 		}
 		translate(HingeTopVector()){
 			rotate([0,90,0]){
@@ -254,8 +255,8 @@ difference(){
 			}
 		}
 		difference(){
-			translate([ExtruderX(.4)/2+608BallBearingHeight(.4)/2,ExtruderY(.4)-HiLoScrewHeadHeight(.4),ExtruderZ(.4)+5]){
-				cube([ExtruderX(.4)/2-608BallBearingHeight(.4)/2,HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
+			translate([ExtruderX(.4)/2+3,ExtruderY(.4)-HiLoScrewHeadHeight(.4),ExtruderZ(.4)+5]){
+				cube([ExtruderTopX(),HiLoScrewDiameter(.4)*2-1,HiLoScrewLength(.4)/2]);
 			}
 			translate([(ExtruderX(.4)/2+608BallBearingHeight(.4)/2-offsetheight())+(HiLoScrewHeadDiameter(.4)/1.5-.4),(ExtruderY(.4)-HiLoScrewHeadHeight(.4))+(HiLoScrewHeadDiameter(.4)/2),(ExtruderZ(.4)+5)+(HiLoScrewLength(.4)/2+.2)]){
 				HiLoBolt(.4,HiLoScrewHeadDiameter(.4)*2);
@@ -278,7 +279,7 @@ difference(){
 		translate(WheelVector()){
 			translate([MKIIwheelheight(),0,0]){
 				rotate([180,90,0]){
-					cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2+.5);
+					cylinder(h=MagnetLength(),r=608BallBearingInnerDiam(.4)/2+2);
 				}
 			}
 		}
@@ -300,7 +301,7 @@ difference(){
 		}
 	}
 	translate([HingeTopVector()]){
-		translate([1,-fRad,18]){
+		translate([1,-fRad+.1,18.6]){
 			rotate([90,0,90]){
 				HingeFillet();
 			}

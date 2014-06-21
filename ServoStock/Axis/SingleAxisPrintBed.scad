@@ -18,13 +18,9 @@ translate([60,-90,0]){
 	}
 }
 //rotating the module, as it would be rotated for printing
-translate([0,0, MotorBracketHeight()])
-{
-	rotate([0,180,90])
-	{
-		StructuralFeet();
-	}
-}
+translate([0,15,0])
+StructuralFeet();
+
 translate([0,50,0])
 	StructuralBearingMount(3);
 
@@ -34,7 +30,7 @@ translate([-40,70,0]){
 
 translate([-55,-15,0]){
 	rotate([0,0,90])
-		Slider(false, 1);
+		Slider(true, 1);
 }
 translate([0,-65,0]){
 	IdlerBearingPlug();

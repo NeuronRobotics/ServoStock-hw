@@ -24,24 +24,23 @@ m3_radius=(3.8+.3)/2;
 m3_nut_radius=(7.75/2);
 m3_wide_radius=m3_radius+.5;
 bracelen=RodEndSpacing()-30;
-
+hotEndOffset=-15;
+pillarOffset = 12;
 
 translate([0, 0, height/2])
 	effector(true);
 
-
-//rotate([0,0,90])translate([0,0,height/2])
-//	Extruder();
+translate([0,hotEndOffset, 0])
+rotate([0,0,90])translate([0,0,0])
+	Extruder();
 
 
 module verticalConnector(){
-	rotate([0,90,0]){
-		translate([-separation/2,0,height])
-			difference(){
-				flatConnector(90);
 
-			}
-	}
+	flatConnector(90);
+
+			
+	
 }
 
 module braceRod(){
@@ -60,7 +59,7 @@ module effector(useVertical=false) {
 	echo("Offset = ",offset);
 	startAngle = 60;
 	boltLength=1.2*25.4;
-	hotEndOffset=-15;
+
 	difference() {
 		union() translate([0,0,-.1]){
 			translate([0, hotEndOffset, 0])
@@ -79,6 +78,7 @@ module effector(useVertical=false) {
 						//%cube([separation, offset, height], center=true);
 					}
 					flatConnector();
+					
 				}else{
 					if(useVertical){
 						verticalConnector();
@@ -193,8 +193,47 @@ module myMount(vert=0,verticalRot =0){
   
 }
 
+module verticalSupport(verticalRot =0,backwards=false ){
+	rotate([0, -90, 0]) 
+	translate([0,offset,(-RodEndSpacing()/2)-(height*.185)]){
+		intersection(){
+			//Upright pilar section
+			translate([pillarOffset,0,0])
+				cylinder(	r1=18, 
+						r2=6, 
+						h=RodEndSpacing()+(RodEndBallSwivelFlangeHeight(.1))-10, 
+						center=false,
+						$fn=24);
+			
+				difference(){
+					union(){
+						translate([pillarOffset,0,0]){
+							for (a = [-20:45:90])rotate([0,0,a]){
+								translate([0,-height/4,0])
+											cube([height*4, height/2, RodEndSpacing()+height], center=false);
+							}
+						}
+						translate([10,0,0])
+						rotate([0,0,-45/2])
+							cube([height*6, height*6, height], center=false);
+					}
+					translate([height*2,0,height*.5])
+						rotate([0, -90, 0])
+							cylinder(r=m3_nut_radius+.1, h=cone_h*3, center=true, $fn=24);
+				}
+				
+			
+				
+			
+		}
+		translate([1,-height/2,height])
+			cube([height-1, height, RodEndSpacing()-10], center=false);
+	}
+}
+
 module flatConnector(verticalRot =0){
-	pillarOffset = 12;
+
+
 	if(verticalRot==0){
 		//horozontal rod
 		rotate([0, 0, 0]) 
@@ -202,52 +241,35 @@ module flatConnector(verticalRot =0){
 				cube([RodEndSpacing()-cone_h*2, height*.75, height], center=true);
 			
 		}
-		
 		myMount(separation,verticalRot);
+		translate([0, offset, heightOfPilar])
+			rotate([90,0,0]){
+				mount();
+				translate([-19, -12, 0])
+					rotate([90,0,0])
+						intersection(){
+							cylinder(r1=height/2+3,r2=0, h=height/2+2, center=false);
+							
+							#cube([height,height,height*2],center=true);
+						}
+			}
+		translate([3,11,0])
+			rotate([-100,90,0])
+				translate([-separation/2,0,height]){
+					translate([0,offset, height-2]){
+						cube([RodEndSpacing()*.86, height, height], center=true);
+					}
+					verticalSupport(90,true);
+		}
 	}else{
 			// vertical rod
-		
-			rotate([0, 0, 0]) 
-				translate([0,offset, height-2]){
-	  				cube([RodEndSpacing()*.86, height, height], center=true);
-				}
-			rotate([0, -90, 0]) 
-				translate([0,offset,(-RodEndSpacing()/2)-(height*.185)]){
-					intersection(){
-						//Upright pilar section
-						translate([pillarOffset,0,0])
-							cylinder(	r1=18, 
-									r2=6, 
-									h=RodEndSpacing()+(RodEndBallSwivelFlangeHeight(.1))-10, 
-									center=false,
-									$fn=24);
-						
-							difference(){
-								union(){
-									translate([pillarOffset,0,0]){
-										for (a = [-20:45:90])rotate([0,0,a]){
-											translate([0,-height/4,0])
-														cube([height*4, height/2, RodEndSpacing()+height], center=false);
-										}
-									}
-									translate([10,0,0])
-									rotate([0,0,-45/2])
-										cube([height*6, height*6, height], center=false);
-								}
-								translate([height*2,0,height*.5])
-									rotate([0, -90, 0])
-										cylinder(r=m3_nut_radius+.1, h=cone_h*3, center=true, $fn=24);
-							}
-							
-						
-							
-						
-					}
-					translate([1,-height/2,height])
-						cube([height-1, height, RodEndSpacing()-10], center=false);
-				}
-			
-			myMount(heightOfPilar+RodEndBallSwivelFlangeHeight(.1),verticalRot);
+		rotate([0,90,0]){
+			translate([-separation/2,0,height]){
+				
+				verticalSupport(verticalRot);
+				myMount(heightOfPilar+RodEndBallSwivelFlangeHeight(.1),verticalRot);
+			}
+		}
 	}
 
 }

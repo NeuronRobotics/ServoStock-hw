@@ -30,11 +30,13 @@ pillarOffset = 12;
 translate([0, 0, height/2])
 	effector(true);
 
-translate([0,hotEndOffset, 0])
-rotate([0,0,90])
-translate([0,0,0])
-	Extruder();
-
+translate([0,hotEndOffset, 0]){
+	rotate([0,0,90]){
+		translate([0,0,0]){
+			//Extruder();
+		}
+	}
+}
 
 module verticalConnector(){
 

@@ -10,7 +10,7 @@ use <Rod.scad>
 use <StructuralFeet.scad>
 
 
-translate([60,-90,0]){
+translate([60,-85,0]){
 	rotate([0,0,90]){
 		translate([0,13,0])
 			DeltaFreeArm();
@@ -37,6 +37,6 @@ translate([0,-65,0]){
 	IdlerBearingClip();
 }
 
-translate([-100,-100,-1.1]){
-	//#cube([200,200,1]);
+translate([-90,-90,-1.1]){
+	%cube([180,180,1]);
 }

@@ -30,9 +30,10 @@ pillarOffset = 12;
 translate([0, 0, height/2])
 	effector(true);
 
-translate([0,hotEndOffset, 0])
-rotate([0,0,90])translate([0,0,0])
-	Extruder();
+//translate([0,hotEndOffset, 0])
+//rotate([0,0,90])
+//translate([0,0,0])
+//	Extruder();
 
 
 module verticalConnector(){
@@ -245,12 +246,12 @@ module flatConnector(verticalRot =0){
 		translate([0, offset, heightOfPilar])
 			rotate([90,0,0]){
 				mount();
-				translate([-19, -12, 0])
+				translate([-19, -11.9, 0])
 					rotate([90,0,0])
 						intersection(){
 							cylinder(r1=height/2+3,r2=0, h=height/2+2, center=false);
 							
-							#cube([height,height,height*2],center=true);
+							cube([height+6,height,height*2],center=true);
 						}
 			}
 		translate([3,11,0])

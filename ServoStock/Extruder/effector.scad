@@ -21,7 +21,7 @@ cone_r1 = 2.5;
 cone_r2 = 21;
 cone_h = cone_r2;
 m3_radius=(3.8+.3)/2;
-m3_nut_radius=(7.75/2);
+m3_nut_radius=(7.75/2)+.25;
 m3_wide_radius=m3_radius+.5;
 bracelen=RodEndSpacing()-30;
 hotEndOffset=-15;
@@ -30,10 +30,10 @@ pillarOffset = 12;
 translate([0, 0, height/2])
 	effector(true);
 
-//translate([0,hotEndOffset, 0])
-//rotate([0,0,90])
-//translate([0,0,0])
-//	Extruder();
+translate([0,hotEndOffset, 0])
+rotate([0,0,90])
+translate([0,0,0])
+	Extruder();
 
 
 module verticalConnector(){
@@ -243,16 +243,18 @@ module flatConnector(verticalRot =0){
 			
 		}
 		myMount(separation,verticalRot);
-		translate([0, offset, heightOfPilar])
+		translate([-RodEndBallSwivelFlangeHeight(.1)/2, offset, heightOfPilar])
 			rotate([90,0,0]){
 				mount();
 				translate([-19, -11.9, 0])
 					rotate([90,0,0])
 						intersection(){
 							cylinder(r1=height/2+3,r2=0, h=height/2+2, center=false);
-							
-							cube([height+6,height,height*2],center=true);
+							translate([5,0, 0])
+							cube([height+6,height,height+2],center=true);
 						}
+				translate([-offset-2, -RodEndSpacing()-height/2,0])
+				cube([height,RodEndSpacing(),height*2],center=false);
 			}
 		translate([3,11,0])
 			rotate([-100,90,0])

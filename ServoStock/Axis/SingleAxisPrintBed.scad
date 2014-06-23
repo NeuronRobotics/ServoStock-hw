@@ -10,24 +10,25 @@ use <Rod.scad>
 use <StructuralFeet.scad>
 
 
-translate([60,-90,0]){
-	rotate([0,0,90]){
-		translate([0,13,0])
-			DeltaFreeArm();
-		DeltaFreeArm();
-	}
-}
+//translate([60,-90,0]){
+	//rotate([0,0,90]){
+		//translate([0,13,0])
+			//DeltaFreeArm();
+		//DeltaFreeArm();
+	//}
+//}
 //rotating the module, as it would be rotated for printing
-translate([0,0, MotorBracketHeight()])
+translate([0,0,0])
 {
-	rotate([0,180,90])
+	rotate([0,0,0])
 	{
 		StructuralFeet();
 	}
 }
-translate([0,50,0])
-	StructuralBearingMount(3);
-
+translate([15,50,0])
+	rotate([0,0,90]){
+		StructuralBearingMount(3);
+	}
 translate([-40,70,0]){
 	servo_pulley(true,true);
 }
@@ -36,7 +37,7 @@ translate([-55,-15,0]){
 	rotate([0,0,90])
 		Slider(false, 1);
 }
-translate([0,-65,0]){
+translate([0,20,0]){
 	IdlerBearingPlug();
 	IdlerBearingClip();
 }

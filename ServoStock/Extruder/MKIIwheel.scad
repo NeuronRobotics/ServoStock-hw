@@ -16,7 +16,11 @@ module bearingshaft(3dPrinterTolerance=.4)
 	difference()
 	{
 		cylinder(h=MagnetLength(3dPrinterTolerance)+2, r=(608BallBearingInnerDiam(3dPrinterTolerance)/2)+.1);
-		translate([0,0,MagnetLength(3dPrinterTolerance)-.25]){rotate([0,180,0]){MagnetDraft(.4);}}
+		translate([0,0,MagnetLength(3dPrinterTolerance)-.25]){
+			rotate([0,180,0]){
+				MagnetDraft();
+			}
+		}
 	}
 }
 module MKIIwheel(){

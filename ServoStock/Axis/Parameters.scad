@@ -11,7 +11,7 @@ function mm(i) = i*25.4;
 
 function RodEndSpacing() = 108.5;// this is a magic number
 
-function getCabnetHeight() = 786;
+function getCabinetHeight() = 786;
 
 //These are the values to use in the kinematics
 function getFreeRodLength() = 203.82;

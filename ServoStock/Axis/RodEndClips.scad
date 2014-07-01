@@ -43,11 +43,11 @@ module RodEndClip()
 		{
 			union()
 			{
-				translate([0,-RodEndClipHeight()/8,0])
+				translate([0,-RodEndClipHeight()/8-3,0])
 				{
 					cube([RodEndClipLength(), RodEndClipWidth(),  RodEndClipHeight()], center=true);
 				}
-				translate([RodEndRodInset()*.8,-RodEndTopWidth()/8,0])
+				translate([RodEndRodInset()*.8,-RodEndTopWidth()/8-3,0])
 				{
 					rotate([90,0,0])
 					{

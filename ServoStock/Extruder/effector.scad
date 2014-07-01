@@ -66,7 +66,9 @@ module effector(useVertical=false) {
 	difference() {
 		union() translate([0,0,-.1]){
 			translate([0, hotEndOffset, 0])
-					cylinder(r=offset, h=height, center=true, $fn=60);
+					cylinder(r=offset*1.2, h=height, center=true, $fn=60);
+			translate([0,-offset,0])
+				cube([separation*.7,offset*.5, height], center=true);
 			translate([offset/3+2,-5,0])
 				cube([offset*1.5,offset*.7, height], center=true);
 			translate([0, hotEndOffset, 0])
@@ -121,18 +123,21 @@ module effector(useVertical=false) {
 			if( a== startAngle || a == 240+startAngle){
 				translate([0,
 						   offset,
-						   -boltLength+RodEndBallSwivelFlangeHeight(.1)])
+						   -boltLength+RodEndBallSwivelFlangeHeight(.1)-1.5])
 
-				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
+				#cylinder(r=m3_radius*2.5, h=boltLength, center=false);
 				translate([0,
 						   offset,
 						   cone_h/2+5+height]){
 							translate([2.2,0,0])
 								cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
-				    		rotate([0, 0, 0])
-							translate([0,0,0])
-			      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+			      			cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
 				}
+			}else{
+				translate([2.2,offset,-(separation/2-20)])
+					cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
+				translate([2.2,offset,separation/2-20])
+					cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
 			}
 		}
 		translate([0,0,-height/2])
@@ -159,7 +164,7 @@ module mount(){
 							cylinder(r=10, h=separation, center=true);
 						}
 		      			rotate([0, 90, 0]){
-							cylinder(r1=cone_r2, r2=cone_r1, h=cone_h, center=true, $fn=24);
+							cylinder(r1=cone_r2*1.75, r2=cone_r1, h=cone_h, center=true, $fn=24);
 						}
 		    		}
 		    		rotate([0, 90, 0])
@@ -245,19 +250,21 @@ module flatConnector(verticalRot =0){
 			
 		}
 		myMount(separation,verticalRot);
+		//additional asymetric upright mount
 		translate([-RodEndBallSwivelFlangeHeight(.1)/2, offset, heightOfPilar])
 			rotate([90,0,0]){
 				mount();
 				translate([-19, -11.9, 0])
 					rotate([90,0,0])
 						intersection(){
-							cylinder(r1=height/2+3,r2=0, h=height/2+2, center=false);
+							cylinder(r1=height+3,r2=3, h=height*1.4, center=false);
 							translate([5,0, 0])
-							cube([height+6,height,height+2],center=true);
+							cube([height+3,height,height*3],center=true);
 						}
 				translate([-offset-2, -RodEndSpacing()-height/2,0])
 				cube([height,RodEndSpacing(),height*2],center=false);
 			}
+		//additional asymetric upright support
 		translate([3,11,0])
 			rotate([-100,90,0])
 				translate([-separation/2,0,height]){

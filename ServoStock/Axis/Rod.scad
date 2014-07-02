@@ -118,7 +118,7 @@ module BoltSlot(RodLength=100)
 			{	
 				union()
 				{
-					HiLoBolt(.2,(HiLoBoltLength()-RodEndRodLength())/2);
+					HiLoBolt(.2,(HiLoBoltLength()-RodEndRodLength())/2,true);
 					cylinder(h=RodChannelLength/5, r=HiLoBoltHeadDiameter()/2, $fn=30);
 				}
 			}

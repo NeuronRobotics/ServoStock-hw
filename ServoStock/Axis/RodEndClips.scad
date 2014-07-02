@@ -60,7 +60,10 @@ module RodEndClip()
 				union()
 				{
 				//#RodEnd();
-				RodEndSlot();
+					RodEndSlot();
+					//Enlarging the hole to match the through holes
+					rotate([90,0,0])
+					cylinder(h=RodEndClipWidth()*2, r=(3.8+.3)/2, center=true, $fn=30);
 				}
 			}
 		}

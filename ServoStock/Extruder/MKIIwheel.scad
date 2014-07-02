@@ -14,7 +14,6 @@ function MKIIwheelheight() = wheelheight()+offsetheight()+MagnetLength(.4)-.1;
 module bearingshaft(3dPrinterTolerance=.4)
 {
 	rotate([0,180,0]){
-		//magshaft(radius,height)
 		magshaft(608BallBearingInnerDiam(3dPrinterTolerance)/2+.1,MagnetLength(.4)+2);
 	}
 }
@@ -55,7 +54,16 @@ module MKIIwheelprint(){
 				translate([0,0,-offsetheight()]){
 					cylinder(h=offsetheight(),r=offsetdiam()/2);
 				}
-				cylinder(h=wheelheight(),r=((608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4)))/2);
+				difference(){
+					cylinder(h=wheelheight(),r=((608BallBearingDiam(.4)/2+608BallBearingInnerDiam(.4)))/2);
+					translate([0,0,wheelheight()/2]){
+						rotate_extrude(convexity=10,$fn=100){
+							translate([9.5,0,0]){
+								circle(r=FilamentDiam(.4)/2);
+							}
+						}
+					}	
+				}
 			}
 		}
 	}

@@ -225,7 +225,17 @@ module pulley(MagnetType=true){
 			cylinder(h = splineToPulleyHeight, r=outerRadius+2);
 
 		shaft(MagnetType);
+		for(i = [0 : 90 : 359]){
+			rotate([0,0,i]){
+				difference(){
+					translate([0,-5,0])
+						cube([22,10,4]);
+					translate([16,0,0])
+						#cylinder(h=10,r=2.5/2,center=true);
+				}
+			}
 		}
+	}
 }
 ///////////////////////////////////////////////
 ///////////       MODULE SHAFT     ////////////

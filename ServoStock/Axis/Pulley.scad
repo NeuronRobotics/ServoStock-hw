@@ -228,10 +228,16 @@ module pulley(MagnetType=true){
 		for(i = [0 : 90 : 359]){
 			rotate([0,0,i]){
 				difference(){
-					translate([0,-5,0])
-						cube([22,10,4]);
+					
+					intersection(){
+						translate([0,-5,0])
+							cube([20,10,4]);
+						translate([13,0,0])
+							cylinder(h=10,r=6,center=true);
+					}
+					
 					translate([16,0,0])
-						#cylinder(h=10,r=2.5/2,center=true);
+						cylinder(h=10,r=2.5/2,center=true);
 				}
 			}
 		}

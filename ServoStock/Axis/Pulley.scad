@@ -205,19 +205,19 @@ module pulley(MagnetType=true){
 	innerRadius = circumference/PI/2-notchDepth-beltThickness;
 	union(){
 		//solid part of gear
-		translate([0,0,head_heigth+splineToPulleyHeight])
-			cylinder(h = toothHeight, r = innerRadius, center =true);
+		translate([0,0,head_heigth+splineToPulleyHeight+5.2/2])
+			cylinder(h = toothHeight+5.2, r = innerRadius, center =true);
 
 		//teeth part of gear
-			translate([0,0,head_heigth+splineToPulleyHeight])
-				teeth(pitch,numTeeth,toothWidth,notchDepth,toothHeight);
+			translate([0,0,head_heigth+splineToPulleyHeight+5.2/2])
+				teeth(pitch,numTeeth,toothWidth,notchDepth,toothHeight+5.2);
 
 		//top flange
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2])
+		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2+5.2])
 			cylinder(h = flangeHeight, r1=outerRadius,r2=outerRadius+2);
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/4])
+		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/4+5.2])
 			cylinder(h = flangeHeight+1, r2=outerRadius,r1=innerRadius);
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2+flangeHeight/2])
+		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2+flangeHeight/2+5.2])
 			cylinder(h = flangeHeight, r=outerRadius+2);
 
 		//bottom flange
@@ -231,13 +231,13 @@ module pulley(MagnetType=true){
 					
 					intersection(){
 						translate([0,-5,0])
-							cube([20,10,4]);
+							cube([20,10,splineToPulleyHeight-1.8]);
 						translate([13,0,0])
 							cylinder(h=10,r=6,center=true);
 					}
 					
 					translate([16,0,0])
-						cylinder(h=10,r=2.5/2,center=true);
+						cylinder(h=10,r=2.75/2,center=true);
 				}
 			}
 		}
@@ -258,8 +258,8 @@ module shaft(MagnetType=true){
 			//translate([0,0,splineToPulleyHeight])
 			//	cylinder(r = bearingStopRadius, h = bearingDistance-splineToPulleyHeight, center = false);
 			//Stress relief
-			translate([0,0,StressReliefOffsetHeight()])
-				cylinder(h = PulleyHubHeight()+1, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
+			translate([0,0,StressReliefOffsetHeight()+5.2])
+				#cylinder(h = PulleyHubHeight()+1-5.2, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
 
 		}
 		
@@ -276,15 +276,15 @@ module shaft(MagnetType=true){
 module servo_pulley(MagnetType=true, MotorType=true){
 
 	if(MotorType==true){
-		difference(){
+		//difference(){
 			pulley(MagnetType);		
-			translate([0,0,-1])
-				StandardServoMotor(	boltsUp=true,
-									Cylinder=1,
-									hornCentered=true,
-									ServoTolerance=.4,
-									hornBoltLength = 17.5);
-		}
+//			translate([0,0,-1])
+//				StandardServoMotor(	boltsUp=true,
+//									Cylinder=1,
+//									hornCentered=true,
+//									ServoTolerance=.4,
+//									hornBoltLength = 17.5);
+//		//}
 	}else{
 		difference(){
 			union(){

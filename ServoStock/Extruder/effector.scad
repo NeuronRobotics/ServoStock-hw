@@ -125,7 +125,7 @@ module effector(useVertical=false) {
 						   offset,
 						   -boltLength+RodEndBallSwivelFlangeHeight(.1)-1.5])
 
-				#cylinder(r=m3_radius*2.5, h=boltLength, center=false);
+				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
 				translate([0,
 						   offset,
 						   cone_h/2+5+height]){
@@ -135,9 +135,9 @@ module effector(useVertical=false) {
 				}
 			}else{
 				translate([2.2,offset,-(separation/2-20)])
-					cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
-				translate([2.2,offset,separation/2-20])
-					cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
+					cube([height,6.7, m3_nut_radius], center=true);
+				translate([2.2,offset,separation/2-21])
+					cube([height,6.7, m3_nut_radius], center=true);
 			}
 		}
 		translate([0,0,-height/2])

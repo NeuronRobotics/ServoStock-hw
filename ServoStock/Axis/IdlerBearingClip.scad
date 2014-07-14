@@ -7,8 +7,8 @@ function BearingClipSideWidth()= (PulleyInnerDiam()-608BallBearingDiam(.3))/2;
 
 function BearingClipDiam()= 608BallBearingDiam(.3)+ BearingClipSideWidth()*2;
 
-echo(BearingClipDiam());
-echo(BearingClipSideWidth());
+function getHeight() = 10+BearingClipSideWidth();
+
 
 $fn=100;
 
@@ -18,22 +18,23 @@ module IdlerBearingClip()
 	{
 		union()
 		{
-			cylinder(h=GenericDriveBeltWidth(.8)+BearingClipSideWidth(), r=BearingClipDiam()/2);
+			cylinder(h=10+BearingClipSideWidth(), r=BearingClipDiam()/2);
 			cylinder(h=BearingClipSideWidth(), r=PulleyInnerDiam()/2+BearingClipSideWidth());
-			translate([0,0,GenericDriveBeltWidth(.8)+BearingClipSideWidth()])
+			translate([0,0,getHeight()])
 			{
 				cylinder(h=BearingClipSideWidth(), r=PulleyInnerDiam()/2+BearingClipSideWidth());
 			}
 		}
 		union()
 		{
-			translate([0,0,BearingClipSideWidth()])
+			//leve just enough room for the 7mm thick bearing
+			translate([0,0,BearingClipSideWidth()+(getHeight()-7)])
 			{
-				cylinder(h=GenericDriveBeltWidth(.8)+BearingClipSideWidth()+1, r=608BallBearingDiam(.3)/2);
+				cylinder(h=getHeight()+1, r=608BallBearingDiam(.3)/2);
 			}
 			translate([0,0,-1])
 			{
-				cylinder(h=GenericDriveBeltWidth(.8)+BearingClipSideWidth()+2, r=608BallBearingDiam(.3)/2-BearingClipSideWidth());		
+				cylinder(h=getHeight()+2, r=608BallBearingDiam(.3)/2-BearingClipSideWidth());		
 			}		
 		}
 	}

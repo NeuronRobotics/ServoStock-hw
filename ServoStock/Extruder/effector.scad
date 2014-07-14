@@ -130,8 +130,8 @@ module effector(useVertical=false) {
 						   offset,
 						   cone_h/2+5+height]){
 							translate([2.2,0,0])
-								cube([height,m3_nut_radius*2-1, m3_nut_radius], center=true);
-			      			cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+								cube([height,6.7, m3_nut_radius], center=true);
+			      			//cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
 				}
 			}else{
 				translate([2.2,offset,-(separation/2-20)])
@@ -169,9 +169,9 @@ module mount(){
 		    		}
 		    		rotate([0, 90, 0])
 		    			cylinder(r=m3_radius, h=separation+1, center=true, $fn=12);
-		    		rotate([90, 30, 90])
-						translate([0,0,-cone_h+6])
-		      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+//		    		rotate([90, 30, 90])
+//						translate([0,0,-cone_h+6])
+//		      				cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
 				}
 }
 
@@ -183,8 +183,14 @@ module myMount(vert=0,verticalRot =0){
 					mount();
 			else{
 				rotate([-1*90,verticalRot,0])
-					translate([height/2,0,0])
-						mount();
+					translate([height/2,0,0]){
+						difference(){
+							mount();
+				    		rotate([90, 30, 90])
+								translate([0,0,-cone_h+6])
+									cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+						}
+				}
 			}
 	  }
 	  
@@ -253,7 +259,12 @@ module flatConnector(verticalRot =0){
 		//additional asymetric upright mount
 		translate([-RodEndBallSwivelFlangeHeight(.1)/2, offset, heightOfPilar])
 			rotate([90,0,0]){
-				mount();
+				difference(){
+					mount();
+		    		rotate([90, 30, 90])
+						translate([0,0,-cone_h+6])
+							cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+				}
 				translate([-19, -11.9, 0])
 					rotate([90,0,0])
 						intersection(){

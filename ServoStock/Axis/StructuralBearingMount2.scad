@@ -40,8 +40,8 @@ module StructuralBearingMount(Style=1)
 						union()
 						{
 							cylinder(	h=StandardServoOutcrop()+PulleyBaseHeight()- getPulleyOffset(), 
-										r1=BearingBracketHeight()/2, 
-										r2=608BallBearingAvgDiam()/2, 
+										r1=BearingBracketHeight()/2.5, 
+										r2=608BallBearingAvgDiam()/3, 
 										$fn=50);
 							if(Style==3)
 							{
@@ -57,13 +57,13 @@ module StructuralBearingMount(Style=1)
 						}
 					}
 				}
-				translate([	0,
-				           	-(608BallBearingDiam()/2+608BallBearingInnerDiam()/2)/2,
-				           	0]){
-					cube([	StandardServoOutcrop()+PulleyBaseHeight()-BearingClipSideWidth()*2 - getPulleyOffset(),
-							(608BallBearingDiam()/2+608BallBearingInnerDiam()/2), 
-							BearingBracketHeight()/2]);
-				}
+//				translate([	0,
+//				           	-(608BallBearingDiam()/2+608BallBearingInnerDiam()/2)/2,
+//				           	0]){
+//					#cube([	StandardServoOutcrop()+PulleyBaseHeight()-BearingClipSideWidth()*2 - getPulleyOffset(),
+//							(608BallBearingDiam()/2+608BallBearingInnerDiam()/2), 
+//							BearingBracketHeight()/2]);
+//				}
 			}			
 		}	
 		//this cuts the bolthole out of the mount

@@ -54,7 +54,7 @@ module braceRod(){
 		cylinder(r1=height/3,r2=0,h=bracelen/4,center=false);
 	}
 	translate([0,0,-20])
-	cylinder(r=height/3,h=bracelen+40,center=true);
+		cylinder(r=height/3,h=bracelen+40,center=true);
 }
 
 module effector(useVertical=false) {
@@ -103,8 +103,8 @@ module effector(useVertical=false) {
 					cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
 			}
 			//cross bracing
-			rotate([0,0,-startAngle/1.7])
-				translate([offset/3-6,offset-6,RodEndSpacing()/2])
+			rotate([0,0,-startAngle])
+				translate([offset/3-15,offset-13,RodEndSpacing()/2])
 
 					union(){
 						rotate([0,30,0])

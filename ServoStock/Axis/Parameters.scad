@@ -15,7 +15,7 @@ function getCabinetHeight() = 786;
 
 //These are the values to use in the kinematics
 function getFreeRodLength() = 203.82;
-function getBaseRadius() = 120;
+function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
 
 

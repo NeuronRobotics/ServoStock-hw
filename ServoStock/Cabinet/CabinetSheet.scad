@@ -27,9 +27,10 @@ module squareWithMountHoles(sideLength=10){
 				circle(holeSize/2);
 		}
 	}
-	echo("Square side length is ",baseSideLength);
+	
 	%square([sideLength-boardThickness*2,sideLength-boardThickness*2],center=true);
 }
+
 
 difference(){
 	translate([0,extraSideLength/sqrt(2)-60,0])
@@ -40,13 +41,13 @@ difference(){
 			translate([0,-getBaseRadius(),0]){
 				//import (file = "FeetOutline.dxf", origin = 0);
 				getStructuralFeetInterface();
-				%StructuralFeet();
+				//%StructuralFeet();
 			}
 					
 	}
 	translate([0,extraSideLength*2.5,0])
 		square([500,getBaseRadius()*2+extraSideLength],center=true);
-	
+	echo("Square side length is ",baseSideLength);
 }
 
 

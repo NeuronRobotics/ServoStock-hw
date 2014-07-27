@@ -1,7 +1,7 @@
 use <../Axis/Parameters.scad>
 use <CabinetTopSheet.scad>
 
-function getBedZHeight() = 110+getCaseBoardThickness();
+function getBedZHeight() = 150+getCaseBoardThickness();
 
 
 
@@ -29,9 +29,11 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 				//cutout for the tabs
 				translate([-getCaseBoardThickness()/2,getCaseBoltHolePitch()/4])
 					square([getCaseBoardThickness(),getCaseBoltHolePitch()/2]);
+				
 			}
 			
 		}
+
 		// Inner bed plate mounts
 		translate([0, getBedZHeight(),0 ]){
 			for (a = [	getInnerPlateTabPitch()+getInnerPlateTabPitch()/4:
@@ -53,7 +55,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 		
 		}
 		// Inner bed plate mounts
-		translate([0, getBedZHeight()*2+getCaseBoardThickness(),0 ]){
+		translate([0, getBedZHeight()+100,0 ]){
 			for (a = [	getInnerPlateTabPitch()+getInnerPlateTabPitch()/4:
 						getInnerPlateTabPitch():
 						getBaseSideLength()-getInnerPlateTabPitch()]){
@@ -89,27 +91,37 @@ module shortSide(left=true){
 		
 	}
 }
+module sides(){
 
-longSide(getBaseSideLength(),usePlateMountSlots = true);
+	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	
+	translate([-getBaseSideLength()-10 ,
+	           0,
+	           0])
+	           rotate([0,0,0])
+	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	
+	translate([getBaseSideLength()+10 ,
+	           0,
+	           0])
+	shortSide(false);
+	
+	translate([-getBaseSideLength()-getShortSideLength()-20 ,
+	           0,
+	           0])
+	
+	shortSide(true);
+}
+translate([0,getBaseSideLength()*3+getShortSideLength()+30])
+rotate([0,0,-90])
+	sides();
 
-translate([-getBaseSideLength()-10 ,
-           ,
-           0])
-           rotate([0,0,0])
-longSide(getBaseSideLength(),usePlateMountSlots = true);
+//%square([1158.24,2194.56]);
 
-translate([getBaseSideLength()+10 ,
-           0,
-           0])
-rotate([0,0,0])
-shortSide(false);
-
-translate([-getBaseSideLength()-getShortSideLength()-20 ,
-           ,
-           0])
-rotate([0,0,0])
-shortSide(true);
-
-translate([getBaseSideLength()/2 -getCaseBoardThickness()*1.5 ,-getBaseSideLength()/2 +getCaseBoardThickness()*1.5,0])
-	rotate([0,0,-45-90])
-		%bearingPlate();
+translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
+topPlate();
+bedPlate();
+translate([getBaseSideLength()+10,0,0])
+topPlate();
+translate([0,getBaseSideLength()+10,0])
+bearingPlate();

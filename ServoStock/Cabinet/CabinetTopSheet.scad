@@ -24,7 +24,7 @@ module getTabsForInnerPlate(){
 }
 
 
-module squareWithMountHoles(sideLength=10, useTabs = false){
+module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 	holeSize=getCaseHoleSize();
 	pitch=50;
 	recessFromSide = getCaseBoardThickness()/2;
@@ -43,10 +43,11 @@ module squareWithMountHoles(sideLength=10, useTabs = false){
 		}
 		if(useTabs){
 			difference(){
-				square([sideLength,sideLength],center=true);
+				square([sideLength+1,sideLength+1],center=true);
 				square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
 			}
 		}
+
 	}
 	translate([-getBaseSideLength()/2,2.5,0])
 		getTabsForInnerPlate();
@@ -58,12 +59,13 @@ module squareWithMountHoles(sideLength=10, useTabs = false){
 }
 
 
-module topPlate(useTabs = false){
-
+module topPlate(useTabs = false,bedCutout = false){
+	translate([getBaseSideLength()/2 -getCaseBoardThickness()*1.5 ,getBaseSideLength()/2 +getCaseBoardThickness()*1.5,0])
+	rotate([0,0,-45-90])
 	difference(){
 		translate([0,extraSideLength/sqrt(2)-60,0])
 			rotate([0,0,45])
-				squareWithMountHoles(getBaseSideLength(),useTabs);
+				squareWithMountHoles(getBaseSideLength(),useTabs,bedCutout);
 		for (a = [0:120:359]){
 			rotate([0,0,a])
 				translate([0,-getBaseRadius(),0]){
@@ -73,6 +75,13 @@ module topPlate(useTabs = false){
 				}
 						
 		}
+		if(bedCutout){
+			translate([0,getPrintbedWidth()/1.5,0]){
+				square([getPrintbedWidth(),
+				        getPrintbedWidth()*2],center=true);
+			}
+			circle(getBaseRadius()-10);
+		}
 		translate([0,extraSideLength*2.5,0])
 			square([500,getBaseRadius()*2+extraSideLength],center=true);
 		echo("Square side length is ",getBaseSideLength());
@@ -81,23 +90,18 @@ module topPlate(useTabs = false){
 }
 
 module bearingPlate(){
-	difference(){
-		topPlate(useTabs = true);
-		translate([0,getPrintbedWidth()/1.5,0])
-			square([getPrintbedWidth(),
-			        getPrintbedWidth()*2],center=true);
-		circle(getBaseRadius()-10);
-	}
+	topPlate(useTabs = true, bedCutout = true);
 }
 
 module bedPlate(){
 		topPlate(useTabs = true);
 }
 
-
-translate([0,-getBaseRadius()-10,0])
+%square([1158.24,2194.56]);
+translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
 	topPlate();
-translate([0,getBaseRadius(),0])
-rotate([0,0,180])
+bedPlate();
+translate([getBaseSideLength()+10,0,0])
+	topPlate();
+translate([0,getBaseSideLength()+10,0])
 	bearingPlate();
-//getStructuralFeetInterface();

@@ -8,7 +8,7 @@ use <../Axis/Clips.scad>
 extraSideLength=140;
 
 function getBaseSideLength() = getBaseRadius()*2+extraSideLength;
-function getCaseBoltHolePitch() = 50;
+function getCaseBoltHolePitch() = 200;
 function getCaseHoleSize() = 4.5;
 function getShortSideLength() = 140;
 
@@ -26,7 +26,7 @@ module placeTabsMounts(){
 
 module getTabsForInnerPlate(addHoles=false){
 	placeTabsMounts(){
-		square([getCaseBoardThickness(),getInnerPlateTabPitch()/3]);
+		square([getCaseBoardThickness(),getInnerPlateTabPitch()/4]);
 	}
 	if(addHoles){
 		placeTabsMounts(){

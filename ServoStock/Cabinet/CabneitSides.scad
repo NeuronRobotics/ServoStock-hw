@@ -1,8 +1,8 @@
 use <../Axis/Parameters.scad>
 use <CabinetTopSheet.scad>
 
-//function getBedZHeight() = 150+getCaseBoardThickness();
-function getBedZHeight() = 0;
+function getBedZHeight() = 150+getCaseBoardThickness();
+//function getBedZHeight() = 0;
 
 module innerPlateMounts(usePlateMountSlots = false){
 	
@@ -141,7 +141,7 @@ module tabCompare(){
 }   
 
 
-tabCompare();
+//tabCompare();
 
-//scale([1/6,1/6,1/6])
-//	fullSheet();
+scale([1/6,1/6,1/6])
+	fullSheet();

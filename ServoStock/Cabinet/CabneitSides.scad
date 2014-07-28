@@ -105,7 +105,7 @@ module sides(){
 module fullSheet(){
 
 	sides();
-	//%square([1158.24,2194.56]);
+	%square([1158.24,2194.56]);
 	topPlate();
 	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
 		bedPlate();//topPlate();

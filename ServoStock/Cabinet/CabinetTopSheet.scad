@@ -6,12 +6,7 @@ use <../Axis/Clips.scad>
 
 
 extraSideLength=140;
-
 function getBaseSideLength() = getBaseRadius()*2+extraSideLength;
-function getCaseBoltHolePitch() = 200;
-function getCaseHoleSize() = 4.5;
-function getShortSideLength() = 140;
-
 function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
 module placeTabsMounts(){
@@ -91,7 +86,12 @@ module topPlate(useTabs = true,bedCutout = false, axisMounts=true){
 	difference(){
 		translate([0,extraSideLength/sqrt(2)-60,0])
 			rotate([0,0,45])
-				squareWithMountHoles(getBaseSideLength(),useTabs,bedCutout);
+				difference(){
+					squareWithMountHoles(getBaseSideLength(),useTabs,bedCutout);
+					rotate([0,0,45])
+						translate([getBaseSideLength()/2+getShortSideLength()/sqrt(2),0,0])
+							square([getBaseSideLength(),getBaseSideLength()],center=true);
+				}
 		if(axisMounts){
 			for (a = [0:120:359]){
 				rotate([0,0,a])
@@ -110,8 +110,7 @@ module topPlate(useTabs = true,bedCutout = false, axisMounts=true){
 			}
 			circle(getBaseRadius()-10);
 		}
-		translate([0,extraSideLength*2.5,0])
-			square([500,getBaseRadius()*2+extraSideLength],center=true);
+		
 		echo("Square side length is ",getBaseSideLength());
 	}
 

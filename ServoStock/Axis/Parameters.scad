@@ -21,6 +21,9 @@ function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
 function getCaseBoardThickness() = 19.05;//3/4in
 function getPrintbedWidth() = 200;
+function getCaseBoltHolePitch() = 200;
+function getCaseHoleSize() = 4.5;
+function getShortSideLength() = 180;
 
 
 

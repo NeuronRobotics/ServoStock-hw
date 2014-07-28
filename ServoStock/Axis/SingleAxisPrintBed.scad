@@ -9,13 +9,13 @@ use <IdlerBearingClip.scad>
 use <Rod.scad>
 use <StructuralFeet.scad>
 
-translate([60,-85,0]){
-	rotate([0,0,90]){
-		translate([0,13,0])
-			DeltaFreeArm();
-		DeltaFreeArm();
-	}
-}
+//translate([60,-85,0]){
+//	rotate([0,0,90]){
+//		translate([0,13,0])
+//			DeltaFreeArm();
+//		DeltaFreeArm();
+//	}
+//}
 
 //rotating the module, as it would be rotated for printing
 translate([0,15,0])

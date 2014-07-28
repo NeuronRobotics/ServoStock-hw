@@ -162,7 +162,9 @@ module StructuralFeet(EncoderScrews=false)
 				{
 					rotate([90,0,0])
 					{
-						StandardServoMotor(true, 1, false, .4);
+						StandardServoMotor(true, 1, false, .4,20);
+						translate([11,28,0])
+						cylinder(h=20,r=22,center=true);
 					}
 				}
 			}

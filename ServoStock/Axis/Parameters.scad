@@ -1,5 +1,6 @@
 use <../../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/LinearBearings/LM8UU_Linear_Bearing_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 
 function mm(i) = i*25.4; 
 
@@ -20,6 +21,8 @@ function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
 function getCaseBoardThickness() = 19.05;//3/4in
 function getPrintbedWidth() = 200;
+
+
 
 //function getCaseBoardThickness() = 6;//6 mm aluminum
 
@@ -47,3 +50,5 @@ function 3dPrinterTolerance() = .4;
 function PlasticWidth()= (8mmRodDiameter()/2);
 function SideWidth() = (8mmRodDiameter()+PlasticWidth());
 echo(PlasticWidth());
+
+function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;

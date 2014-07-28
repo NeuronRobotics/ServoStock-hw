@@ -12,14 +12,29 @@ function getCaseBoltHolePitch() = 50;
 function getCaseHoleSize() = 4.5;
 function getShortSideLength() = 140;
 
-function getInnerPlateTabPitch() = 75;
+function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
-module getTabsForInnerPlate(){
-	for (a = [	getInnerPlateTabPitch()+getInnerPlateTabPitch()/4:
+module placeTabsMounts(){
+	for (a = [	getCaseBoardThickness()*2:
 		getInnerPlateTabPitch():
-		getBaseSideLength()-getInnerPlateTabPitch()]){
-		translate([0,a-getBaseSideLength()/2,0])
-			square([getCaseBoardThickness(),getInnerPlateTabPitch()/3]);
+		getBaseSideLength()-getCaseBoardThickness()*2]){
+		translate([0,a,0])
+			child();
+
+	}
+}
+
+module getTabsForInnerPlate(addHoles=false){
+	placeTabsMounts(){
+		square([getCaseBoardThickness(),getInnerPlateTabPitch()/3]);
+	}
+	if(addHoles){
+		placeTabsMounts(){
+			translate([getCaseBoardThickness()/2,
+			           getInnerPlateTabPitch()*2/3,
+			           0])
+			           circle(getCaseHoleSize()/2);
+		}
 	}
 }
 
@@ -49,18 +64,29 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 		}
 
 	}
-	translate([-getBaseSideLength()/2,2.5,0])
+	translate([-sideLength/2,-sideLength/2,0]){
+		//%circle(5);
 		getTabsForInnerPlate();
-	rotate([0,0,90])
-		translate([-getBaseSideLength()/2,0,0])
-			getTabsForInnerPlate();
 	
+		rotate([0,0,90])
+			translate([0,-sideLength,0]){
+					getTabsForInnerPlate();
+		}
+		rotate([0,0,-90])
+			translate([-(sideLength),0,0])
+				getTabsForInnerPlate();
+		rotate([0,0,180])
+			translate([-(sideLength),-(sideLength),0])
+				getTabsForInnerPlate();
+	}
 	//%square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
 }
 
 
 module topPlate(useTabs = false,bedCutout = false){
-	translate([getBaseSideLength()/2 -getCaseBoardThickness()*1.5 ,getBaseSideLength()/2 +getCaseBoardThickness()*1.5,0])
+	fudge = extraSideLength/sqrt(2)-60;
+	
+	translate([getBaseSideLength()/2 -fudge/sqrt(2) ,getBaseSideLength()/2 +fudge/sqrt(2),0])
 	rotate([0,0,-45-90])
 	difference(){
 		translate([0,extraSideLength/sqrt(2)-60,0])

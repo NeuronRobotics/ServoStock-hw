@@ -6,8 +6,6 @@ use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
 
-
-function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;
 function BearingBracketHeight()=608BallBearingDiam()*1.5;
 function SlotWidth()= PlasticWidth()/2;
 function ClipWidth()=StandardServoHeightAbvWings()-1.5;

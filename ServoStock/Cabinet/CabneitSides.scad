@@ -1,9 +1,19 @@
 use <../Axis/Parameters.scad>
 use <CabinetTopSheet.scad>
 
-function getBedZHeight() = 150+getCaseBoardThickness();
+//function getBedZHeight() = 150+getCaseBoardThickness();
+function getBedZHeight() = 0;
 
-
+module innerPlateMounts(usePlateMountSlots = false){
+	
+	// slots for tabs
+	if(usePlateMountSlots){
+		translate([0,getCaseBoardThickness(),0]){
+			rotate([0,0,-90])
+			getTabsForInnerPlate(addHoles=true);
+		}
+	}
+}
 
 module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 	difference(){
@@ -33,62 +43,39 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 			}
 			
 		}
+		
+		// Top plate mount
+		translate([0, getCabinetHeight()- MotorBracketHeight()-getCaseBoardThickness(),0 ]){
+			innerPlateMounts(usePlateMountSlots);
+		
+		}
 
 		// Inner bed plate mounts
 		translate([0, getBedZHeight(),0 ]){
-			for (a = [	getInnerPlateTabPitch()+getInnerPlateTabPitch()/4:
-						getInnerPlateTabPitch():
-						getBaseSideLength()-getInnerPlateTabPitch()]){
-				translate([a-getInnerPlateTabPitch()/2+getInnerPlateTabPitch()/6,getCaseBoardThickness()/2,0])
-					circle(getCaseHoleSize()/2);
-				
-				
-			}
-			// slots for tabs
-			if(usePlateMountSlots){
-				translate([getBaseSideLength()/2+getCaseBoardThickness(),0,0]){
-					rotate([0,0,90])
-						getTabsForInnerPlate();
-				}
-				
-			}
+			innerPlateMounts(usePlateMountSlots);
 		
 		}
 		// Inner bed plate mounts
 		translate([0, getBedZHeight()+100,0 ]){
-			for (a = [	getInnerPlateTabPitch()+getInnerPlateTabPitch()/4:
-						getInnerPlateTabPitch():
-						getBaseSideLength()-getInnerPlateTabPitch()]){
-				translate([a-getInnerPlateTabPitch()/2+getInnerPlateTabPitch()/6,getCaseBoardThickness()/2,0])
-					circle(getCaseHoleSize()/2);
-				
-				
-			}
-			// slots for tabs
-			if(usePlateMountSlots){
-				translate([getBaseSideLength()/2+getCaseBoardThickness(),0,0]){
-					rotate([0,0,90])
-						getTabsForInnerPlate();
-				}
-				
-			}
-		
+			innerPlateMounts(usePlateMountSlots);
 		}
 	}
 
 }
 
 module shortSide(left=true){
-	union(){
-		longSide(getShortSideLength());
-		//Eliminating the tabs and holes on the front
-		if(left){
-			square([getCaseBoardThickness()+5,getCabinetHeight() ]);
-		}else{
-			translate([getShortSideLength()-getCaseBoardThickness()-5,0,0])
-				square([getCaseBoardThickness()+5,getCabinetHeight() ]);
+	if(left){
+		intersection(){
+			translate([-(getBaseSideLength()-getShortSideLength()),0,0])
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			square([getShortSideLength(),getCabinetHeight()]);
 		}
 		
+	}else{
+		intersection(){
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			square([getShortSideLength(),getCabinetHeight()]);
+		}
 	}
 }
 module sides(){
@@ -112,16 +99,49 @@ module sides(){
 	
 	shortSide(true);
 }
-translate([0,getBaseSideLength()*3+getShortSideLength()+30])
-rotate([0,0,-90])
-	sides();
 
-//%square([1158.24,2194.56]);
+module fullSheet(){
+	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
+		rotate([0,0,-90])
+			sides();
+	//%square([1158.24,2194.56]);
+	bedPlate();
+	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
+		bedPlate();//topPlate();
 
-translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
-topPlate();
-bedPlate();
-translate([getBaseSideLength()+10,0,0])
-topPlate();
-translate([0,getBaseSideLength()+10,0])
-bearingPlate();
+	translate([0,getBaseSideLength()+10,0])
+		bearingPlate();
+
+}
+
+module tabCompare(){
+
+	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	translate([ 0,
+	            -getBaseSideLength(),
+	            0])
+	            rotate([0,0,90])
+	            	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	translate([ 0,
+	            -getBaseSideLength(),
+	            0])
+	            bedPlate();
+	
+	translate([ getShortSideLength(),
+	            -getBaseSideLength(),
+	            0])
+	            rotate([0,0,180])
+	            	shortSide(left=true);
+	
+    rotate([0,0,-90])
+    translate([ 0,
+                getBaseSideLength(),
+	            0])
+    	shortSide(left=false);
+}   
+
+
+tabCompare();
+
+//scale([1/6,1/6,1/6])
+//	fullSheet();

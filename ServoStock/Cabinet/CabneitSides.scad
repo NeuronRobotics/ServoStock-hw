@@ -79,33 +79,34 @@ module shortSide(left=true){
 	}
 }
 module sides(){
-
-	longSide(getBaseSideLength(),usePlateMountSlots = true);
-	
-	translate([-getBaseSideLength()-10 ,
-	           0,
-	           0])
-	           rotate([0,0,0])
-	longSide(getBaseSideLength(),usePlateMountSlots = true);
-	
-	translate([getBaseSideLength()+10 ,
-	           0,
-	           0])
-	shortSide(false);
-	
-	translate([-getBaseSideLength()-getShortSideLength()-20 ,
-	           0,
-	           0])
-	
-	shortSide(true);
+	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
+		rotate([0,0,-90]){
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			
+			translate([-getBaseSideLength()-10 ,
+			           0,
+			           0])
+			           rotate([0,0,0])
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			
+			translate([getBaseSideLength()+10 ,
+			           0,
+			           0])
+			shortSide(false);
+			
+			translate([-getBaseSideLength()-getShortSideLength()-20 ,
+			           0,
+			           0])
+			
+			shortSide(true);
+	}
 }
 
 module fullSheet(){
-	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
-		rotate([0,0,-90])
-			sides();
+
+	sides();
 	//%square([1158.24,2194.56]);
-	bedPlate();
+	topPlate();
 	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
 		bedPlate();//topPlate();
 

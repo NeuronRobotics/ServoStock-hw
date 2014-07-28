@@ -83,7 +83,7 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 }
 
 
-module topPlate(useTabs = false,bedCutout = false){
+module topPlate(useTabs = true,bedCutout = false, axisMounts=true){
 	fudge = extraSideLength/sqrt(2)-60;
 	
 	translate([getBaseSideLength()/2 -fudge/sqrt(2) ,getBaseSideLength()/2 +fudge/sqrt(2),0])
@@ -92,14 +92,16 @@ module topPlate(useTabs = false,bedCutout = false){
 		translate([0,extraSideLength/sqrt(2)-60,0])
 			rotate([0,0,45])
 				squareWithMountHoles(getBaseSideLength(),useTabs,bedCutout);
-		for (a = [0:120:359]){
-			rotate([0,0,a])
-				translate([0,-getBaseRadius(),0]){
-					//import (file = "FeetOutline.dxf", origin = 0);
-					getStructuralFeetInterface();
-					//%StructuralFeet();
-				}
-						
+		if(axisMounts){
+			for (a = [0:120:359]){
+				rotate([0,0,a])
+					translate([0,-getBaseRadius(),0]){
+						//import (file = "FeetOutline.dxf", origin = 0);
+						getStructuralFeetInterface();
+						//%StructuralFeet();
+					}
+							
+			}
 		}
 		if(bedCutout){
 			translate([0,getPrintbedWidth()/1.5,0]){
@@ -116,12 +118,15 @@ module topPlate(useTabs = false,bedCutout = false){
 }
 
 module bearingPlate(){
-	topPlate(useTabs = true, bedCutout = true);
+	topPlate( bedCutout = true);
 }
 
 module bedPlate(){
-		topPlate(useTabs = true);
+	// Maggie, this is the module to edit to add your auto-feed bed mounts
+	topPlate(axisMounts=false);
 }
+
+
 
 %square([1158.24,2194.56]);
 translate([getBaseSideLength()+10,getBaseSideLength()+10,0])

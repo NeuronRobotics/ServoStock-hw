@@ -143,5 +143,5 @@ module tabCompare(){
 
 //tabCompare();
 
-scale([1/6,1/6,1/6])
+//scale([1/6,1/6,1/6])
 	fullSheet();

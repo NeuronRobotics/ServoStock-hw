@@ -13,12 +13,14 @@ rodLength = 1000;
 
 function RodEndSpacing() = 108.5;// this is a magic number
 
-function getCabinetHeight() = 889;// rod length minus feet height and board thickness
+function getCabinetHeight() = 800;// rod length minus feet height and board thickness
 
 //These are the values to use in the kinematics
 function getFreeRodLength() = 203.82;
 function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
+
+// these are the parameters for the Case
 function getCaseBoardThickness() = 19.05;//3/4in
 function getPrintbedWidth() = 200;
 function getCaseBoltHolePitch() = 200;

@@ -94,18 +94,18 @@ module sides(){
 			           0])
 			shortSide(false);
 			
-			translate([-getBaseSideLength()-getShortSideLength()-20 ,
-			           0,
+			translate([getBaseSideLength(),
+			           getCabinetHeight()+10,
 			           0])
-			
-			shortSide(true);
+			rotate([0,0,90])
+				shortSide(true);
 	}
 }
 
 module fullSheet(){
 
 	sides();
-	%square([1158.24,2194.56]);
+	%square([40*25.4,75*25.4]);
 	topPlate();
 	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
 		bedPlate();//topPlate();
@@ -144,5 +144,5 @@ module tabCompare(){
 
 //tabCompare();
 
-scale(1/6)
+//scale(1/6)
 	fullSheet();

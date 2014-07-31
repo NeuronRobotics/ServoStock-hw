@@ -56,7 +56,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 		
 		}
 		// Inner bed plate mounts
-		translate([0, getBedZHeight()+100,0 ]){
+		translate([0, getBedZHeight()+145,0 ]){
 			innerPlateMounts(usePlateMountSlots);
 		}
 	}

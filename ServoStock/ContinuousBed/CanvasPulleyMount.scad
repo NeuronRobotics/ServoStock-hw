@@ -1,13 +1,13 @@
 use <CanvasPulley.scad>
-use <CanvasPulleyDriver.scad>
+use <CanvasPulleyWormDriver.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
 
 function CanvasPulleyMountThickness()=5;
-function CanvasPulleyEffectiveHeight()=CanvasPulleyWidth()*1.5;
 
 
-module CanvasPulleyMount(motor=false,)
+module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 {
 	difference()
 	{
@@ -28,12 +28,12 @@ module CanvasPulleyMount(motor=false,)
 				{
 					rotate([-90,0,0])
 					{
-						if(motor==true)	
+						if(WormDriver==true)	
 						{
 							union()
 							{				
-								cylinder(r=608BallBearingInnerDiam()/1.5, h=DriverRodRadius()*1.5, $fn=30);
-								translate([0,0,DriverRodRadius()*1.5])
+								cylinder(r=608BallBearingInnerDiam()/1.5, h=WormDriverRodRadius()*1.5, $fn=30);
+								translate([0,0,WormDriverRodRadius()*1.5])
 								{
 									cylinder(r=608BallBearingInnerDiam()/2, h=608BallBearingHeight(), $fn=30);
 								}
@@ -46,6 +46,28 @@ module CanvasPulleyMount(motor=false,)
 								{
 								cylinder(r=608BallBearingInnerDiam()/2, h=608BallBearingHeight(), $fn=30);
 								}
+								if (LinearSpring==true)
+								{	
+									translate([0,0,-CanvasPulleyMountThickness()])
+									{
+										difference()
+										{
+											cylinder(r=CanvasPulleyWidth()/1.5, h=CanvasPulleyMountThickness()+608BallBearingHeight()*4/3);
+											translate([0,0,CanvasPulleyMountThickness()])
+											{
+												cylinder(r=CanvasPulleyWidth()/1.8, h=CanvasPulleyMountThickness()+608BallBearingHeight()*4/3);		
+											}
+											translate([-ConstantForceSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+ConstantForceSpringHookDiameter()/2,CanvasPulleyMountThickness()+608BallBearingHeight()*1/3+.3])
+											{
+												rotate([180,180,90])
+												{
+													#ConstantForceSpringHook();
+												}
+											}
+										}
+
+									}
+								}else{}
 							}
 						}
 					}
@@ -69,11 +91,16 @@ module CanvasPulleyMount(motor=false,)
 
 //PRINT ORIENTATION
 rotate([90,0,0])
-CanvasPulleyMount(true);
+CanvasPulleyMount(WormDriver=true);
 
 translate([40,0,0])
 rotate([90,0,0])
-CanvasPulleyMount(false);
+CanvasPulleyMount(WormDriver=false);
+
+translate([-40,0,0])
+rotate([90,0,0])
+CanvasPulleyMount(WormDriver=false,LinearSpring=true);
+
 
 
 

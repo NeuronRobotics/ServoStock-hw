@@ -2,22 +2,25 @@ use <../Axis/Parameters.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Libraries/Threaded_Library/WormDrive-NoThroat_ModifiedGear.scad>
+use <../../../Libraries/Threaded_Library/HerringBoneGear_Modified.scad>
 
 //print these with low infill setting.
 
 
 function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
 function CanvasPulleyLength()=getBaseRadius();
-function SlitWidth() = CanvasWidth()*2;
+function CanvasPulleySlitWidth() =CanvasWidth()*2;
+function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
 
 
 module CanvasSlit()
 {
-	translate([-CanvasPulleyWidth()*.2,-SlitWidth()/2,-1])
+	translate([-CanvasPulleyWidth()*.2,-CanvasPulleySlitWidth()/2,-1])
 	{
-		cube([CanvasPulleyWidth()*.7, SlitWidth(), CanvasPulleyLength()+2]);
+		cube([CanvasPulleyWidth()*.7, CanvasPulleySlitWidth(), CanvasPulleyLength()+2]);
 	}
 }
 
@@ -79,7 +82,6 @@ module BottomBearingMount()
 {
 	difference()
 	{
-		
 		cylinder(r=CanvasPulleyWidth()/2, h=608BallBearingHeight()-1);
 		translate([0,0,-0.5])				
 		608BallBearing(.3);				
@@ -105,12 +107,27 @@ module BottomBearingDraft()
 	}
 }
 
+module BoltDropInSlot()
+{
+	rotate([90,0,0])
+	{
+		translate([-CanvasPulleyWidth()/4,CanvasPulleyLength()+608BallBearingHeight()-1.5,-CanvasPulleyEffectiveHeight()])
+		{
+			cylinder(r=HiLoBoltHeadDiameter()/2, h=CanvasPulleyLength()/2);
+		}
+	}
+}
+
 module TopBearingRoller()
 {
-	union()
+	difference()
 	{
-		BaseCanvasRoller();
-		TopBearingMount();
+		union()
+		{
+			BaseCanvasRoller();
+			TopBearingMount();
+		}
+		BoltDropInSlot();
 	}
 }
 
@@ -162,43 +179,118 @@ module CanvasRoller(motor=false, type=1)
 						CanvasPulleyGear();
 						translate([0,0,-1])
 						{
-							cylinder(r=CanvasPulleyWidth()/2-1, h=gearThickness()+2, $fn=40);
+							cylinder(r=CanvasPulleyWidth()/2-1, h=WormDriveGearThickness()+2, $fn=40);
 						}
 					}						
 				}
 			}
 			else
 			{
-			//type 3 stuff (helix gear?)
+				union()
+				{
+					TopAndBottomBearingRoller();
+					difference()
+					{
+						double_helix_gear (teeth=16);
+						translate([0,0,-1])
+						{
+							cylinder(r=CanvasPulleyWidth()/2-1, h=HerringBoneGearThickness()+2, $fn=40);
+						}
+					}						
+				}
 			}
 		}
 	}
 	else
 	{
 		//this is eventually going to need to become the idler roller, which must have a spring attached--is there a good way to attach the spring or is it just wrapped around?
-		TopAndBottomBearingRoller();
+		difference()
+		{
+			TopAndBottomBearingRoller();
+			translate([-CanvasPulleyWidth()/2+ConstantForceSpringHookDiameter()/4,0,0])
+			{
+				ConstantForceSpringHook();
+			}
+		}
 	}
 }
-	
 
-CanvasRoller(true, 2);
+
+
+CanvasRoller(true, 3);
+
+
+
+
+
+////////probably none of these things are needed any more, but keeping them for now
+
 
 
 //just checking how things mesh
-use <CanvasPulleyDriver.scad>
-translate([-32,25,4])
-rotate([0,90,0])
-#CanvasPulleyDriver();
-
+	//use <CanvasPulleyWormDriver.scad>
+	//translate([-32,25,4])
+	//rotate([0,90,0])
+	//#CanvasPulleyWormDriver();
+//
 //just checking the size of the mounts
-use <CanvasPulleyMount.scad>
-translate([0,0,-14])
-rotate([90,0,0])
-#CanvasPulleyMount(true);
+	use <CanvasPulleyMount.scad>
+	translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+	rotate([90,0,0])
+	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 
-translate([0,0,CanvasPulleyLength()+20])
-rotate([-90,0,180])
-#CanvasPulleyMount(false);
+	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])
+	rotate([-90,0,180])
+	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
+
+//checking the fit of the herringbone driver
+	use <CanvasPulleyHerringboneDriver.scad>
+	translate([-42,20.5,0])
+	rotate([0,0,35])
+	CanvasPulleyHerringboneDriver();
+
+//how high up must the servo be
+	
+//	translate([-80,31.7,0])
+//	rotate([0,0,-90])
+//	StandardServoMotor();
+//
+//	function SizingCubeHeight()=12;
+//	function SizingCubeLength()=100;
+//
+//	translate([-SizingCubeLength(),CanvasPulleyEffectiveHeight()-SizingCubeHeight(),0])
+//	#cube([SizingCubeLength(),SizingCubeHeight(),10]);
+
+//checking the motor mount
+	use <CanvasPulleyMotorMount.scad>
+	translate([-80,CanvasPulleyEffectiveHeight(),20])
+	rotate([90,0,0])
+	CanvasPulleyMotorMount(true);
+
+
+
+
+
+
+///note: you sould be able to use pitch radius to find a less janky way of aligning the gears
+
+
+
+
+
+
+//CanvasRoller(false);
+////just checking the size of the for the idler roller
+//	use <CanvasPulleyMount.scad>
+//	translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+//	rotate([90,0,0])
+//	CanvasPulleyMount(WormDriver=false,LinearSpring=true);
+//
+//	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])
+//	rotate([-90,0,180])
+//	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
+////
+	
 
 
 

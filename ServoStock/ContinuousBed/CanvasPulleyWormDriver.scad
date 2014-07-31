@@ -1,9 +1,9 @@
 use <../../../Libraries/Threaded_Library/WormDrive-NoThroat_ModifiedDriver.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 
-function DriverRodRadius()=wormRadius()/2.6;
+function WormDriverRodRadius()=wormRadius()/2.6;
 
-module CanvasPulleyDriver()
+module CanvasPulleyWormDriver()
 {
 	union()
 	{
@@ -13,7 +13,7 @@ module CanvasPulleyDriver()
 		}
 		translate([0,0,wormLength()/15-1])
 		{
-			cylinder(r=DriverRodRadius(), h=wormLength()/5+2, $fn=27);
+			cylinder(r=WormDriverRodRadius(), h=wormLength()/5+2, $fn=27);
 		}
 		difference()
 		{
@@ -25,4 +25,4 @@ module CanvasPulleyDriver()
 }
 	
 
-CanvasPulleyDriver();
+CanvasPulleyWormDriver();

@@ -56,7 +56,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 		
 		}
 		// Inner bed plate mounts
-		translate([0, getBedZHeight()+100,0 ]){
+		translate([0, getBedZHeight()+145,0 ]){
 			innerPlateMounts(usePlateMountSlots);
 		}
 	}
@@ -79,33 +79,34 @@ module shortSide(left=true){
 	}
 }
 module sides(){
-
-	longSide(getBaseSideLength(),usePlateMountSlots = true);
-	
-	translate([-getBaseSideLength()-10 ,
-	           0,
-	           0])
-	           rotate([0,0,0])
-	longSide(getBaseSideLength(),usePlateMountSlots = true);
-	
-	translate([getBaseSideLength()+10 ,
-	           0,
-	           0])
-	shortSide(false);
-	
-	translate([-getBaseSideLength()-getShortSideLength()-20 ,
-	           0,
-	           0])
-	
-	shortSide(true);
+	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
+		rotate([0,0,-90]){
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			
+			translate([-getBaseSideLength()-10 ,
+			           0,
+			           0])
+			           rotate([0,0,0])
+			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			
+			translate([getBaseSideLength()+10 ,
+			           0,
+			           0])
+			shortSide(false);
+			
+			translate([getBaseSideLength(),
+			           getCabinetHeight()+10,
+			           0])
+			rotate([0,0,90])
+				shortSide(true);
+	}
 }
 
 module fullSheet(){
-	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
-		rotate([0,0,-90])
-			sides();
-	//%square([1158.24,2194.56]);
-	bedPlate();
+
+	sides();
+	%square([40*25.4,75*25.4]);
+	topPlate();
 	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
 		bedPlate();//topPlate();
 
@@ -140,14 +141,8 @@ module tabCompare(){
     	shortSide(left=false);
 }   
 
-bearingPlate();
-translate([ getBaseSideLength()/2,
-	            getBaseSideLength()/2,
-	            0])
-rotate([0,0,45])
-%square(200,200,center=true);
 
 //tabCompare();
 
-//scale([1/6,1/6,1/6])
-//	fullSheet();
+//scale(1/6)
+	fullSheet();

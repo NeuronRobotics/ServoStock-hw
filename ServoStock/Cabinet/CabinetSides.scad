@@ -1,8 +1,6 @@
 use <../Axis/Parameters.scad>
 use <CabinetTopSheet.scad>
 
-function getBedZHeight() = 150+getCaseBoardThickness();
-//function getBedZHeight() = 0;
 
 module innerPlateMounts(usePlateMountSlots = false){
 	
@@ -56,7 +54,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 		
 		}
 		// Inner bed plate mounts
-		translate([0, getBedZHeight()+145,0 ]){
+		translate([0, getBedZHeight()+ getBedToBearingPlateHeight(),0 ]){
 			innerPlateMounts(usePlateMountSlots);
 		}
 	}

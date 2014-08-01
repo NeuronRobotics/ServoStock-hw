@@ -9,11 +9,8 @@ function mm(i) = i*25.4;
 //z-rod length, diameter-- dependent on which rods you buy
 //(bearing diameter is dependent on rod diameter)
 
-rodLength = 1000;
 
 function RodEndSpacing() = 108.5;// this is a magic number
-
-function getCabinetHeight() = 800;// rod length minus feet height and board thickness
 
 //These are the values to use in the kinematics
 function getFreeRodLength() = 203.82;
@@ -21,13 +18,27 @@ function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
 
 // these are the parameters for the Case
+rodLength = 500;
+
+function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;
+function getBedToBearingPlateHeight() = 125+getCaseBoardThickness();
+function getBedZHeight() = 150+getCaseBoardThickness();
 function getCaseBoardThickness() = 19.05;//3/4in
 function getPrintbedWidth() = 200;
-function getCaseBoltHolePitch() = 200;
+
 function getCaseHoleSize() = 4.5;
 function getShortSideLength() = 180;
+//function getCabinetHeight() = 800;// rod length minus feet height and board thickness
 
+function getCabinetHeight() = getBedZHeight() + getBedToBearingPlateHeight() +rodLength;// rod length minus feet height and board thickness
+function getCaseBoltHolePitch() =  getCabinetHeight()/4;
+function extraSideLength()=140;
+function getBaseSideLength() = getBaseRadius()*2+extraSideLength;
+function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
+function extraSideLength()=140;
+function getBaseSideLength() = getBaseRadius()*2+extraSideLength();
+function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
 //function getCaseBoardThickness() = 6;//6 mm aluminum
 
@@ -55,5 +66,3 @@ function 3dPrinterTolerance() = .4;
 function PlasticWidth()= (8mmRodDiameter()/2);
 function SideWidth() = (8mmRodDiameter()+PlasticWidth());
 echo(PlasticWidth());
-
-function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;

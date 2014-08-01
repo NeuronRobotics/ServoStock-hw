@@ -5,9 +5,6 @@ use <../Axis/RodEndClips.scad>
 use <../Axis/Clips.scad>	
 
 
-extraSideLength=140;
-function getBaseSideLength() = getBaseRadius()*2+extraSideLength;
-function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
 module placeTabsMounts(){
 	for (a = [	getCaseBoardThickness()*2:
@@ -79,12 +76,12 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 
 
 module topPlate(useTabs = true,bedCutout = false, axisMounts=true){
-	fudge = extraSideLength/sqrt(2)-60;
+	fudge = extraSideLength()/sqrt(2)-60;
 	
 	translate([getBaseSideLength()/2 -fudge/sqrt(2) ,getBaseSideLength()/2 +fudge/sqrt(2),0])
 	rotate([0,0,-45-90])
 	difference(){
-		translate([0,extraSideLength/sqrt(2)-60,0])
+		translate([0,extraSideLength()/sqrt(2)-60,0])
 			rotate([0,0,45])
 				difference(){
 					squareWithMountHoles(getBaseSideLength(),useTabs,bedCutout);

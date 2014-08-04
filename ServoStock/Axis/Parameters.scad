@@ -31,12 +31,11 @@ function getShortSideLength() = 180;
 //function getCabinetHeight() = 800;// rod length minus feet height and board thickness
 
 function getCabinetHeight() = getBedZHeight() + getBedToBearingPlateHeight() +rodLength;// rod length minus feet height and board thickness
-
+function getCaseBoltHolePitch() =  getCabinetHeight()/4;
 function extraSideLength()=140;
 function getBaseSideLength() = getBaseRadius()*2+extraSideLength();
 function getInnerPlateTabPitch() = getBaseSideLength()/4;
 
-//function getCaseBoardThickness() = 6;//6 mm aluminum
 
 
 function ZrodSpacing()=RodEndSpacing()-LM8UULinearBearingDiam()*2-PlasticWidth()*4;

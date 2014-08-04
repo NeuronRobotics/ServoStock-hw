@@ -4,14 +4,12 @@ use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_V
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Libraries/Threaded_Library/WormDrive-NoThroat_ModifiedGear.scad>
-use <../../../Libraries/Threaded_Library/HerringBoneGear_Modified.scad>
+use <../../../Vitamins/Threaded_Library/WormDrive-NoThroat_ModifiedGear.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 //print these with low infill setting.
 
 
-function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
-function CanvasPulleyLength()=(getBaseRadius()-60)*2;
 function CanvasPulleySlitWidth() =CanvasWidth()*2;
 function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
 
@@ -235,11 +233,11 @@ CanvasRoller(true, 3);
 //
 //just checking the size of the mounts
 	use <CanvasPulleyMount.scad>
-	translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+	translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
 	rotate([90,0,0])
 	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 
-	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])
+	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])
 	rotate([-90,0,180])
 	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 
@@ -282,11 +280,11 @@ CanvasRoller(true, 3);
 //CanvasRoller(false);
 ////just checking the size of the for the idler roller
 //	use <CanvasPulleyMount.scad>
-//	translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+//	translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
 //	rotate([90,0,0])
 //	CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 //
-//	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])
+//	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])
 //	rotate([-90,0,180])
 //	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 ////

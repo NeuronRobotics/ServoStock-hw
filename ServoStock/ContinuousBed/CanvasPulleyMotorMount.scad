@@ -1,3 +1,4 @@
+use <../Axis/Parameters.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <CanvasPulley.scad>
@@ -5,7 +6,7 @@ use <CanvasPulley.scad>
 function CanvasPulleyMotorMountThickness()=5;
 function CanvasPulleyHerringboneMotorOffset()=12;
 function HerringboneMotorMountHeight()=StandardServoThickness()+CanvasPulleyHerringboneMotorOffset();
-function HerringboneMotorMountLength()=StandardServoLength()+HiLoScrewHeadDiameter()*2;
+
 
 module CanvasPulleyMotorMount(herringbone=true)
 {

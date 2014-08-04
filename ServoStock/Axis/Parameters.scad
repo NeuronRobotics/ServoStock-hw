@@ -1,6 +1,8 @@
 use <../../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/LinearBearings/LM8UU_Linear_Bearing_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 
 function mm(i) = i*25.4; 
 
@@ -61,3 +63,14 @@ function 3dPrinterTolerance() = .4;
 function PlasticWidth()= (8mmRodDiameter()/2);
 function SideWidth() = (8mmRodDiameter()+PlasticWidth());
 echo(PlasticWidth());
+
+
+//canvas pulley parameters
+function CanvasPulleyLength()=(getBaseRadius()-60)*2;
+function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
+function CanvasPulleySeperation()=100; //fairly arbitrary seperation between active and idler pullies
+function HerringboneMotorMountLength()=StandardServoLength()+HiLoBoltHeadDiameter()*2; //length of the motor mount when the herringbone gear is used
+
+//////////figure out where the 1.5 fudge factor is coming from
+function CanvasPulleyMountHerringboneDistance()= CanvasPulleyLength()+608BallBearingHeight()*8/3-(HiLoBoltHeadDiameter()*2+PlasticWidth())-1.5;
+

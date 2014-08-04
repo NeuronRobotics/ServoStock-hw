@@ -4,16 +4,11 @@ use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
-
-use <../ContinuousBed/CanvasPulley.scad>
-use <../ContinuousBed/CanvasPulleyMount.scad>
-use <../ContinuousBed/CanvasPulleyMotorMount.scad>
-use <../ContinuousBed/CanvasPulleyAssembly.scad>
-
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
 
+function CuttingToolDiam()=(1/8)*25.4; //diameter of cutting tool, maximum width of any hole
 
 
 
@@ -176,10 +171,10 @@ module CanvasHoles()
 		{
 			translate([-CanvasPulleyLength()/2,-getPrintbedWidth()/2,0])
 			{
-				square([CanvasPulleyLength(), CanvasWidth()*2]);
+				square([CanvasPulleyLength(), CuttingToolDiam()]);
 				translate([0,getPrintbedWidth(),0])
 				{
-					square([CanvasPulleyLength(), CanvasWidth()*2]);
+					square([CanvasPulleyLength(), CuttingToolDiam()]);
 				}
 			}
 		}
@@ -192,7 +187,7 @@ module bedPlate(){
 	{
 		topPlate(axisMounts=false);
 		CanvasHoles();
-		translate([getBaseSideLength()/2+CanvasPulleyMountThickness()*2,getBaseSideLength()/2,0])
+		translate([getBaseSideLength()/2+PlasticWidth()*2,getBaseSideLength()/2,0])
 		{
 			rotate([0,0,45])
 			{
@@ -203,7 +198,7 @@ module bedPlate(){
 					{
 						CanvasPulleyMount();
 					}		
-					translate([42.5-HiLoScrewHeadHeight()*3-CanvasPulleyMountThickness(),20.5+HiLoScrewHeadHeight()*4,0]) ///Fix these numbers
+					translate([42.5-HiLoScrewHeadHeight()*3-PlasticWidth(),20.5+HiLoScrewHeadHeight()*4,0]) ///Fix these numbers
 					{
 						MotorMount();
 					}

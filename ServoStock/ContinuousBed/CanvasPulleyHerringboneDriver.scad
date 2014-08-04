@@ -1,4 +1,4 @@
-use <../../../Libraries/Threaded_Library/HerringBoneGear_Modified.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 
 module CanvasPulleyHerringboneDriver()

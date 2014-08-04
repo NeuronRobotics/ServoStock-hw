@@ -9,7 +9,7 @@ function CanvasPulleyMountThickness()=5;
 
 module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 {
-	difference()
+	//difference()
 	{
 		translate([-CanvasPulleyWidth()/2,0,-CanvasPulleyEffectiveHeight()])
 		{

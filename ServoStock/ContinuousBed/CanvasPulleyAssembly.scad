@@ -2,7 +2,15 @@ use <CanvasPulley.scad>
 use <CanvasPulleyMount.scad>
 use <CanvasPulleyHerringboneDriver.scad>
 use <CanvasPulleyMotorMount.scad>
+use <3dBedPlate.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+
+function CanvasPulleySeperation()=100;
+
+
+//////////figure out where the 1.5 fudge factor is coming from
+function CanvasPulleyMountHerringboneDistance()= CanvasPulleyLength()+608BallBearingHeight()*8/3-(HiLoScrewHeadDiameter()*2+CanvasPulleyMountThickness())-1.5;
 
 module IdleCanvasPulleyAssembly()
 {
@@ -45,6 +53,7 @@ module DrivenCanvasPulleyAssembly()
 				CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 			}
 		}
+//fix these janky numbers
 		translate([-42,20.5,0])
 		{
 			rotate([0,0,35])
@@ -64,12 +73,12 @@ module DrivenCanvasPulleyAssembly()
 
 module CanvasPulleyAssembly()
 {
-	translate([0,0,CanvasPulleyEffectiveHeight()])
+	translate([CanvasPulleySeperation()/2,-CanvasPulleyLength()/2,CanvasPulleyEffectiveHeight()])
 	{
 		rotate([-90,0,0])
 		{
 			DrivenCanvasPulleyAssembly();
-			translate([-100,0,0])
+			translate([-CanvasPulleySeperation(),0,0])
 			{
 				IdleCanvasPulleyAssembly();
 			}
@@ -77,5 +86,14 @@ module CanvasPulleyAssembly()
 	}
 }
 
-CanvasPulleyAssembly();
-
+translate([BaseSideLength()/2,BaseSideLength()/2,0])
+{
+	rotate([0,0,-45])
+	{
+		CanvasPulleyAssembly();
+	}
+}
+translate([0,0,-10])
+{
+	3dBedPlate();
+}

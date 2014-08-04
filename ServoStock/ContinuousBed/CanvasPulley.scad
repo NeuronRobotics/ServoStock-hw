@@ -11,7 +11,7 @@ use <../../../Libraries/Threaded_Library/HerringBoneGear_Modified.scad>
 
 
 function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
-function CanvasPulleyLength()=getBaseRadius();
+function CanvasPulleyLength()=(getBaseRadius()-60)*2;
 function CanvasPulleySlitWidth() =CanvasWidth()*2;
 function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
 

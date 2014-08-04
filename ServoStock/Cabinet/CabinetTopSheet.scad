@@ -3,6 +3,15 @@ use <../Axis/StructuralFeet.scad>
 use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
+use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../ContinuousBed/CanvasPulley.scad>
+use <../ContinuousBed/CanvasPulleyMount.scad>
+use <../ContinuousBed/CanvasPulleyMotorMount.scad>
+use <../ContinuousBed/CanvasPulleyAssembly.scad>
+use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
+
 
 
 
@@ -117,18 +126,103 @@ module bearingPlate(){
 	topPlate( bedCutout = true);
 }
 
-module bedPlate(){
+
+module CanvasPulleyMount(wormgear=false)
+{
+	if(wormgear==false)
+	{
+		circle(HiLoScrewDiameter()/2);
+		translate([0,CanvasPulleyWidth()/2,0])
+		{
+			circle(HiLoScrewDiameter()/2);
+		}
+		translate([CanvasPulleyMountHerringboneDistance(),0,0])
+		{
+			circle(HiLoScrewDiameter()/2);
+		}
+		translate([CanvasPulleyMountHerringboneDistance(),CanvasPulleyWidth()/2,0])
+		{
+			circle(HiLoScrewDiameter()/2);
+		}
+	}
+	else
+	{
+	//put wormgear mount here if necessary
+	}
+}
+
+module MotorMount()
+{
+	rotate([0,0,90])
+	{
+		union()
+		{
+			circle(HiLoScrewDiameter()/2);
+			translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,0,0])
+			{
+				circle(HiLoScrewDiameter()/2);
+			}
+		}
+	}
+}
+
+module CanvasHoles()
+{
+	translate([getBaseSideLength()/2,getBaseSideLength()/2,0])
+	{
+		rotate([0,0,45])
+		{
+			translate([-CanvasPulleyLength()/2,-getPrintbedWidth()/2,0])
+			{
+				square([CanvasPulleyLength(), CanvasWidth()*2]);
+				translate([0,getPrintbedWidth(),0])
+				{
+					square([CanvasPulleyLength(), CanvasWidth()*2]);
+				}
+			}
+		}
+	}
+}
+
 	// Maggie, this is the module to edit to add your auto-feed bed mounts
-	topPlate(axisMounts=false);
+module bedPlate(){
+	difference()
+	{
+		topPlate(axisMounts=false);
+		CanvasHoles();
+		translate([getBaseSideLength()/2+CanvasPulleyMountThickness()*2,getBaseSideLength()/2,0])
+		{
+			rotate([0,0,45])
+			{
+				translate([-CanvasPulleyLength()/2,-CanvasPulleySeperation()/2,0])
+				{
+					CanvasPulleyMount();
+					translate([0,CanvasPulleySeperation(),0])
+					{
+						CanvasPulleyMount();
+					}		
+					translate([42.5-HiLoScrewHeadHeight()*3-CanvasPulleyMountThickness(),20.5+HiLoScrewHeadHeight()*4,0]) ///Fix these numbers
+					{
+						MotorMount();
+					}
+				}
+			}
+		}
+	}
 }
 
 
-
-%square([1158.24,2194.56]);
-translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
-	topPlate();
 bedPlate();
-translate([getBaseSideLength()+10,0,0])
-	topPlate();
-translate([0,getBaseSideLength()+10,0])
-	bearingPlate();
+
+
+
+
+//
+//%square([1158.24,2194.56]);
+//translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
+//	topPlate();
+//bedPlate();
+//translate([getBaseSideLength()+10,0,0])
+//	topPlate();
+//translate([0,getBaseSideLength()+10,0])
+//	bearingPlate();

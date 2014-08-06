@@ -12,6 +12,7 @@ use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 function CanvasPulleySlitWidth() =CanvasWidth()*2;
 function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
+echo ("Canvas Pulley Height: ", CanvasPulleyLength()); 
 
 
 module CanvasSlit()
@@ -189,7 +190,7 @@ module CanvasRoller(motor=false, type=1)
 					TopAndBottomBearingRoller();
 					difference()
 					{
-						double_helix_gear (teeth=16);
+						double_helix_gear (teeth=CanvasPulleyTeeth());
 						translate([0,0,-1])
 						{
 							cylinder(r=CanvasPulleyWidth()/2-1, h=HerringBoneGearThickness()+2, $fn=40);
@@ -232,20 +233,20 @@ CanvasRoller(true, 3);
 	//#CanvasPulleyWormDriver();
 //
 //just checking the size of the mounts
-	use <CanvasPulleyMount.scad>
-	translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
-	rotate([90,0,0])
-	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
+//	use <CanvasPulleyMount.scad>
+//	translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
+//	rotate([90,0,0])
+//	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 
-	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])
-	rotate([-90,0,180])
-	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
+//	translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])
+//	rotate([-90,0,180])
+//	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 
 //checking the fit of the herringbone driver
-	use <CanvasPulleyHerringboneDriver.scad>
-	translate([-42,20.5,0])
-	rotate([0,0,35])
-	CanvasPulleyHerringboneDriver();
+//	use <CanvasPulleyHerringboneDriver.scad>
+//	translate([-42,20.5,0])
+//	rotate([0,0,35])
+//	CanvasPulleyHerringboneDriver();
 
 //how high up must the servo be
 	
@@ -260,10 +261,10 @@ CanvasRoller(true, 3);
 //	#cube([SizingCubeLength(),SizingCubeHeight(),10]);
 
 //checking the motor mount
-	use <CanvasPulleyMotorMount.scad>
-	translate([-80,CanvasPulleyEffectiveHeight(),20])
-	rotate([90,0,0])
-	CanvasPulleyMotorMount(true);
+//	use <CanvasPulleyMotorMount.scad>
+//	translate([-80,CanvasPulleyEffectiveHeight(),20])
+//	rotate([90,0,0])
+//	CanvasPulleyMotorMount(true);
 
 
 

@@ -81,23 +81,23 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 
 
 //USE ORIENTATION
-//CanvasPulleyMount(false);
+CanvasPulleyMount(false);
 
 //translate([0,50,0])
 //rotate([0,0,180])
 //CanvasPulleyMount(true);
 
 //PRINT ORIENTATION
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=true);
-
-translate([40,0,0])
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=false);
-
-translate([-40,0,0])
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=false,LinearSpring=true);
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=true);
+//
+//translate([40,0,0])
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=false);
+//
+//translate([-40,0,0])
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 
 
 

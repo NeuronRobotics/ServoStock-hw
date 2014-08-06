@@ -3,7 +3,6 @@ use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.sc
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <CanvasPulley.scad>
 
-function CanvasPulleyMotorMountThickness()=5;
 function CanvasPulleyHerringboneMotorOffset()=12;
 function HerringboneMotorMountHeight()=StandardServoThickness()+CanvasPulleyHerringboneMotorOffset();
 
@@ -12,33 +11,35 @@ module CanvasPulleyMotorMount(herringbone=true)
 {
 	if (herringbone==true)
 	{
-		difference()
+		translate([-(StandardServoWingLength()+StandardServoBaseLength()-StandardServoCylinderDiam()/2),StandardServoOutcrop()-PlasticWidth(),0])
 		{
-			translate([-HiLoScrewHeadDiameter(),0,0])
+			difference()
 			{
-				union()	
+				translate([-HiLoScrewHeadDiameter(),0,0])
 				{
-					cube([HerringboneMotorMountLength(),CanvasPulleyMotorMountThickness(),HerringboneMotorMountHeight()]);
-					cube([HerringboneMotorMountLength(),HiLoScrewHeadDiameter()*3,CanvasPulleyMotorMountThickness()]);
+					union()	
+					{
+						cube([HerringboneMotorMountLength(),PlasticWidth(),HerringboneMotorMountHeight()]);
+						cube([HerringboneMotorMountLength(),HiLoScrewHeadDiameter()*3,PlasticWidth()]);
 					
+					}
 				}
-			}
-			translate([0,CanvasPulleyMotorMountThickness(),StandardServoThickness()+CanvasPulleyHerringboneMotorOffset()])
-			{
-				rotate([0,90,-90])
+				translate([0,PlasticWidth(),StandardServoThickness()+CanvasPulleyHerringboneMotorOffset()])
 				{
-					#StandardServoMotor(true, 1, false, .4, 10);
+					rotate([0,90,-90])
+					{
+						#StandardServoMotor(true, 1, false, .4, 10);
+					}
 				}
-			}
-			translate([0,CanvasPulleyMotorMountThickness()+HiLoScrewHeadDiameter()*1.5,CanvasPulleyMotorMountThickness()])
-			{
-				#HiLoScrew();
+				translate([0,PlasticWidth()+HiLoScrewHeadDiameter()*1.5,PlasticWidth()])
+				{
+					#HiLoScrew();
 				
-			}
-			translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,CanvasPulleyMotorMountThickness()+HiLoScrewHeadDiameter()*1.5,CanvasPulleyMotorMountThickness()])
-			{
-				#HiLoScrew();
-				
+				}
+				translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,PlasticWidth()+HiLoScrewHeadDiameter()*1.5,PlasticWidth()])
+				{
+					#HiLoScrew();
+				}				
 			}
 		}
 	}
@@ -48,4 +49,5 @@ module CanvasPulleyMotorMount(herringbone=true)
 	}
 }
 
+//translate([0,-StandardServoOutcrop()-HiLoScrewHeadDiameter()*1.5,0])
 CanvasPulleyMotorMount(true);

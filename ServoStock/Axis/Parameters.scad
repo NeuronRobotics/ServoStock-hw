@@ -64,13 +64,27 @@ function PlasticWidth()= (8mmRodDiameter()/2);
 function SideWidth() = (8mmRodDiameter()+PlasticWidth());
 echo(PlasticWidth());
 
+//flashforge printable height
+function FlashforgePrintableHeight()= 145;
 
 //canvas pulley parameters
-function CanvasPulleyLength()=(getBaseRadius()-60)*2;
+function CanvasPulleyLength()=FlashforgePrintableHeight();
+//CanvasPulleyLength should be(getBaseRadius()-60)*2, except that this is larger than the flashforge printable height. Therefore change the flashforge variable to this when we have a printer that can print a taller part.
+
 function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
 function CanvasPulleySeperation()=100; //fairly arbitrary seperation between active and idler pullies
 function HerringboneMotorMountLength()=StandardServoLength()+HiLoBoltHeadDiameter()*2; //length of the motor mount when the herringbone gear is used
 
-//////////figure out where the 1.5 fudge factor is coming from
-function CanvasPulleyMountHerringboneDistance()= CanvasPulleyLength()+608BallBearingHeight()*8/3-(HiLoBoltHeadDiameter()*2+PlasticWidth())-1.5;
+function CanvasPulleyMountHerringboneDistance()=(PlasticWidth()+608BallBearingHeight()/3+608BallBearingHeight())*2+CanvasPulleyLength()-HiLoBoltHeadDiameter()*4;
+
+//canvas pulley herringbone gear parameters
+function CanvasGearPitch()=700;
+function CanvasPulleyTeeth()=16;
+function CanvasPulleyGearRadius()=(CanvasPulleyTeeth()*CanvasGearPitch()/180)/2;
+function CanvasDriverTeeth()= 8;
+function CanvasPulleyDriverRadius()=(CanvasDriverTeeth()*CanvasGearPitch()/180)/2;
+function CanvasPulleyGearOffsetAngle()=25;
+function CanvasPulleyMotorMountOffset()=sin(90-CanvasPulleyGearOffsetAngle())*(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius());
+
+
 

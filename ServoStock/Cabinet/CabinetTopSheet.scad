@@ -7,6 +7,8 @@ use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 function CuttingToolDiam()=(1/8)*25.4; //diameter of cutting tool, maximum width of any hole
 
@@ -181,6 +183,8 @@ module CanvasHoles()
 	}
 }
 
+
+
 	// Maggie, this is the module to edit to add your auto-feed bed mounts
 module bedPlate(){
 	difference()
@@ -191,16 +195,16 @@ module bedPlate(){
 		{
 			rotate([0,0,45])
 			{
-				translate([-CanvasPulleyLength()/2,-CanvasPulleySeperation()/2,0])
+				translate([-CanvasPulleyMountHerringboneDistance()/2,-CanvasPulleySeperation()/2,0])
 				{
 					CanvasPulleyMount();
 					translate([0,CanvasPulleySeperation(),0])
 					{
 						CanvasPulleyMount();
 					}		
-					translate([42.5-HiLoScrewHeadHeight()*3-PlasticWidth(),20.5+HiLoScrewHeadHeight()*4,0]) ///Fix these numbers
+					translate([HerringBoneGearThickness()+StandardServoOutcrop()+PlasticWidth(),CanvasPulleyMotorMountOffset()-HiLoScrewHeadHeight()*4,0]) 
 					{
-						MotorMount();
+						#MotorMount();
 					}
 				}
 			}

@@ -1,3 +1,4 @@
+use <../Axis/Parameters.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 
@@ -7,7 +8,7 @@ module CanvasPulleyHerringboneDriver()
 	{
 		mirror([0,1,0])
 		{
-			#double_helix_gear (teeth=8);
+			#double_helix_gear (teeth=CanvasDriverTeeth());
 		}
 		rotate([0,180,0])
 		{

@@ -6,6 +6,8 @@ use <CanvasPulleyHerringboneDriver.scad>
 use <CanvasPulleyMotorMount.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
+
 
 
 module 3dBedPlate()
@@ -54,15 +56,17 @@ module DrivenCanvasPulleyAssembly()
 				CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 			}
 		}
-//fix these janky numbers
-		translate([-42,20.5,0])
-		{
-			rotate([0,0,35])
+		rotate(a=CanvasPulleyGearOffsetAngle(), v=[0,0,-(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius())])
+		{	
+			translate([-(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius()),0,0])
 			{
-				CanvasPulleyHerringboneDriver();
+				rotate([0,0,20])
+				{
+					CanvasPulleyHerringboneDriver();
+				}
 			}
 		}
-		translate([-80,CanvasPulleyEffectiveHeight(),20])
+		translate([-CanvasPulleyMotorMountOffset(),CanvasPulleyEffectiveHeight(),HerringBoneGearThickness()])
 		{
 			rotate([90,0,0])
 			{

@@ -4,12 +4,10 @@ use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
-
-use <../ContinuousBed/CanvasPulley.scad>
-use <../ContinuousBed/CanvasPulleyMount.scad>
-use <../ContinuousBed/CanvasPulleyMotorMount.scad>
-use <../ContinuousBed/CanvasPulleyAssembly.scad>
-
+//use <../ContinuousBed/CanvasPulley.scad>
+//use <../ContinuousBed/CanvasPulleyMount.scad>
+//use <../ContinuousBed/CanvasPulleyMotorMount.scad>
+//use <../ContinuousBed/CanvasPulleyAssembly.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
@@ -214,7 +212,7 @@ module bedPlate(){
 }
 
 
-bedPlate();
+//bedPlate();
 
 
 

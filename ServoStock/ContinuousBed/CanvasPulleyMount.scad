@@ -1,11 +1,9 @@
+use <../Axis/Parameters.scad>
 use <CanvasPulley.scad>
 use <CanvasPulleyWormDriver.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
-
-function CanvasPulleyMountThickness()=5;
-
 
 module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 {
@@ -15,16 +13,16 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 		{
 			union()
 			{
-				cube([CanvasPulleyWidth(), CanvasPulleyMountThickness(),CanvasPulleyEffectiveHeight()]);
-				translate([CanvasPulleyWidth()/2,CanvasPulleyMountThickness(),CanvasPulleyEffectiveHeight()])
+				cube([CanvasPulleyWidth(), PlasticWidth(),CanvasPulleyEffectiveHeight()]);
+				translate([CanvasPulleyWidth()/2,PlasticWidth(),CanvasPulleyEffectiveHeight()])
 				{
 					rotate([90,0,0])
 					{
-						cylinder(r=CanvasPulleyWidth()/2, h=CanvasPulleyMountThickness());
+						cylinder(r=CanvasPulleyWidth()/2, h=PlasticWidth());
 					}
 				}
-				cube([CanvasPulleyWidth(),HiLoScrewHeadDiameter()*3, CanvasPulleyMountThickness()]);
-				translate([CanvasPulleyWidth()/2,CanvasPulleyMountThickness(),CanvasPulleyEffectiveHeight()])
+				cube([CanvasPulleyWidth(),HiLoScrewHeadDiameter()*3, PlasticWidth()]);
+				translate([CanvasPulleyWidth()/2,PlasticWidth(),CanvasPulleyEffectiveHeight()])
 				{
 					rotate([-90,0,0])
 					{
@@ -48,16 +46,16 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 								}
 								if (LinearSpring==true)
 								{	
-									translate([0,0,-CanvasPulleyMountThickness()])
+									translate([0,0,-PlasticWidth()])
 									{
 										difference()
 										{
-											cylinder(r=CanvasPulleyWidth()/1.5, h=CanvasPulleyMountThickness()+608BallBearingHeight()*4/3);
-											translate([0,0,CanvasPulleyMountThickness()])
+											cylinder(r=CanvasPulleyWidth()/1.5, h=PlasticWidth()+608BallBearingHeight()*4/3);
+											translate([0,0,PlasticWidth()])
 											{
-												cylinder(r=CanvasPulleyWidth()/1.8, h=CanvasPulleyMountThickness()+608BallBearingHeight()*4/3);		
+												cylinder(r=CanvasPulleyWidth()/1.8, h=PlasticWidth()+608BallBearingHeight()*4/3);		
 											}
-											translate([-ConstantForceSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+ConstantForceSpringHookDiameter()/2,CanvasPulleyMountThickness()+608BallBearingHeight()*1/3+.3])
+											translate([-ConstantForceSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+ConstantForceSpringHookDiameter()/2,PlasticWidth()+608BallBearingHeight()*1/3+.3])
 											{
 												rotate([180,180,90])
 												{
@@ -74,32 +72,32 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 				}
 			}
 		}	
-		translate([CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+CanvasPulleyMountThickness()])
+		translate([CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+PlasticWidth()])
 		#HiLoScrew();
-		translate([-CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+CanvasPulleyMountThickness()])
+		translate([-CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+PlasticWidth()])
 		#HiLoScrew();
 	}
 }
 
 
 //USE ORIENTATION
-//CanvasPulleyMount(false);
+CanvasPulleyMount(false);
 
 //translate([0,50,0])
 //rotate([0,0,180])
 //CanvasPulleyMount(true);
 
 //PRINT ORIENTATION
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=true);
-
-translate([40,0,0])
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=false);
-
-translate([-40,0,0])
-rotate([90,0,0])
-CanvasPulleyMount(WormDriver=false,LinearSpring=true);
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=true);
+//
+//translate([40,0,0])
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=false);
+//
+//translate([-40,0,0])
+//rotate([90,0,0])
+//CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 
 
 

@@ -4,14 +4,20 @@ use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+<<<<<<< HEAD
 //use <../ContinuousBed/CanvasPulley.scad>
 //use <../ContinuousBed/CanvasPulleyMount.scad>
 //use <../ContinuousBed/CanvasPulleyMotorMount.scad>
 //use <../ContinuousBed/CanvasPulleyAssembly.scad>
+=======
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+>>>>>>> dc787c3320ff3ff655075f7d210baa50ad0616b0
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
+function CuttingToolDiam()=(1/8)*25.4; //diameter of cutting tool, maximum width of any hole
 
 
 
@@ -174,15 +180,17 @@ module CanvasHoles()
 		{
 			translate([-CanvasPulleyLength()/2,-getPrintbedWidth()/2,0])
 			{
-				square([CanvasPulleyLength(), CanvasWidth()*2]);
+				square([CanvasPulleyLength(), CuttingToolDiam()]);
 				translate([0,getPrintbedWidth(),0])
 				{
-					square([CanvasPulleyLength(), CanvasWidth()*2]);
+					square([CanvasPulleyLength(), CuttingToolDiam()]);
 				}
 			}
 		}
 	}
 }
+
+
 
 	// Maggie, this is the module to edit to add your auto-feed bed mounts
 module bedPlate(){
@@ -190,20 +198,20 @@ module bedPlate(){
 	{
 		topPlate(axisMounts=false);
 		CanvasHoles();
-		translate([getBaseSideLength()/2+CanvasPulleyMountThickness()*2,getBaseSideLength()/2,0])
+		translate([getBaseSideLength()/2+PlasticWidth()*2,getBaseSideLength()/2,0])
 		{
 			rotate([0,0,45])
 			{
-				translate([-CanvasPulleyLength()/2,-CanvasPulleySeperation()/2,0])
+				translate([-CanvasPulleyMountHerringboneDistance()/2,-CanvasPulleySeperation()/2,0])
 				{
 					CanvasPulleyMount();
 					translate([0,CanvasPulleySeperation(),0])
 					{
 						CanvasPulleyMount();
 					}		
-					translate([42.5-HiLoScrewHeadHeight()*3-CanvasPulleyMountThickness(),20.5+HiLoScrewHeadHeight()*4,0]) ///Fix these numbers
+					translate([HerringBoneGearThickness()+StandardServoOutcrop()+PlasticWidth(),CanvasPulleyMotorMountOffset()-HiLoScrewHeadHeight()*4,0]) 
 					{
-						MotorMount();
+						#MotorMount();
 					}
 				}
 			}

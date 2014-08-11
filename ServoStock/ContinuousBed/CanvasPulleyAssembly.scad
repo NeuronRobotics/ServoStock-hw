@@ -1,30 +1,33 @@
+use <../Axis/Parameters.scad>
+use <../Cabinet/CabinetTopSheet.scad>
 use <CanvasPulley.scad>
 use <CanvasPulleyMount.scad>
 use <CanvasPulleyHerringboneDriver.scad>
 use <CanvasPulleyMotorMount.scad>
-use <3dBedPlate.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
-function CanvasPulleySeperation()=100;
 
 
-//////////figure out where the 1.5 fudge factor is coming from
-function CanvasPulleyMountHerringboneDistance()= CanvasPulleyLength()+608BallBearingHeight()*8/3-(HiLoScrewHeadDiameter()*2+CanvasPulleyMountThickness())-1.5;
+module 3dBedPlate()
+{
+	linear_extrude(height=5)bedPlate();
+}
 
 module IdleCanvasPulleyAssembly()
 {
 	union()
 	{
 		CanvasRoller(false);
-		translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+		translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
 		{
 			rotate([90,0,0])
 			{
 				CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 			}
 		}
-		translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])	
+		translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])	
 		{
 			rotate([-90,0,180])
 			{
@@ -39,29 +42,31 @@ module DrivenCanvasPulleyAssembly()
 	union()
 	CanvasRoller(true, 3);
 	{
-		translate([0,0,-CanvasPulleyMountThickness()-608BallBearingHeight()/3])
+		translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
 		{
 			rotate([90,0,0])
 			{
 				CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 			}
 		}
-		translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+CanvasPulleyMountThickness()+608BallBearingHeight()/3-2])	
+		translate([0,0,CanvasPulleyLength()+608BallBearingHeight()*2+PlasticWidth()+608BallBearingHeight()/3-2])	
 		{
 			rotate([-90,0,180])
 			{
 				CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 			}
 		}
-//fix these janky numbers
-		translate([-42,20.5,0])
-		{
-			rotate([0,0,35])
+		rotate(a=CanvasPulleyGearOffsetAngle(), v=[0,0,-(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius())])
+		{	
+			translate([-(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius()),0,0])
 			{
-				CanvasPulleyHerringboneDriver();
+				rotate([0,0,20])
+				{
+					CanvasPulleyHerringboneDriver();
+				}
 			}
 		}
-		translate([-80,CanvasPulleyEffectiveHeight(),20])
+		translate([-CanvasPulleyMotorMountOffset(),CanvasPulleyEffectiveHeight(),HerringBoneGearThickness()])
 		{
 			rotate([90,0,0])
 			{
@@ -86,7 +91,7 @@ module CanvasPulleyAssembly()
 	}
 }
 
-translate([BaseSideLength()/2,BaseSideLength()/2,0])
+translate([getBaseSideLength()/2,getBaseSideLength()/2,0])
 {
 	rotate([0,0,-45])
 	{

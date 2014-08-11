@@ -4,14 +4,9 @@ use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
-<<<<<<< HEAD
-//use <../ContinuousBed/CanvasPulley.scad>
-//use <../ContinuousBed/CanvasPulleyMount.scad>
-//use <../ContinuousBed/CanvasPulleyMotorMount.scad>
-//use <../ContinuousBed/CanvasPulleyAssembly.scad>
-=======
+
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
->>>>>>> dc787c3320ff3ff655075f7d210baa50ad0616b0
+
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>

@@ -65,85 +65,135 @@ module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 
 module BowlerBoardAccessSlot()
 {
-	square([BowlerBoardSideLength(), BowlerBoardHeight()*1.5]);
+	square([BowlerBoardLength(), BowlerBoardHeight()*1.5]);
 }
 
-module PowerSupplyMount()
+module PowerSupplyBoltHole()
+{
+	circle(PowerSupplyBoltDiameter()/2, center=true);
+}
+
+module PowerSupplyFrontMount()
 {
 	union()
 	{
 		difference()
 		{
 			square([PowerSupplyLength(),PowerSupplyHeight()]);
-			translate([PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+			translate([PowerSupplyFrontTopBoltInset(),PowerSupplyHeight()-PowerSupplyFrontTopBoltInset(),0])
 			{
 				square(PowerSupplyBoltDiameter()*3, center=true);
 			}
-			translate([PowerSupplyLength()-PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+			translate([PowerSupplyLength()-PowerSupplyFrontTopBoltInset(),PowerSupplyHeight()-PowerSupplyFrontTopBoltInset(),0])
 			{
 				square(PowerSupplyBoltDiameter()*3, center=true);
 			}
-			square([PowerSupplyBoltDiameter()*3,PowerSupplyBoltDiameter()*3+PowerSupplyBottomLeftBoltHeightInset()]);
-			translate([PowerSupplyLength()-PowerSupplyBottomRightBoltLengthInset()-PowerSupplyBoltDiameter()*3,0,0])	
+			square([PowerSupplyBoltDiameter()*3,PowerSupplyBoltDiameter()*3+PowerSupplyFrontBottomLeftBoltHeightInset()]);
+			translate([PowerSupplyLength()-PowerSupplyFrontBottomRightBoltLengthInset()-PowerSupplyBoltDiameter()*3,0,0])	
 			{
-				square([PowerSupplyBoltDiameter()*3+PowerSupplyBottomRightBoltLengthInset(),PowerSupplyBoltDiameter()*3]);
+				square([PowerSupplyBoltDiameter()*3+PowerSupplyFrontBottomRightBoltLengthInset(),PowerSupplyBoltDiameter()*3]);
 			}
 		}
-		translate([PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+		translate([PowerSupplyFrontTopBoltInset(),PowerSupplyHeight()-PowerSupplyFrontTopBoltInset(),0])
 		{
-			circle(PowerSupplyBoltDiameter()/2, center=true);
+			PowerSupplyBoltHole();
 		}
-		translate([PowerSupplyLength()-PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+		translate([PowerSupplyLength()-PowerSupplyFrontTopBoltInset(),PowerSupplyHeight()-PowerSupplyFrontTopBoltInset(),0])
 		{
-			circle(PowerSupplyBoltDiameter()/2, center=true);
+			PowerSupplyBoltHole();
 		}
-		translate([PowerSupplyBottomLeftBoltLengthInset(),PowerSupplyBottomLeftBoltHeightInset(),0])
+		translate([PowerSupplyFrontBottomLeftBoltLengthInset(),PowerSupplyFrontBottomLeftBoltHeightInset(),0])
 		{
-			circle(PowerSupplyBoltDiameter()/2, center=true);
+			PowerSupplyBoltHole();
 		}
-		translate([PowerSupplyLength()-PowerSupplyBottomRightBoltLengthInset(),PowerSupplyBottomRightBoltHeightInset(),0])	
+		translate([PowerSupplyLength()-PowerSupplyFrontBottomRightBoltLengthInset(),PowerSupplyFrontBottomRightBoltHeightInset(),0])	
 		{
-			circle(PowerSupplyBoltDiameter()/2, center=true);
+			PowerSupplyBoltHole();
 		}
 	}
 }
 
-
-
-module longSide(width =getBaseSideLength(), usePlateMountSlots = true, mounts=false)
+module PowerSupplySideMount()
 {
-	if (mounts==true)
+	union()
+	{
+		translate([PowerSupplySideRightBoltLengthInset(),PowerSupplySideBoltHeightInset(),0])
+		{
+			PowerSupplyBoltHole();
+		}
+		translate([PowerSupplySideRightBoltLengthInset(),PowerSupplyLength()-PowerSupplySideBoltHeightInset(),0])
+		{
+			PowerSupplyBoltHole();
+		}
+		translate([PowerSupplyDepth()-PowerSupplySideLeftBoltLengthInset(),PowerSupplySideBoltHeightInset(),0])
+		{
+			PowerSupplyBoltHole();
+		}
+		translate([PowerSupplyDepth()-PowerSupplySideLeftBoltLengthInset(),PowerSupplyLength()-PowerSupplySideBoltHeightInset(),0])
+		{
+			PowerSupplyBoltHole();
+		}	
+	}
+}
+
+//if you want to get a visual of where the mount holes are compared to the side of the power supply
+//PowerSupplySideMount();
+//%square([PowerSupplyDepth(),PowerSupplyLength()]);
+
+
+
+module longSide(width =getBaseSideLength(), usePlateMountSlots = true, mounts=1)
+{
+	if (mounts==1)
 	{
 		difference()
 		{
 			longSideBase(width, usePlateMountSlots);
-			translate([getBaseSideLength()-BowlerBoardSideLength()*2,getBedZHeight()-getCaseBoardThickness()+BowlerBoardHeight()/2,0])
+			translate([getBaseSideLength()-BowlerBoardLength()*2-getInnerPlateTabPitch()*2,getBedZHeight()-getCaseBoardThickness(),0])
 			{
 				BowlerBoardAccessSlot();
 			}
-			translate([getBaseSideLength()-PowerSupplyLength()-getCaseBoardThickness()*2,getBedZHeight()-getCaseBoardThickness()-PowerSupplyHeight()-(CanvasPulleyEffectiveHeight()+CanvasPulleyWidth()/1.5),0])
+			translate([getBaseSideLength()-getCaseBoardThickness(),getBedZHeight()-getCaseBoardThickness()/2,0])
 			{
-				PowerSupplyMount();
+				mirror([1,0,0])
+				{
+					rotate([0,0,-90])
+					{
+						PowerSupplyFrontMount();
+					}
+				}
+			}
+		}
+	}else{
+	if (mounts==2)
+	{
+		difference()
+		{
+			longSideBase(width, usePlateMountSlots);
+			translate([getCaseBoardThickness(),getBedZHeight()-getCaseBoardThickness()/2-PowerSupplyLength(),0])
+			{
+				PowerSupplySideMount();					
 			}
 		}
 	}else{
 		longSideBase(width, usePlateMountSlots);
 	}
 }
+}
 
-longSide(mounts=true);
+//longSide(mounts=2);
 
 module shortSide(left=true){
 	if(left){
 		intersection(){
 			translate([-(getBaseSideLength()-getShortSideLength()),0,0])
-			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=3);
 			square([getShortSideLength(),getCabinetHeight()]);
 		}
 		
 	}else{
 		intersection(){
-			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=3);
 			square([getShortSideLength(),getCabinetHeight()]);
 		}
 	}
@@ -151,13 +201,13 @@ module shortSide(left=true){
 module sides(){
 	translate([0,getBaseSideLength()*3+getShortSideLength()+30])
 		rotate([0,0,-90]){
-			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=1);
 			
 			translate([-getBaseSideLength()-10 ,
 			           0,
 			           0])
 			           rotate([0,0,0])
-			longSide(getBaseSideLength(),usePlateMountSlots = true);
+			longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=2);
 			
 			translate([getBaseSideLength()+10 ,
 			           0,
@@ -187,12 +237,12 @@ module fullSheet(){
 
 module tabCompare(){
 
-	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=2);
 	translate([ 0,
 	            -getBaseSideLength(),
 	            0])
 	            rotate([0,0,90])
-	            	longSide(getBaseSideLength(),usePlateMountSlots = true);
+	            	longSide(getBaseSideLength(),usePlateMountSlots = true, mounts=1);
 	translate([ 0,
 	            -getBaseSideLength(),
 	            0])
@@ -212,7 +262,7 @@ module tabCompare(){
 }   
 
 
-//tabCompare();
+tabCompare();
 
 //scale(1/6)
-//	fullSheet();
+//fullSheet();

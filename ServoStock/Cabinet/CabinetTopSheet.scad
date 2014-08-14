@@ -184,49 +184,51 @@ module CanvasHoles()
 	}
 }
 
+
 module BowlerBoardMount()
 {
 	union()
 	{
 		difference()
 		{
-			square([BowlerBoardSideLength(),BowlerBoardSideLength()]);
+			square([BowlerBoardDepth(),BowlerBoardLength()]);
 			translate([BowlerBoardInset(),BowlerBoardInset(),0])
 			{
 				square(MotorScrewBoltDiameter()*3, center=true);
 			}
-			translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardInset(),0])
+			translate([BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
 			{
 				square(MotorScrewBoltDiameter()*3, center=true);
 			}
-			translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])
+			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
 			{
 				square(MotorScrewBoltDiameter()*3, center=true);
 			}
-			translate([BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])	
+			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardInset(),0])	
 			{
 				square(MotorScrewBoltDiameter()*3, center=true);
 			}
 		}
-		translate([BowlerBoardInset(),BowlerBoardInset(),0])
-		{
-			circle(MotorScrewBoltDiameter()/2);
-		}
-		translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardInset(),0])
-		{
-			circle(MotorScrewBoltDiameter()/2);
-		}
-		translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])
-		{
-			circle(MotorScrewBoltDiameter()/2);
-		}
-		translate([BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])	
-		{
-			circle(MotorScrewBoltDiameter()/2);
-		}
+	translate([BowlerBoardInset(),BowlerBoardInset(),0])
+			{
+				circle(MotorScrewBoltDiameter()/2);
+			}
+			translate([BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
+			{
+				circle(MotorScrewBoltDiameter()/2);
+			}
+			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
+			{
+				circle(MotorScrewBoltDiameter()/2);
+			}
+			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardInset(),0])	
+			{
+				circle(MotorScrewBoltDiameter()/2);
+			}
 	}
 }
 
+//BowlerBoardMount();
 
 	// Maggie, this is the module to edit to add your auto-feed bed mounts
 module bedPlate(){
@@ -234,7 +236,7 @@ module bedPlate(){
 	{
 		topPlate(axisMounts=false);
 		CanvasHoles();
-		translate([getCaseBoardThickness()*.95,getBaseSideLength()-BowlerBoardSideLength()-getCaseBoardThickness()-getInnerPlateTabPitch()/2,0])
+		translate([getCaseBoardThickness(),getBaseSideLength()-getCaseBoardThickness()-getInnerPlateTabPitch()*5/2-BowlerBoardLength(),0])
 		{
 			BowlerBoardMount();			
 		}

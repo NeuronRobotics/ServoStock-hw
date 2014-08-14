@@ -4,13 +4,12 @@ use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
-
-use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
-
+use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
+use <../../../Vitamins/Vitamins/Electronics/Bowler_Board_Vitamin.scad>
 
 function CuttingToolDiam()=(1/8)*25.4; //diameter of cutting tool, maximum width of any hole
 
@@ -185,6 +184,48 @@ module CanvasHoles()
 	}
 }
 
+module BowlerBoardMount()
+{
+	union()
+	{
+		difference()
+		{
+			square([BowlerBoardSideLength(),BowlerBoardSideLength()]);
+			translate([BowlerBoardInset(),BowlerBoardInset(),0])
+			{
+				square(MotorScrewBoltDiameter()*3, center=true);
+			}
+			translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardInset(),0])
+			{
+				square(MotorScrewBoltDiameter()*3, center=true);
+			}
+			translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])
+			{
+				square(MotorScrewBoltDiameter()*3, center=true);
+			}
+			translate([BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])	
+			{
+				square(MotorScrewBoltDiameter()*3, center=true);
+			}
+		}
+		translate([BowlerBoardInset(),BowlerBoardInset(),0])
+		{
+			circle(MotorScrewBoltDiameter()/2);
+		}
+		translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardInset(),0])
+		{
+			circle(MotorScrewBoltDiameter()/2);
+		}
+		translate([BowlerBoardHoleDist()+BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])
+		{
+			circle(MotorScrewBoltDiameter()/2);
+		}
+		translate([BowlerBoardInset(),BowlerBoardHoleDist()+BowlerBoardInset(),0])	
+		{
+			circle(MotorScrewBoltDiameter()/2);
+		}
+	}
+}
 
 
 	// Maggie, this is the module to edit to add your auto-feed bed mounts
@@ -193,6 +234,10 @@ module bedPlate(){
 	{
 		topPlate(axisMounts=false);
 		CanvasHoles();
+		translate([getCaseBoardThickness()*.95,getBaseSideLength()-BowlerBoardSideLength()-getCaseBoardThickness()-getInnerPlateTabPitch()/2,0])
+		{
+			BowlerBoardMount();			
+		}
 		translate([getBaseSideLength()/2+PlasticWidth()*2,getBaseSideLength()/2,0])
 		{
 			rotate([0,0,45])
@@ -206,7 +251,7 @@ module bedPlate(){
 					}		
 					translate([HerringBoneGearThickness()+StandardServoOutcrop()+PlasticWidth(),CanvasPulleyMotorMountOffset()-HiLoScrewHeadHeight()*4,0]) 
 					{
-						#MotorMount();
+						MotorMount();
 					}
 				}
 			}
@@ -214,8 +259,7 @@ module bedPlate(){
 	}
 }
 
-
-//bedPlate();
+bedPlate();
 
 
 

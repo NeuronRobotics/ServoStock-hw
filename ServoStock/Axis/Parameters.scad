@@ -72,6 +72,7 @@ function CanvasPulleyLength()=FlashforgePrintableHeight();
 //CanvasPulleyLength should be(getBaseRadius()-60)*2, except that this is larger than the flashforge printable height. Therefore change the flashforge variable to this when we have a printer that can print a taller part.
 
 function CanvasPulleyWidth()=HiLoBoltLength()*1.3;
+echo(CanvasPulleyWidth());
 function CanvasPulleySeperation()=100; //fairly arbitrary seperation between active and idler pullies
 function HerringboneMotorMountLength()=StandardServoLength()+HiLoBoltHeadDiameter()*2; //length of the motor mount when the herringbone gear is used
 

@@ -9,7 +9,6 @@ use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 //print these with low infill setting.
 
-
 function CanvasPulleySlitWidth() =CanvasWidth()*2;
 function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
 echo ("Canvas Pulley Height: ", CanvasPulleyLength()); 
@@ -202,13 +201,15 @@ module CanvasRoller(motor=false, type=1)
 	}
 	else
 	{
-		//this is eventually going to need to become the idler roller, which must have a spring attached--is there a good way to attach the spring or is it just wrapped around?
 		difference()
 		{
 			TopAndBottomBearingRoller();
-			translate([-CanvasPulleyWidth()/2+ConstantForceSpringHookDiameter()/4,0,0])
+			translate([-CanvasPulleyWidth()/2,0,ConstantForceSpringWidth()/2])
 			{
-				ConstantForceSpringHook();
+				rotate([0,-90,0])
+				{
+					HiLoBolt(0);
+				}
 			}
 		}
 	}
@@ -216,9 +217,11 @@ module CanvasRoller(motor=false, type=1)
 
 
 
-CanvasRoller(true, 3);
+CanvasRoller(false);
 
 
+////if you ever need to check if the pulley is longer than the flashforge can print
+//#cube([20,20, FlashforgePrintableHeight()]);
 
 
 

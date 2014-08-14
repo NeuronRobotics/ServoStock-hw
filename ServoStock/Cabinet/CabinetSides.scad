@@ -1,6 +1,8 @@
 use <../Axis/Parameters.scad>
 use <CabinetTopSheet.scad>
-
+use <../ContinuousBed/CanvasPulley.scad>
+use <../../../Vitamins/Vitamins/Electronics/Bowler_Board_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Electronics/Power_Supply_Vitamin.scad>
 
 module innerPlateMounts(usePlateMountSlots = false){
 	
@@ -13,7 +15,7 @@ module innerPlateMounts(usePlateMountSlots = false){
 	}
 }
 
-module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
+module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 	difference(){
 		square([width,getCabinetHeight() ]);
 		
@@ -21,7 +23,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 					getCaseBoltHolePitch():
 					getCabinetHeight()]){
 			translate([getCaseBoardThickness()/2,
-			           a,
+	a,
 			           0]){
 				//bolt hole
 				circle(getCaseHoleSize()/2);
@@ -60,6 +62,76 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = false ){
 	}
 
 }
+
+module BowlerBoardAccessSlot()
+{
+	square([BowlerBoardSideLength(), BowlerBoardHeight()*1.5]);
+}
+
+module PowerSupplyMount()
+{
+	union()
+	{
+		difference()
+		{
+			square([PowerSupplyLength(),PowerSupplyHeight()]);
+			translate([PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+			{
+				square(PowerSupplyBoltDiameter()*3, center=true);
+			}
+			translate([PowerSupplyLength()-PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+			{
+				square(PowerSupplyBoltDiameter()*3, center=true);
+			}
+			square([PowerSupplyBoltDiameter()*3,PowerSupplyBoltDiameter()*3+PowerSupplyBottomLeftBoltHeightInset()]);
+			translate([PowerSupplyLength()-PowerSupplyBottomRightBoltLengthInset()-PowerSupplyBoltDiameter()*3,0,0])	
+			{
+				square([PowerSupplyBoltDiameter()*3+PowerSupplyBottomRightBoltLengthInset(),PowerSupplyBoltDiameter()*3]);
+			}
+		}
+		translate([PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+		{
+			circle(PowerSupplyBoltDiameter()/2, center=true);
+		}
+		translate([PowerSupplyLength()-PowerSupplyTopBoltInset(),PowerSupplyHeight()-PowerSupplyTopBoltInset(),0])
+		{
+			circle(PowerSupplyBoltDiameter()/2, center=true);
+		}
+		translate([PowerSupplyBottomLeftBoltLengthInset(),PowerSupplyBottomLeftBoltHeightInset(),0])
+		{
+			circle(PowerSupplyBoltDiameter()/2, center=true);
+		}
+		translate([PowerSupplyLength()-PowerSupplyBottomRightBoltLengthInset(),PowerSupplyBottomRightBoltHeightInset(),0])	
+		{
+			circle(PowerSupplyBoltDiameter()/2, center=true);
+		}
+	}
+}
+
+
+
+module longSide(width =getBaseSideLength(), usePlateMountSlots = true, mounts=false)
+{
+	if (mounts==true)
+	{
+		difference()
+		{
+			longSideBase(width, usePlateMountSlots);
+			translate([getBaseSideLength()-BowlerBoardSideLength()*2,getBedZHeight()-getCaseBoardThickness()+BowlerBoardHeight()/2,0])
+			{
+				BowlerBoardAccessSlot();
+			}
+			translate([getBaseSideLength()-PowerSupplyLength()-getCaseBoardThickness()*2,getBedZHeight()-getCaseBoardThickness()-PowerSupplyHeight()-(CanvasPulleyEffectiveHeight()+CanvasPulleyWidth()/1.5),0])
+			{
+				PowerSupplyMount();
+			}
+		}
+	}else{
+		longSideBase(width, usePlateMountSlots);
+	}
+}
+
+longSide(mounts=true);
 
 module shortSide(left=true){
 	if(left){
@@ -143,4 +215,4 @@ module tabCompare(){
 //tabCompare();
 
 //scale(1/6)
-	fullSheet();
+//	fullSheet();

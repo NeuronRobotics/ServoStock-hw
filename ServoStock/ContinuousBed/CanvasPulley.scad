@@ -4,14 +4,21 @@ use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_V
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 use <../../../Vitamins/Threaded_Library/WormDrive-NoThroat_ModifiedGear.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
+
 
 //print these with low infill setting.
 
 function CanvasPulleySlitWidth() =CanvasWidth()*2;
 function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
 echo ("Canvas Pulley Height: ", CanvasPulleyLength()); 
+
+function MotorCanvasPulleyLength()=CanvasPulleyLength()+608BallBearingHeight()*2-2;
+
+function SpringCanvasPulleyLength()=MotorCanvasPulleyLength()+DrillPressSpringWidth()-2;
+
 
 
 module CanvasSlit()
@@ -105,16 +112,17 @@ module BottomBearingDraft()
 	}
 }
 
-module BoltDropInSlot()
-{
-	rotate([90,0,0])
-	{
-		translate([-CanvasPulleyWidth()/4,CanvasPulleyLength()+608BallBearingHeight()-1.5,-CanvasPulleyEffectiveHeight()])
-		{
-			cylinder(r=HiLoBoltHeadDiameter()/2, h=CanvasPulleyLength()/2);
-		}
-	}
-}
+//the idea of this is to make a slot to make it easier to access the screw holes under the roller, however it's pretty unwieldy and probably not the best idea
+//module BoltDropInSlot()
+//{
+//	rotate([90,0,0])
+//	{
+//		translate([-CanvasPulleyWidth()/4,CanvasPulleyLength()+608BallBearingHeight()-1.5,-CanvasPulleyEffectiveHeight()])
+//		{
+//			cylinder(r=HiLoBoltHeadDiameter()/2, h=CanvasPulleyLength()/2);
+//		}
+//	}
+//}
 
 module TopBearingRoller()
 {
@@ -125,7 +133,7 @@ module TopBearingRoller()
 			BaseCanvasRoller();
 			TopBearingMount();
 		}
-		BoltDropInSlot();
+//		BoltDropInSlot();
 	}
 }
 
@@ -148,6 +156,25 @@ module TopAndBottomBearingRoller()
 		BottomBearingDraft();
 	}
 }
+
+module BottomBearingRoller()
+{
+	difference()
+	{
+		union()
+		{
+			translate([0,0,608BallBearingHeight()-1])
+			{
+				BaseCanvasRoller();				
+			}
+			BottomBearingMount();
+		}
+		BottomBearingDraft();
+	}
+}
+
+
+
 
 
 module CanvasRoller(motor=false, type=1)
@@ -203,21 +230,33 @@ module CanvasRoller(motor=false, type=1)
 	{
 		difference()
 		{
-			TopAndBottomBearingRoller();
-			translate([-CanvasPulleyWidth()/2,0,ConstantForceSpringWidth()/2])
+			union()
 			{
-				rotate([0,-90,0])
+				BottomBearingRoller();
+				translate([0,0,CanvasPulleyLength()+DrillPressSpringWidth()-1])
 				{
-					HiLoBolt(0);
+					cylinder(r=CanvasPulleyWidth()/2, h=DrillPressSpringWidth());
+				}
+				translate([0,0,DrillPressSpringWidth()-1+608BallBearingHeight()-.5])
+				{
+					TopBearingMount();
 				}
 			}
-		}
+			translate([0,0,CanvasPulleyLength()+DrillPressSpringWidth()])
+			{
+				cube([DrillPressSpringThickness(), CanvasPulleyWidth()/2,DrillPressSpringWidth()+608BallBearingHeight()+1]);
+				
+			}
+		}			
 	}
 }
 
 
 
 CanvasRoller(false);
+
+//if you want to check if we are within the printable area for the flashforge
+//#cube([5,5,FlashforgePrintableHeight()]);
 
 
 ////if you ever need to check if the pulley is longer than the flashforge can print

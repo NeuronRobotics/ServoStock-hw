@@ -3,7 +3,7 @@ use <CanvasPulley.scad>
 use <CanvasPulleyWormDriver.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 
 module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 {
@@ -50,20 +50,19 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 									{
 										difference()
 										{
-											cylinder(r=ConstantForceSpringOuterDiameter()/2+PlasticWidth(), h=PlasticWidth()+ConstantForceSpringWidth());
+											cylinder(r=CanvasPulleyWidth()/1.5, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
 											translate([0,0,PlasticWidth()])
 											{
-												cylinder(r=ConstantForceSpringOuterDiameter()/2, h=PlasticWidth()+ConstantForceSpringWidth());		
+												cylinder(r=CanvasPulleyWidth()/1.8, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());		
 											}
-											translate([0,-ConstantForceSpringOuterDiameter()/1.5,PlasticWidth()+ConstantForceSpringWidth()/2])
+											translate([-DrillPressSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+DrillPressSpringHookDiameter()/2,PlasticWidth()+608BallBearingHeight()*4/3+.1])
 											{
-												rotate([90,0,0])
+												rotate([180,180,90])
 												{
-													HiLoScrew();
+													DrillPressSpringHook();
 												}
 											}
 										}
-
 									}
 								}else{}
 							}

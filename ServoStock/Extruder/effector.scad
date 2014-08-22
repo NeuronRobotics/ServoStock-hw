@@ -3,6 +3,8 @@ use <../../../Vitamins/Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Electronics/Hot_Ends/PrintrBotJHeadHotEnd_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Tools/Standard_Extruder_Spacing_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/MiniServo_Vitamin.scad>
+
 use <ExtruderMKII.scad>
 
 
@@ -27,8 +29,9 @@ bracelen=RodEndSpacing()-30;
 hotEndOffset=-15;
 pillarOffset = 12;
 
-translate([0, 0, height/2])
-	effector(true);
+
+effector(true);
+
 
 translate([0,hotEndOffset, 0]){
 	rotate([0,0,90]){
@@ -37,6 +40,35 @@ translate([0,hotEndOffset, 0]){
 		}
 	}
 }
+
+
+module MotorMount()
+{
+	difference()
+	{
+		cube([MiniServoLength(),offset*1.2, height]);
+		translate([-.5,-1,0])
+		{
+			rotate([-90,-90,0]) 
+			{
+				%MiniServoMotor(true, 2, false, .2);
+			}
+		}
+			translate([MiniServoWingLength()-0.5,0,-1])
+			{
+				cube([MiniServoBaseLength()+0.5, MiniServoThickness()+MiniServoHubHeight()+MiniServoNubHeight()+PlasticWidth()+2, MiniServoThickness()+2]);
+			}
+			translate([-1,MiniServoHubHeight()+MiniServoNubHeight()+MiniServoHeightAbvWings()+MiniServoHornHeight(),0])
+			{
+				rotate([0,90,0])
+				{
+					cylinder(r=height/2, h=MiniServoWingLength()+2);
+				}
+			}
+	}
+}
+
+
 
 module verticalConnector(){
 
@@ -62,97 +94,114 @@ module effector(useVertical=false) {
 	echo("Offset = ",offset);
 	startAngle = 60;
 	boltLength=1.2*25.4;
-
-	difference() {
-		union() translate([0,0,-.1]){
-			translate([0, hotEndOffset, 0])
-					cylinder(r=offset*1.2, h=height, center=true, $fn=60);
-			translate([0,-offset,0])
-				cube([separation*.7,offset*.5, height], center=true);
-			translate([offset/3+2,-5,0])
-				cube([offset*1.5,offset*.7, height], center=true);
-			translate([0, hotEndOffset, 0])
-				cube([m3_wide_radius*6,mount_radius*2, height], center=true);
-			rotate([0,0,7])
-				translate([0,offset/2,0])
-					cube([m3_wide_radius*6,mount_radius*2.3, height], center=true);
-			for (a = [startAngle:120:359]) rotate([0, 0, a]) {
+	
+	union()
+	{
+		translate([0, 0, height/2])
+		{
+			difference() {
+			union() translate([0,0,-.1]){
+				translate([0, hotEndOffset, 0])
+						cylinder(r=offset*1.2, h=height, center=true, $fn=60);
+				translate([0,-offset,0])
+					cube([separation*.7,offset*.5, height], center=true);
+				translate([offset/3+2,-5,0])
+					cube([offset*1.5,offset*.7, height], center=true);
+				translate([0, hotEndOffset, 0])
+					cube([m3_wide_radius*6,mount_radius*2, height], center=true);
+				rotate([0,0,7])
+					translate([0,offset/2,0])
+						cube([m3_wide_radius*6,mount_radius*2.3, height], center=true);
+				for (a = [startAngle:120:359]) rotate([0, 0, a]) {
 				
-				if(a==120+startAngle){
-					translate([0, offset/2, 0]){
-						//%cube([separation, offset, height], center=true);
-					}
-					flatConnector();
-					
-				}else{
-					if(useVertical){
-						verticalConnector();
-						translate([0, offset/2, heightOfPilar/2]){
-							rotate([0,90,0]){
-								//%cube([heightOfPilar, offset, height], center=true);
-							}
+					if(a==120+startAngle){
+						translate([0, offset/2, 0]){
+							//%cube([separation, offset, height], center=true);
 						}
-					}	
-					else
 						flatConnector();
+					
+					}else{
+						if(useVertical){
+							verticalConnector();
+							translate([0, offset/2, heightOfPilar/2]){
+								rotate([0,90,0]){
+									//%cube([heightOfPilar, offset, height], center=true);
+								}
+							}
+						}	
+						else
+						flatConnector();
+					}
+				}
+				translate([0, hotEndOffset, 0])
+				for (a = [0:180:359]) rotate([0, 0, a]) {
+					translate([0, mount_radius, 0])
+						cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
+				}
+				//cross bracing
+				rotate([0,0,-startAngle])
+					translate([offset/3-15,offset-13,RodEndSpacing()/2])
+
+						union(){
+							rotate([0,30,0])
+								braceRod();
+							rotate([0,-30,0])
+								braceRod();
+						}
+			}
+			for (a = [startAngle:120:359]) rotate([0, 90, a]) {
+			
+
+				translate([0,
+									   offset,
+									   0])
+				cylinder(r=m3_radius, h=RodEndSpacing(), center=true);
+				if( a== startAngle || a == 240+startAngle){
+					translate([0,
+							   offset,
+							   -boltLength+RodEndBallSwivelFlangeHeight(.1)-1.5])
+
+					cylinder(r=m3_radius*2.5, h=boltLength, center=false);
+					translate([0,
+							   offset,
+							   cone_h/2+5+height]){
+								translate([2.2,0,0])
+									cube([height,6.7, m3_nut_radius], center=true);
+			      				//cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
+					}
+				}else{
+					translate([2.2,offset,-(separation/2-20)])
+						cube([height,6.7, m3_nut_radius], center=true);
+					translate([2.2,offset,separation/2-21])
+						cube([height,6.7, m3_nut_radius], center=true);
 				}
 			}
+			translate([0,0,-height/2])
+			rotate([0,180,0])
+				cylinder(r=RodEndSpacing(),h=20,center=false);
+			//Hot End Hole
+			translate([0, hotEndOffset, -height/2-.1])
+				cylinder(r1=HotEndDiam()/1.2 ,r2=HotEndDiam()/2 ,h=height+1)	;	
 			translate([0, hotEndOffset, 0])
 			for (a = [0:180:359]) rotate([0, 0, a]) {
 				translate([0, mount_radius, 0])
-					cylinder(r=m3_wide_radius*3, h=height, center=true, $fn=12);
+						cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);				
 			}
-			//cross bracing
-			rotate([0,0,-startAngle])
-				translate([offset/3-15,offset-13,RodEndSpacing()/2])
+			}
 
-					union(){
-						rotate([0,30,0])
-							braceRod();
-						rotate([0,-30,0])
-							braceRod();
-					}
-		}
-		for (a = [startAngle:120:359]) rotate([0, 90, a]) {
-			
-
-			translate([0,
-								   offset,
-								   0])
-			cylinder(r=m3_radius, h=RodEndSpacing(), center=true);
-			if( a== startAngle || a == 240+startAngle){
-				translate([0,
-						   offset,
-						   -boltLength+RodEndBallSwivelFlangeHeight(.1)-1.5])
-
-				cylinder(r=m3_radius*2.5, h=boltLength, center=false);
-				translate([0,
-						   offset,
-						   cone_h/2+5+height]){
-							translate([2.2,0,0])
-								cube([height,6.7, m3_nut_radius], center=true);
-			      			//cylinder(r=m3_nut_radius, h=cone_h, center=true, $fn=6);
-				}
-			}else{
-				translate([2.2,offset,-(separation/2-20)])
-					cube([height,6.7, m3_nut_radius], center=true);
-				translate([2.2,offset,separation/2-21])
-					cube([height,6.7, m3_nut_radius], center=true);
+	  }
+		difference()
+		{
+			translate([-mount_radius-MiniServoWingLength(),-mount_radius*2-MiniServoHeightAbvWings()-MiniServoHubHeight()-MiniServoNubHeight(),-0.1])
+			{
+				MotorMount();
+			}
+		translate([0,hotEndOffset,-1])
+			{
+				cylinder(r=offset*1.2, h=height+2);
 			}
 		}
-		translate([0,0,-height/2])
-		rotate([0,180,0])
-			cylinder(r=RodEndSpacing(),h=20,center=false);
-		//Hot End Hole
-		translate([0, hotEndOffset, -height/2-.1])
-			cylinder(r1=HotEndDiam()/1.2 ,r2=HotEndDiam()/2 ,h=height+1)	;	
-		translate([0, hotEndOffset, 0])
-		for (a = [0:180:359]) rotate([0, 0, a]) {
-			translate([0, mount_radius, 0])
-					cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);				
-		}
-
-  }
+	}
 }
 
 module mount(){

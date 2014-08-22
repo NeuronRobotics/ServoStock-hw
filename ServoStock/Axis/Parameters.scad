@@ -3,6 +3,7 @@ use <../../../Vitamins/Vitamins/Structural/LinearBearings/LM8UU_Linear_Bearing_V
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 
 function mm(i) = i*25.4; 
 
@@ -68,7 +69,7 @@ echo(PlasticWidth());
 function FlashforgePrintableHeight()= 145;
 
 //canvas pulley parameters
-function CanvasPulleyLength()=FlashforgePrintableHeight();
+function CanvasPulleyLength()=FlashforgePrintableHeight()-608BallBearingHeight()*2-DrillPressSpringWidth()+2;
 //CanvasPulleyLength should be(getBaseRadius()-60)*2, except that this is larger than the flashforge printable height. Therefore change the flashforge variable to this when we have a printer that can print a taller part.
 
 function CanvasPulleyWidth()=HiLoBoltLength()*1.3;

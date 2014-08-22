@@ -107,6 +107,6 @@ translate([0,0,-10])
 //here to check how the power supply fits
 use <../../../Vitamins/Vitamins/Electronics/Power_Supply_Vitamin.scad>
 
-translate([0,getBaseSideLength()-PowerSupplyHeight()-getCaseBoardThickness(),0])
+translate([getCaseBoardThickness(),getBaseSideLength()-PowerSupplyHeight()-getCaseBoardThickness(),0])
 #cube([PowerSupplyLength(),PowerSupplyHeight(), PowerSupplyDepth()]);
 

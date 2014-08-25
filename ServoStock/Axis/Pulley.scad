@@ -1,7 +1,8 @@
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt.scad>
+use <../../../Vitamins/Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt_Vitamin.scad>
+
 
 use <Parameters.scad>
 
@@ -253,15 +254,16 @@ module shaft(MagnetType=true){
 			//Main Shaft
 			cylinder(	r1 = (shaftDiameter/2)-.2, // taper the bottom in a bit so the bearing seats all the way down
 						r2 = shaftDiameter/2, 
-						h = 608BallBearingHeight()+PulleyHeight()+2.1, 
+						h = 30.48, 
 						center = false);
 			//Bearing Stop
 			//translate([0,0,splineToPulleyHeight])
 			//	cylinder(r = bearingStopRadius, h = bearingDistance-splineToPulleyHeight, center = false);
 			//Stress relief
-			translate([0,0,StressReliefOffsetHeight()+beltOffset])
-				cylinder(h = PulleyHubHeight()+1-beltOffset, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
-
+			translate([0,0,19])
+				#cylinder(h = PulleyHubHeight()+1-beltOffset, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
+			echo ("Stress releif height",StressReliefOffsetHeight()+beltOffset);
+			echo ("Shaft releif height",608BallBearingHeight()+PulleyHeight()+2.1);
 		}
 		
 		translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])

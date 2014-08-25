@@ -1,5 +1,5 @@
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Kinematics/Belts/Generic_Drive_Belt_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
 
 
@@ -7,7 +7,7 @@ function BearingClipSideWidth()= (PulleyInnerDiam()-608BallBearingDiam(.3))/2;
 
 function BearingClipDiam()= 608BallBearingDiam(.3)+ BearingClipSideWidth()*2;
 
-function getHeight() = 10+BearingClipSideWidth();
+function getHeight() = 2XLBeltWidth(.4)+BearingClipSideWidth()+1;
 
 
 $fn=100;
@@ -18,7 +18,7 @@ module IdlerBearingClip()
 	{
 		union()
 		{
-			cylinder(h=10+BearingClipSideWidth(), r=BearingClipDiam()/2);
+			cylinder(h=getHeight()+BearingClipSideWidth()-1, r=BearingClipDiam()/2);
 			cylinder(h=BearingClipSideWidth(), r=PulleyInnerDiam()/2+BearingClipSideWidth());
 			translate([0,0,getHeight()])
 			{

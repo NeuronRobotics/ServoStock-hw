@@ -21,7 +21,7 @@ translate([60,-85,0]){
 translate([0,15,0])
 StructuralFeet();
 
-translate([0,50,0])
+translate([20,50,0])
 	StructuralBearingMount(3);
 
 translate([-40,70,0]){

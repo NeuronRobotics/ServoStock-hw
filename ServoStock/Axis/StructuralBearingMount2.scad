@@ -22,7 +22,7 @@ use <IdlerBearingPlug.scad>
 
 function getPulleyOffset()=6.79;
 //This makes the structual bearing mount, in its entirety
-module StructuralBearingMount(Style=1)
+module StructuralBearingMount_local(Style=1)
 {
 	difference()
 	{
@@ -54,6 +54,7 @@ module StructuralBearingMount(Style=1)
 							}else{
 								
 							}
+							
 						}
 					}
 				}
@@ -64,7 +65,9 @@ module StructuralBearingMount(Style=1)
 //							(608BallBearingDiam()/2+608BallBearingInnerDiam()/2), 
 //							BearingBracketHeight()/2]);
 //				}
-			}			
+			}	
+			translate([-ClipWidth()*2.5,-(ZrodSpacing()-8mmRodDiameter(.8))/2,0])
+				cube([ClipWidth()*2.5,ZrodSpacing()-8mmRodDiameter(.8),BearingBracketHeight()]);
 		}	
 		//this cuts the bolthole out of the mount
 		if(Style==1)
@@ -106,7 +109,15 @@ module StructuralBearingMount(Style=1)
 		}			
 	}
 }
-
+module StructuralBearingMount(Style=1){
+	translate([0,0,(ClipWidth()*3)-5])
+	rotate([0,-90,0])
+	difference(){
+		StructuralBearingMount_local(Style);
+		translate([-ClipWidth()*3,-(ZrodSpacing()+8mmRodDiameter(.8)*2)/2,-.5])
+			cube([5,ZrodSpacing()+8mmRodDiameter(.8)*2,BearingBracketHeight()+1]);
+	}
+}
 
 //Style 1 is a 50mm bolt, style 2 is a 30mm bolt with a hole for the nut, and style 3 removes the bolt entirely and uses a HiLo screw instead.
 

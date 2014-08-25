@@ -3,11 +3,11 @@ use <CanvasPulley.scad>
 use <CanvasPulleyWormDriver.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 
 module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 {
-	//difference()
+	difference()
 	{
 		translate([-CanvasPulleyWidth()/2,0,-CanvasPulleyEffectiveHeight()])
 		{
@@ -33,7 +33,7 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 								cylinder(r=608BallBearingInnerDiam()/1.5, h=WormDriverRodRadius()*1.5, $fn=30);
 								translate([0,0,WormDriverRodRadius()*1.5])
 								{
-									cylinder(r=608BallBearingInnerDiam()/2, h=608BallBearingHeight(), $fn=30);
+									cylinder(r1=608BallBearingInnerDiam(3dPrinterTolerance=0)/2,r2=608BallBearingInnerDiam(3dPrinterTolerance=.4)/2, h=608BallBearingHeight(), $fn=30);
 								}
 							}
 						}else{
@@ -42,7 +42,7 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 								cylinder(r=608BallBearingInnerDiam()/1.5, h=608BallBearingHeight()/3, $fn=30);
 								translate([0,0,608BallBearingHeight()/3])
 								{
-								cylinder(r=608BallBearingInnerDiam()/2, h=608BallBearingHeight(), $fn=30);
+								cylinder(r1=608BallBearingInnerDiam(3dPrinterTolerance=0)/2,r2=608BallBearingInnerDiam(3dPrinterTolerance=.4)/2, h=608BallBearingHeight(), $fn=30);
 								}
 								if (LinearSpring==true)
 								{	
@@ -50,20 +50,19 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 									{
 										difference()
 										{
-											cylinder(r=CanvasPulleyWidth()/1.5, h=PlasticWidth()+608BallBearingHeight()*4/3);
+											cylinder(r=CanvasPulleyWidth()/1.5, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
 											translate([0,0,PlasticWidth()])
 											{
-												cylinder(r=CanvasPulleyWidth()/1.8, h=PlasticWidth()+608BallBearingHeight()*4/3);		
+												cylinder(r=CanvasPulleyWidth()/1.8, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());		
 											}
-											translate([-ConstantForceSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+ConstantForceSpringHookDiameter()/2,PlasticWidth()+608BallBearingHeight()*1/3+.3])
+											translate([-DrillPressSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+DrillPressSpringHookDiameter()/2,PlasticWidth()+608BallBearingHeight()*4/3+.1])
 											{
 												rotate([180,180,90])
 												{
-													#ConstantForceSpringHook();
+													DrillPressSpringHook();
 												}
 											}
 										}
-
 									}
 								}else{}
 							}
@@ -81,23 +80,23 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 
 
 //USE ORIENTATION
-CanvasPulleyMount(false);
-
+//CanvasPulleyMount(false);
+//
 //translate([0,50,0])
 //rotate([0,0,180])
 //CanvasPulleyMount(true);
 
 //PRINT ORIENTATION
-//rotate([90,0,0])
-//CanvasPulleyMount(WormDriver=true);
-//
-//translate([40,0,0])
-//rotate([90,0,0])
-//CanvasPulleyMount(WormDriver=false);
-//
-//translate([-40,0,0])
-//rotate([90,0,0])
-//CanvasPulleyMount(WormDriver=false,LinearSpring=true);
+rotate([90,0,0])
+CanvasPulleyMount(WormDriver=true);
+
+translate([40,0,0])
+rotate([90,0,0])
+CanvasPulleyMount(WormDriver=false);
+
+translate([-40,0,0])
+rotate([90,0,0])
+CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 
 
 

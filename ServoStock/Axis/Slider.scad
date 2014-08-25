@@ -1,7 +1,7 @@
 use <Parameters.scad>
 use <../../../Vitamins/Vitamins/Structural/LinearBearings/LM8UU_Linear_Bearing_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_Vitamin.scad>
-use <../../../Vitamins/Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt.scad>
+use <../../../Vitamins/Vitamins/Kinematics/Belts/OneFifthinXLTimingBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/RodEnds/RodEnd_Vitamin.scad>
 

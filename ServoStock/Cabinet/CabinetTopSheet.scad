@@ -1,4 +1,3 @@
-function getThickness() = 18;
 use <../Axis/StructuralFeet.scad>
 use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
@@ -20,7 +19,7 @@ module placeTabsMounts(){
 		getInnerPlateTabPitch():
 		getBaseSideLength()-getCaseBoardThickness()*2]){
 		translate([0,a,0])
-			child();
+			children();
 
 	}
 }

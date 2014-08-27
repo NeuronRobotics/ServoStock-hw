@@ -149,7 +149,7 @@ module longSide(width =getBaseSideLength(), usePlateMountSlots = true, mounts=1)
 		difference()
 		{
 			longSideBase(width, usePlateMountSlots);
-			translate([getBaseSideLength()-BowlerBoardLength()*2-getInnerPlateTabPitch()*2,getBedZHeight()-getCaseBoardThickness(),0])
+			translate([getBaseSideLength()-getCaseBoardThickness()-getInnerPlateTabPitch()*5/2-BowlerBoardLength(),getBedZHeight()-getCaseBoardThickness(),0])
 			{
 				BowlerBoardAccessSlot();
 			}

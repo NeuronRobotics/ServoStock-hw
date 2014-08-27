@@ -6,6 +6,7 @@ use <CanvasPulleyHerringboneDriver.scad>
 use <CanvasPulleyMotorMount.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 
@@ -20,7 +21,7 @@ module IdleCanvasPulleyAssembly()
 	union()
 	{
 		CanvasRoller(false);
-		translate([0,0,-PlasticWidth()-608BallBearingHeight()/3])
+		translate([0,0,-PlasticWidth()-608BallBearingHeight()/3-DrillPressSpringWidth()+2])
 		{
 			rotate([90,0,0])
 			{

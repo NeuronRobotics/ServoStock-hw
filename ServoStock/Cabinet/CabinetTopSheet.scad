@@ -2,11 +2,13 @@ use <../Axis/StructuralFeet.scad>
 use <../Axis/Parameters.scad>
 use <../Axis/RodEndClips.scad>	
 use <../Axis/Clips.scad>	
+use <../ContinuousBed/CanvasPulley.scad>
 use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/Motor_Screw_As_Bolt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Kinematics/Belts/CanvasAsBelt_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 use <../../../Vitamins/Vitamins/Electronics/Bowler_Board_Vitamin.scad>
 
@@ -126,29 +128,49 @@ module bearingPlate(){
 }
 
 
-module CanvasPulleyMount(wormgear=false)
+module CanvasPulleyMount(driven=true, wormgear=false)
 {
-	if(wormgear==false)
+	if(driven==true)
+	{
+		if(wormgear==false)
+		{
+			circle(HiLoScrewDiameter()/2);
+			translate([0,CanvasPulleyWidth()/2,0])
+			{
+				circle(HiLoScrewDiameter()/2);
+			}
+			translate([CanvasPulleyMountHerringboneDistance(),0,0])
+			{
+				circle(HiLoScrewDiameter()/2);
+			}
+			translate([CanvasPulleyMountHerringboneDistance(),CanvasPulleyWidth()/2,0])
+			{
+				circle(HiLoScrewDiameter()/2);
+			}
+		}
+		else
+		{
+		//put wormgear mount here if necessary
+		}
+	}
+	else
 	{
 		circle(HiLoScrewDiameter()/2);
 		translate([0,CanvasPulleyWidth()/2,0])
 		{
 			circle(HiLoScrewDiameter()/2);
 		}
-		translate([CanvasPulleyMountHerringboneDistance(),0,0])
+		translate([CanvasPulleyMountNonDrivenDistance(),0,0])
 		{
 			circle(HiLoScrewDiameter()/2);
 		}
-		translate([CanvasPulleyMountHerringboneDistance(),CanvasPulleyWidth()/2,0])
+		translate([CanvasPulleyMountNonDrivenDistance(),CanvasPulleyWidth()/2,0])
 		{
 			circle(HiLoScrewDiameter()/2);
 		}
-	}
-	else
-	{
-	//put wormgear mount here if necessary
 	}
 }
+
 
 module MotorMount()
 {
@@ -245,10 +267,10 @@ module bedPlate(){
 			{
 				translate([-CanvasPulleyMountHerringboneDistance()/2,-CanvasPulleySeperation()/2,0])
 				{
-					CanvasPulleyMount();
-					translate([0,CanvasPulleySeperation(),0])
+					CanvasPulleyMount(driven=true);
+					translate([-DrillPressSpringWidth()+2,CanvasPulleySeperation(),0])
 					{
-						CanvasPulleyMount();
+						CanvasPulleyMount(driven=false);
 					}		
 					translate([HerringBoneGearThickness()+StandardServoOutcrop()+PlasticWidth(),CanvasPulleyMotorMountOffset()-HiLoScrewHeadHeight()*4,0]) 
 					{

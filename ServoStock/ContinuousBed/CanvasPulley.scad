@@ -19,7 +19,9 @@ function MotorCanvasPulleyLength()=CanvasPulleyLength()+608BallBearingHeight()*2
 
 function SpringCanvasPulleyLength()=MotorCanvasPulleyLength()+DrillPressSpringWidth()-2;
 
+function CanvasPulleyMountHerringboneDistance()=MotorCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4;
 
+function CanvasPulleyMountNonDrivenDistance()=SpringCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4;
 
 module CanvasSlit()
 {
@@ -332,23 +334,3 @@ CanvasRoller(false);
 //	CanvasPulleyMount(WormDriver=false,LinearSpring=false);
 ////
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

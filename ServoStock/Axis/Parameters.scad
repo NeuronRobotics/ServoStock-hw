@@ -77,8 +77,6 @@ echo(CanvasPulleyWidth());
 function CanvasPulleySeperation()=100; //fairly arbitrary seperation between active and idler pullies
 function HerringboneMotorMountLength()=StandardServoLength()+HiLoBoltHeadDiameter()*2; //length of the motor mount when the herringbone gear is used
 
-function CanvasPulleyMountHerringboneDistance()=(PlasticWidth()+608BallBearingHeight()/3+608BallBearingHeight())*2+CanvasPulleyLength()-HiLoBoltHeadDiameter()*4;
-
 //canvas pulley herringbone gear parameters
 function CanvasGearPitch()=700;
 function CanvasPulleyTeeth()=16;
@@ -87,6 +85,3 @@ function CanvasDriverTeeth()= 8;
 function CanvasPulleyDriverRadius()=(CanvasDriverTeeth()*CanvasGearPitch()/180)/2;
 function CanvasPulleyGearOffsetAngle()=25;
 function CanvasPulleyMotorMountOffset()=sin(90-CanvasPulleyGearOffsetAngle())*(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius());
-
-
-

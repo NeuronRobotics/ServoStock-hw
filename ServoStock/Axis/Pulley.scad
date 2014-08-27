@@ -221,11 +221,11 @@ module pulley(MagnetType=true){
 		//top flange
 		
 		translate([0,0,topFlangePlacemnet]){
-			#cylinder(h = flangeHeight, r1=outerRadius,r2=outerRadius+2);
+			cylinder(h = flangeHeight, r1=outerRadius,r2=outerRadius+2);
 			translate([0,0,-toothHeight/4 ])
-				#cylinder(h = flangeHeight+1, r2=outerRadius,r1=innerRadius);
+				cylinder(h = flangeHeight+1, r2=outerRadius,r1=innerRadius);
 			translate([0,0,flangeHeight/2])
-				#cylinder(h = flangeHeight, r=outerRadius+2);
+				cylinder(h = flangeHeight, r=outerRadius+2);
 		}
 
 		//bottom flange
@@ -267,7 +267,7 @@ module shaft(MagnetType=true){
 			//	cylinder(r = bearingStopRadius, h = bearingDistance-splineToPulleyHeight, center = false);
 			//Stress relief
 			translate([0,0,19])
-				#cylinder(h = PulleyHubHeight()+1-beltOffset, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
+				cylinder(h = PulleyHubHeight()+1-beltOffset, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
 			echo ("Stress releif height",StressReliefOffsetHeight()+beltOffset);
 			echo ("Shaft releif height",608BallBearingHeight()+PulleyHeight()+2.1);
 			

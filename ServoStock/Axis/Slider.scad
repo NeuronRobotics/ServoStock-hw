@@ -44,7 +44,7 @@ module SliderBase(Style=2)
 				translate([braceWidth/2,0,0])
 				union(){
 					cylinder(	r2=RodEndTopWidth()-1.8,
-								r1=braceWidth/2, 
+								r1=braceWidth/2-3, 
 								h=RodEndSpacing()+RodEndClipHeight(), 
 								center=false, 
 								$fn=24);

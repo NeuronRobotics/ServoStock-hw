@@ -110,6 +110,11 @@ module PowerSupplyFrontMount()
 		{
 			PowerSupplyBoltHole();
 		}
+////////gets rid of bottom two mounts, which are awkward and inconvient to cut out, remove this to get them back
+		translate([PowerSupplyLength()/2,0,0])
+		{
+			square([PowerSupplyLength(), PowerSupplyHeight()]);
+		}		
 	}
 }
 

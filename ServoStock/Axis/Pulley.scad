@@ -60,7 +60,9 @@ function StressReliefOffsetHeight()= splineToPulleyHeight+toothHeight+flangeHeig
 ////////////////////////
 pitch = 5.35; // distance between the teeth
 //NOTE THAT PULLEY PITCH IS NOT THE SAME AS BELT  PITCH!!! IF YOU GET A DIFFERENT PITCH BELT YOU'LL JUST HAVE TO MANUALLY CHANGE THE PITCH FOR THE PULLEY
+
 beltWidth = 2XLBeltWidth(); // the width/height of the belt. The (vertical) size of the pulley is adapted to this.
+
 beltThickness = 2XLBeltBaseHeight(); // thickness of the part excluding the notch depth!
 notchDepth = 2XLBeltGripHeight(1); // make it slightly bigger than actual, there's an outward curvature in the inner solid part of the pulley
 toothWidth = 2XLBeltSpaceWidth()-3dPrinterTolerance(); // Teeth of the PULLEY, that is.
@@ -205,6 +207,8 @@ module pulley(MagnetType=true){
 	circumference = numTeeth*pitch;
 	outerRadius = circumference/PI/2-beltThickness;
 	innerRadius = circumference/PI/2-notchDepth-beltThickness;
+	topFlangePlacemnet = 15.85;
+	echo("Top Flange Placement=",topFlangePlacemnet);
 	union(){
 		//solid part of gear
 		translate([0,0,head_heigth+splineToPulleyHeight+beltOffset/2])
@@ -215,12 +219,14 @@ module pulley(MagnetType=true){
 				teeth(pitch,numTeeth,toothWidth,notchDepth,toothHeight+beltOffset);
 
 		//top flange
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2+beltOffset])
-			cylinder(h = flangeHeight, r1=outerRadius,r2=outerRadius+2);
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/4+beltOffset])
-			cylinder(h = flangeHeight+1, r2=outerRadius,r1=innerRadius);
-		translate([0,0,head_heigth+splineToPulleyHeight+toothHeight/2+flangeHeight/2+beltOffset])
-			cylinder(h = flangeHeight, r=outerRadius+2);
+		
+		translate([0,0,topFlangePlacemnet]){
+			#cylinder(h = flangeHeight, r1=outerRadius,r2=outerRadius+2);
+			translate([0,0,-toothHeight/4 ])
+				#cylinder(h = flangeHeight+1, r2=outerRadius,r1=innerRadius);
+			translate([0,0,flangeHeight/2])
+				#cylinder(h = flangeHeight, r=outerRadius+2);
+		}
 
 		//bottom flange
 		translate([0,0,0])
@@ -264,6 +270,7 @@ module shaft(MagnetType=true){
 				#cylinder(h = PulleyHubHeight()+1-beltOffset, r1 = bearingStopRadius+3, r2 = bearingStopRadius, center = false);
 			echo ("Stress releif height",StressReliefOffsetHeight()+beltOffset);
 			echo ("Shaft releif height",608BallBearingHeight()+PulleyHeight()+2.1);
+			
 		}
 		
 		translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])

@@ -21,10 +21,10 @@ function getBaseRadius() = 140;
 function getEffectorRadius() = 25;
 
 // these are the parameters for the Case
-rodLength = 500;
+rodLength = 775;
 
 function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;
-function getBedToBearingPlateHeight() = 125+getCaseBoardThickness();
+function getBedToBearingPlateHeight() =60-getCaseBoardThickness();
 function getBedZHeight() = 150+getCaseBoardThickness();
 function getCaseBoardThickness() = 19.05;//3/4in
 function getPrintbedWidth() = 200;

@@ -26,9 +26,20 @@ module placeTabsMounts(){
 	}
 }
 
+module tabForInnerPlate(){
+	square([getCaseBoardThickness()+.1,getInnerPlateTabPitch()/4]);
+}
+
 module getTabsForInnerPlate(addHoles=false){
+	scaleFactor = .05;
 	placeTabsMounts(){
-		square([getCaseBoardThickness(),getInnerPlateTabPitch()/4]);
+		if(addHoles){
+			translate([-scaleFactor*getCaseBoardThickness()/2,-scaleFactor*getInnerPlateTabPitch()/8])
+			scale((1+scaleFactor))
+			 tabForInnerPlate();
+		}else{
+			tabForInnerPlate();
+		}
 	}
 	if(addHoles){
 		placeTabsMounts(){

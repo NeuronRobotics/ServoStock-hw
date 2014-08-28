@@ -29,7 +29,7 @@ module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 				circle(getCaseHoleSize()/2);
 				//cutout for the tabs
 				translate([-getCaseBoardThickness()/2,getCaseBoltHolePitch()/4])
-					square([getCaseBoardThickness(),getCaseBoltHolePitch()/2]);
+					square([getCaseBoardThickness()+.1,getCaseBoltHolePitch()/2]);
 			}
 			translate([width-getCaseBoardThickness()/2,
 			           a-getCaseBoltHolePitch()/2,
@@ -38,7 +38,7 @@ module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 				circle(getCaseHoleSize()/2);
 				//cutout for the tabs
 				translate([-getCaseBoardThickness()/2,getCaseBoltHolePitch()/4])
-					square([getCaseBoardThickness(),getCaseBoltHolePitch()/2]);
+					square([getCaseBoardThickness()+.1,getCaseBoltHolePitch()/2]);
 				
 			}
 			
@@ -219,10 +219,9 @@ module sides(){
 			           0])
 			shortSide(false);
 			
-			translate([getBaseSideLength(),
-			           getCabinetHeight()+10,
+			translate([(getBaseSideLength()+getShortSideLength()+20),
+			           0,
 			           0])
-			rotate([0,0,90])
 				shortSide(true);
 	}
 }
@@ -230,13 +229,21 @@ module sides(){
 module fullSheet(){
 
 	sides();
-	%square([40*25.4,75*25.4]);
-	topPlate();
-	translate([getBaseSideLength()+10,getBaseSideLength()+10,0])
-		bedPlate();//topPlate();
+	translate([0,0,-1]){
+		%square([40*25.4,75*25.4]);
+	}
+	yOffset=80;
+	translate([140,getBaseSideLength()*sqrt(2)+yOffset,0])
+		rotate([0,0,45+180])
+			topPlate();
+	
+	translate([(40*25)-130,0+yOffset,0])
+		rotate([0,0,45])
+			bedPlate();//topPlate();
 
-	translate([0,getBaseSideLength()+10,0])
-		bearingPlate();
+	translate([210,60+yOffset,0])
+		rotate([0,0,45-90])
+			bearingPlate();
 
 }
 
@@ -267,7 +274,7 @@ module tabCompare(){
 }   
 
 
-tabCompare();
+//tabCompare();
 
 //scale(1/6)
-//fullSheet();
+fullSheet();

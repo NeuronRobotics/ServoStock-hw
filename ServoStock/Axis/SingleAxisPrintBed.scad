@@ -1,5 +1,5 @@
 use <Parameters.scad>
-use <BearingCap.scad>	
+	
 use <Clips.scad>	
 use <StructuralBearingMount2.scad>
 use <Pulley.scad>

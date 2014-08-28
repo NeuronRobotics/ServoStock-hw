@@ -5,8 +5,7 @@ use <../../../Vitamins/Vitamins/Kinematics/Pulleys/Pulley_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SteelRod/8mm_Rod_Vitamin.scad>
-
-use <BearingCap.scad>	
+	
 use <Clips.scad>	
 use <RodEndClips.scad>
 

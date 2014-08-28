@@ -64,6 +64,23 @@ module teeSlot(){
 	}
 }
 
+module placeAllSlotElements(sideLength=10){
+	translate([-sideLength/2,-sideLength/2,0]){
+		children();
+	
+		rotate([0,0,90])
+			translate([0,-sideLength,0]){
+			children();
+		}
+		rotate([0,0,-90])
+			translate([-(sideLength),0,0])
+				children();
+		rotate([0,0,180])
+			translate([-(sideLength),-(sideLength),0])
+				children();
+	}
+}
+
 module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 	holeSize=getCaseHoleSize();
 	pitch=50;
@@ -88,41 +105,18 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 				square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
 			}
 		}
-		if(getCaseBoardThickness()<(getCaseHoleSize()*3)){
-			translate([-sideLength/2,-sideLength/2,0]){
-				//%circle(5);
+		// This checks to see if the case hole is less then 4 times the board thickness
+		if(getCaseBoardThickness()<(getCaseHoleSize()*4)){
+			placeAllSlotElements(sideLength){
 				teeSlot();
-			
-				rotate([0,0,90])
-					translate([0,-sideLength,0]){
-					teeSlot();
-				}
-				rotate([0,0,-90])
-					translate([-(sideLength),0,0])
-						teeSlot();
-				rotate([0,0,180])
-					translate([-(sideLength),-(sideLength),0])
-						teeSlot();
 			}
 		}
 
 	}
-	translate([-sideLength/2,-sideLength/2,0]){
-		//%circle(5);
+	placeAllSlotElements(sideLength){
 		getTabsForInnerPlate();
-	
-		rotate([0,0,90])
-			translate([0,-sideLength,0]){
-					getTabsForInnerPlate();
-		}
-		rotate([0,0,-90])
-			translate([-(sideLength),0,0])
-				getTabsForInnerPlate();
-		rotate([0,0,180])
-			translate([-(sideLength),-(sideLength),0])
-				getTabsForInnerPlate();
 	}
-	//%square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
+	
 }
 
 

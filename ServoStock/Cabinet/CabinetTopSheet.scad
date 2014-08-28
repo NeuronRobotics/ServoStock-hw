@@ -51,11 +51,24 @@ module getTabsForInnerPlate(addHoles=false){
 	}
 }
 
+module teeSlot(){
+	nutWidth = getCaseHoleSize()*1.75;
+	placeTabsMounts(){
+		translate([getCaseBoardThickness(),
+		           getInnerPlateTabPitch()*2/3-getCaseHoleSize()/2,
+		           0]){
+			square([getCaseHoleSize()*3 ,getCaseHoleSize() ]);
+			translate([getCaseHoleSize(),-(nutWidth-getCaseHoleSize())/2,0])
+				square([getCaseHoleSize() ,nutWidth ]);
+		}
+	}
+}
 
 module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 	holeSize=getCaseHoleSize();
 	pitch=50;
 	recessFromSide = getCaseBoardThickness()/2;
+	useTeeSlots=true;
 	difference(){
 		square([sideLength,sideLength],center=true);
 		
@@ -73,6 +86,23 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 			difference(){
 				square([sideLength+1,sideLength+1],center=true);
 				square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
+			}
+		}
+		if(getCaseBoardThickness()<(getCaseHoleSize()*3)){
+			translate([-sideLength/2,-sideLength/2,0]){
+				//%circle(5);
+				teeSlot();
+			
+				rotate([0,0,90])
+					translate([0,-sideLength,0]){
+					teeSlot();
+				}
+				rotate([0,0,-90])
+					translate([-(sideLength),0,0])
+						teeSlot();
+				rotate([0,0,180])
+					translate([-(sideLength),-(sideLength),0])
+						teeSlot();
 			}
 		}
 

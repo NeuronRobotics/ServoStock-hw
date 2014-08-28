@@ -25,8 +25,11 @@ rodLength = 775;
 
 function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+PlasticWidth()*2;
 function getBedToBearingPlateHeight() =60-getCaseBoardThickness();
-function getBedZHeight() = 150+getCaseBoardThickness();
-function getCaseBoardThickness() = 19.05;//3/4in
+//function getBedZHeight() = 150+getCaseBoardThickness();
+function getBedZHeight() =0;
+//function getCaseBoardThickness() = 19.05;//3/4in
+function getCaseBoardThickness() = 3;//3/4in
+
 function getPrintbedWidth() = 200;
 
 function getCaseHoleSize() = 4.5;

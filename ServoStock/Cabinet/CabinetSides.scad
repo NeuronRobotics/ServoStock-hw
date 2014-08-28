@@ -274,7 +274,7 @@ module tabCompare(){
 }   
 
 
-//tabCompare();
+tabCompare();
 
 //scale(1/6)
-fullSheet();
+//fullSheet();

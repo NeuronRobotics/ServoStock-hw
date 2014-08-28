@@ -43,7 +43,7 @@ function WorkingPulleyHeight()= PulleyBaseHeight()+toothHeight+flangeHeight;
 function PulleyHeight()=PulleyBaseHeight()+toothHeight+flangeHeight+PulleyHubHeight();
 
 
-function PulleyTotalHeight()=PulleyHeight()+608BallBearingHeight();
+function PulleyTotalHeight()=30.48;
 
 function PulleyBeltOffset()=splineToPulleyHeight+beltWidth/2;
 //translate([10,10,0])
@@ -260,7 +260,7 @@ module shaft(MagnetType=true){
 			//Main Shaft
 			cylinder(	r1 = (shaftDiameter/2)-.2, // taper the bottom in a bit so the bearing seats all the way down
 						r2 = shaftDiameter/2, 
-						h = 30.48, 
+						h = PulleyTotalHeight(), 
 						center = false);
 			//Bearing Stop
 			//translate([0,0,splineToPulleyHeight])
@@ -273,8 +273,8 @@ module shaft(MagnetType=true){
 			
 		}
 		
-		translate([0, 0, PulleyTotalHeight()-MagnetLength()+4.1])
-			MagnetDraft();
+		translate([0, 0, PulleyTotalHeight()-(MagnetLength()-.1)])
+			#MagnetDraft();
 		
 	}
 }

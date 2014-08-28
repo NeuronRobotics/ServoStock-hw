@@ -9,7 +9,7 @@ use <IdlerBearingClip.scad>
 use <Rod.scad>
 use <StructuralFeet.scad>
 
-translate([60,-85,0]){
+translate([6,-85,0]){
 	rotate([0,0,90]){
 		translate([0,13,0])
 			DeltaFreeArm();
@@ -18,21 +18,21 @@ translate([60,-85,0]){
 }
 
 //rotating the module, as it would be rotated for printing
-translate([0,15,0])
-StructuralFeet();
+translate([50,15,0])
+	StructuralFeet();
 
-translate([20,50,0])
+translate([70,50,0])
 	StructuralBearingMount(3);
 
-translate([-40,70,0]){
+translate([-35,70,0]){
 	servo_pulley(true,true);
 }
 
-translate([-55,-15,0]){
+translate([-30,-15,0]){
 	rotate([0,0,90])
 		Slider(true, 1);
 }
-translate([0,-65,0]){
+translate([-50,40,0]){
 	IdlerBearingPlug();
 	IdlerBearingClip();
 }

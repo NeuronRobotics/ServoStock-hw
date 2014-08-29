@@ -46,7 +46,7 @@ module getTabsForInnerPlate(addHoles=false){
 			translate([getCaseBoardThickness()/2,
 			           getInnerPlateTabPitch()*2/3,
 			           0])
-			           circle(getCaseHoleSize()/2);
+			           circle(getCaseHoleSize()/2, $fn=100);
 		}
 	}
 }
@@ -91,13 +91,13 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 		
 		for (a = [getCaseBoltHolePitch()+getCaseBoltHolePitch()/4:getCaseBoltHolePitch():sideLength-getCaseBoltHolePitch()]){
 			translate([a-sideLength/2,sideLength/2-recessFromSide,0])
-				circle(holeSize/2);
+				circle(holeSize/2, $fn=100);
 			translate([a-sideLength/2,-sideLength/2+recessFromSide,0])
-				circle(holeSize/2);
+				circle(holeSize/2, $fn=100);
 			translate([sideLength/2-recessFromSide,a-sideLength/2,0])
-				circle(holeSize/2);
+				circle(holeSize/2, $fn=100);
 			translate([-sideLength/2+recessFromSide,a-sideLength/2,0])
-				circle(holeSize/2);
+				circle(holeSize/2, $fn=100);
 		}
 		if(useTabs){
 			difference(){
@@ -150,7 +150,7 @@ module topPlate(useTabs = true,bedCutout = false, axisMounts=true){
 				square([getPrintbedWidth(),
 				        getPrintbedWidth()*2],center=true);
 			}
-			circle(getBaseRadius()-10);
+			circle(getBaseRadius()-10, $fn=100);
 		}
 		
 		echo("Square side length is ",getBaseSideLength());
@@ -169,18 +169,18 @@ module CanvasPulleyMount(driven=true, wormgear=false)
 	{
 		if(wormgear==false)
 		{
-			circle(HiLoScrewDiameter()/2);
+			circle(HiLoScrewDiameter()/2, $fn=100);
 			translate([0,CanvasPulleyWidth()/2,0])
 			{
-				circle(HiLoScrewDiameter()/2);
+				circle(HiLoScrewDiameter()/2, $fn=100);
 			}
 			translate([CanvasPulleyMountHerringboneDistance(),0,0])
 			{
-				circle(HiLoScrewDiameter()/2);
+				circle(HiLoScrewDiameter()/2, $fn=100);
 			}
 			translate([CanvasPulleyMountHerringboneDistance(),CanvasPulleyWidth()/2,0])
 			{
-				circle(HiLoScrewDiameter()/2);
+				circle(HiLoScrewDiameter()/2, $fn=100);
 			}
 		}
 		else
@@ -190,18 +190,18 @@ module CanvasPulleyMount(driven=true, wormgear=false)
 	}
 	else
 	{
-		circle(HiLoScrewDiameter()/2);
+		circle(HiLoScrewDiameter()/2, $fn=100);
 		translate([0,CanvasPulleyWidth()/2,0])
 		{
-			circle(HiLoScrewDiameter()/2);
+			circle(HiLoScrewDiameter()/2, $fn=100);
 		}
 		translate([CanvasPulleyMountNonDrivenDistance(),0,0])
 		{
-			circle(HiLoScrewDiameter()/2);
+			circle(HiLoScrewDiameter()/2, $fn=100);
 		}
 		translate([CanvasPulleyMountNonDrivenDistance(),CanvasPulleyWidth()/2,0])
 		{
-			circle(HiLoScrewDiameter()/2);
+			circle(HiLoScrewDiameter()/2, $fn=100);
 		}
 	}
 }
@@ -213,10 +213,10 @@ module MotorMount()
 	{
 		union()
 		{
-			circle(HiLoScrewDiameter()/2);
+			circle(HiLoScrewDiameter()/2, $fn=100);
 			translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,0,0])
 			{
-				circle(HiLoScrewDiameter()/2);
+				circle(HiLoScrewDiameter()/2, $fn=100);
 			}
 		}
 	}
@@ -267,19 +267,19 @@ module BowlerBoardMount()
 		}
 	translate([BowlerBoardInset(),BowlerBoardInset(),0])
 			{
-				circle(MotorScrewBoltDiameter()/2);
+				circle(MotorScrewBoltDiameter()/2, $fn=100);
 			}
 			translate([BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
 			{
-				circle(MotorScrewBoltDiameter()/2);
+				circle(MotorScrewBoltDiameter()/2, $fn=100);
 			}
 			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardLength()-BowlerBoardInset(),0])
 			{
-				circle(MotorScrewBoltDiameter()/2);
+				circle(MotorScrewBoltDiameter()/2, $fn=100);
 			}
 			translate([BowlerBoardDepth()-BowlerBoardInset(),BowlerBoardInset(),0])	
 			{
-				circle(MotorScrewBoltDiameter()/2);
+				circle(MotorScrewBoltDiameter()/2, $fn=100);
 			}
 	}
 }

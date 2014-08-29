@@ -26,7 +26,7 @@ module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 	a,
 			           0]){
 				//bolt hole
-				circle(getCaseHoleSize()/2);
+				circle(getCaseHoleSize()/2, $fn=100);
 				//cutout for the tabs
 				translate([-getCaseBoardThickness()/2,getCaseBoltHolePitch()/4])
 					square([getCaseBoardThickness()+.1,getCaseBoltHolePitch()/2]);
@@ -35,7 +35,7 @@ module longSideBase(width =getBaseSideLength(), usePlateMountSlots = true ){
 			           a-getCaseBoltHolePitch()/2,
 			           0]){
 				//bolt hole
-				circle(getCaseHoleSize()/2);
+				circle(getCaseHoleSize()/2, $fn=100);
 				//cutout for the tabs
 				translate([-getCaseBoardThickness()/2,getCaseBoltHolePitch()/4])
 					square([getCaseBoardThickness()+.1,getCaseBoltHolePitch()/2]);
@@ -70,7 +70,7 @@ module BowlerBoardAccessSlot()
 
 module PowerSupplyBoltHole()
 {
-	circle(PowerSupplyBoltDiameter()/2, center=true);
+	circle(PowerSupplyBoltDiameter()/2, center=true, $fn=100);
 }
 
 module PowerSupplyFrontMount()

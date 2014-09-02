@@ -19,8 +19,8 @@ use <IdlerBearingPlug.scad>
 //note to self, this is how this part is oriented in rostock mini, but to me it makes more sense to flip the bolt round the other way so that the clips are facing inward (so they'd face out on the bottom and in on the top), I think this would make accessing the belt a lot easier, but maybe there's a reason it's like this so I'm leaving it as-is for now.
 
 //if anyone ever wants to change it back just swap the cylinder from 90 to -90, remove the plasticwidth() from its translate, change the bolt round to -90, and make its translate just -boltheadheight()/2-BallBearingHeight()-Plasticwidth() for the first term.
-
-function getPulleyOffset()=6.79;
+function getPulleyOffset()=2;
+//function getPulleyOffset()=6.79;
 //This makes the structual bearing mount, in its entirety
 module StructuralBearingMount_local(Style=1)
 {

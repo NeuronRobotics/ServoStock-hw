@@ -15,7 +15,7 @@ $fn = 60;
 /////////////////////////
 ////Pulley Properties////
 /////////////////////////
-shaftDiameter = 608BallBearingInnerDiam(); 
+shaftDiameter = 608BallBearingInnerDiam(.1); 
 flanges = 2; // the rims that keep the belt from going anywhere
 flangeHeight = 2;
 numTeeth = 14; // usually 16 // this value together with the pitch determines the pulley diameter

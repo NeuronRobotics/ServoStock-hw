@@ -11,9 +11,12 @@ use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
 
 //print these with low infill setting.
 
-function CanvasPulleySlitWidth() =CanvasWidth()*2;
-function CanvasPulleyEffectiveHeight() =CanvasPulleyWidth()*1.5;
-echo ("Canvas Pulley Height: ", CanvasPulleyLength()); 
+function CanvasPulleySlitWidth()=CanvasWidth()*2;
+function CanvasPulleyClearance()=2;
+function CanvasPulleyEffectiveHeight()=CanvasPulleyWidth()*1.5+CanvasPulleyClearance();
+
+echo ("Canvas Pulley Effective Height: ", CanvasPulleyEffectiveHeight());
+echo ("Canvas Pulley Print Height: ", CanvasPulleyLength()); 
 
 function MotorCanvasPulleyLength()=CanvasPulleyLength()+608BallBearingHeight()*2-2;
 

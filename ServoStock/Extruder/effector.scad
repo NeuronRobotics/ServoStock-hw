@@ -51,7 +51,7 @@ module MotorMount()
 		{
 			rotate([-90,-90,0]) 
 			{
-				%MiniServoMotor(true, 2, false, .2);
+				#MiniServoMotor(true, 2, false, .4);
 			}
 		}
 			translate([MiniServoWingLength()-0.5,0,-1])

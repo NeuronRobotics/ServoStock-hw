@@ -50,16 +50,16 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 									{
 										difference()
 										{
-											cylinder(r=CanvasPulleyWidth()/1.5, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
+											cylinder(r=(DrillPressSpringOuterDiameter()+PlasticWidth())/2, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
 											translate([0,0,PlasticWidth()])
 											{
-												cylinder(r=CanvasPulleyWidth()/1.8, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());		
+												cylinder(r=DrillPressSpringOuterDiameter()/2, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());		
 											}
-											translate([-DrillPressSpringHookLength()*.75,-CanvasPulleyWidth()/1.5+DrillPressSpringHookDiameter()/2,PlasticWidth()+608BallBearingHeight()*4/3+.1])
+											translate([-DrillPressSpringHookLength()*.75,-DrillPressSpringOuterDiameter()/2-.5,PlasticWidth()+608BallBearingHeight()*4/3+.1])
 											{
 												rotate([180,180,90])
 												{
-													DrillPressSpringHook();
+													#DrillPressSpringHook();
 												}
 											}
 										}
@@ -86,15 +86,19 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 //rotate([0,0,180])
 //CanvasPulleyMount(true);
 
-//PRINT ORIENTATION
+//PRINT BED
 rotate([90,0,0])
 CanvasPulleyMount(WormDriver=true);
+
+translate([80,0,0])
+rotate([90,0,0])
+CanvasPulleyMount(WormDriver=false);
 
 translate([40,0,0])
 rotate([90,0,0])
 CanvasPulleyMount(WormDriver=false);
 
-translate([-40,0,0])
+translate([-45,0,0])
 rotate([90,0,0])
 CanvasPulleyMount(WormDriver=false,LinearSpring=true);
 

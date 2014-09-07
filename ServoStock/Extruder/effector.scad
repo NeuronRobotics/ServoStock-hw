@@ -155,6 +155,7 @@ module effector(useVertical=false) {
 							rotate([0,-30,0])
 								braceRod();
 						}
+				// Hot end mount support
 				placeHotEnd(){
 //					translate([0, 0, -height/2])
 //						cylinder(r1=HotEndDiam() ,r2=HotEndDiam() ,h=height)	;	

@@ -32,6 +32,13 @@ pillarOffset = 12;
 
 effector(true);
 
+module placeHotEnd(){
+	translate([-22, hotEndOffset+5,0]){
+		rotate([0,0,-79])
+		children();
+	}
+}
+
 
 translate([0,hotEndOffset, 0]){
 	rotate([0,0,90]){
@@ -148,6 +155,15 @@ module effector(useVertical=false) {
 							rotate([0,-30,0])
 								braceRod();
 						}
+				placeHotEnd(){
+//					translate([0, 0, -height/2])
+//						cylinder(r1=HotEndDiam() ,r2=HotEndDiam() ,h=height)	;	
+				
+					for (a = [0:180:359]) rotate([0, 0, a]) {
+						translate([0, mount_radius, 0])
+								cylinder(r=m3_wide_radius*2, h=height, center=true, $fn=12);				
+					}
+				}
 			}
 			for (a = [startAngle:120:359]) rotate([0, 90, a]) {
 			
@@ -176,17 +192,19 @@ module effector(useVertical=false) {
 						cube([height,6.7, m3_nut_radius], center=true);
 				}
 			}
-			translate([0,0,-height/2])
-			rotate([0,180,0])
-				cylinder(r=RodEndSpacing(),h=20,center=false);
-			//Hot End Hole
-			translate([0, hotEndOffset, -height/2-.1])
-				cylinder(r1=HotEndDiam()/1.2 ,r2=HotEndDiam()/2 ,h=height+1)	;	
-			translate([0, hotEndOffset, 0])
-			for (a = [0:180:359]) rotate([0, 0, a]) {
-				translate([0, mount_radius, 0])
-						cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);				
-			}
+				translate([0,0,-height/2])
+				rotate([0,180,0])
+					cylinder(r=RodEndSpacing(),h=20,center=false);
+				//Hot End Hole
+				placeHotEnd(){
+					translate([0, 0, -height/2-.1])
+						cylinder(r1=HotEndDiam()/1.3 ,r2=HotEndDiam()/1.3 ,h=height+1)	;	
+					
+					for (a = [0:180:359]) rotate([0, 0, a]) {
+						translate([0, mount_radius, 0])
+								cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);				
+					}
+				}
 			}
 
 	  }

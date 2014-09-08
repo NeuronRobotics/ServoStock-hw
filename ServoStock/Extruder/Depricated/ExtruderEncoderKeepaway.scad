@@ -1,4 +1,4 @@
-use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
+use <../../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
 $fn=50;
 function solderthickness(3dPrinterTolerance=.4)=1.1+3dPrinterTolerance;
 

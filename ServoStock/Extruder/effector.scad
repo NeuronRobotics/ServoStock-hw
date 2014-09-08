@@ -28,15 +28,16 @@ m3_wide_radius=m3_radius+.5;
 bracelen=RodEndSpacing()-30;
 hotEndOffset=-15;
 pillarOffset = 12;
-
+startAngle = 60;
 
 effector(true);
 
 module placeHotEnd(){
-	translate([-22, hotEndOffset+5,0]){
-		rotate([0,0,-79])
-		children();
-	}
+	rotate([0,0,-startAngle-5])
+		translate([-5, hotEndOffset-9,0]){
+			
+				children();
+		}
 }
 
 
@@ -99,7 +100,7 @@ module braceRod(){
 module effector(useVertical=false) {
 	echo("Separation = ",separation);
 	echo("Offset = ",offset);
-	startAngle = 60;
+	
 	boltLength=1.2*25.4;
 	
 	union()

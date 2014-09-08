@@ -76,7 +76,7 @@ module StructuralBearingMount_local(Style=1)
 			{
 				rotate([0,90,0])
 				{
-					#M8x50Bolt();
+					M8x50Bolt();
 				}
 			}
 		}else{
@@ -88,7 +88,7 @@ module StructuralBearingMount_local(Style=1)
 					{
 						union()
 						{
-						#M8x30Bolt();
+						M8x30Bolt();
 						translate([0,0,-M8x30BoltLength()])
 						{
 							M8NutSlot();
@@ -102,7 +102,7 @@ module StructuralBearingMount_local(Style=1)
 				{
 					rotate([0,90,0])
 					{
-					#IdlerBearingPlugBolt();
+						IdlerBearingPlugBolt();
 					}				
 				}
 			}

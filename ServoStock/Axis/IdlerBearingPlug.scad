@@ -6,7 +6,7 @@ function IdlerBearingPlugPlasticWidth()= 608BallBearingHeight()/4;
 
 module IdlerBearingPlugBolt()
 {
-	HiLoBolt(.4,608BallBearingHeight()/3+IdlerBearingPlugPlasticWidth());
+	HiLoBolt(.2,608BallBearingHeight()/3+IdlerBearingPlugPlasticWidth());
 }
 
 module IdlerBearingPlugBoltGapped()

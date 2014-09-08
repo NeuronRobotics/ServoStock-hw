@@ -2,9 +2,9 @@
 
 $fn=50;
 
-use <../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
-use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
-use <../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
+use <../../../../Vitamins/Vitamins/Sensors/Encoders/Encoder_Vitamin.scad>;
+use <../../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>;
+use <../../../../Vitamins/Vitamins/Fasteners/Screws/High_Low_Screw_Vitamin.scad>;
 
 use <ExtruderMKII.scad>;
 use <ExtruderIdlerWheel.scad>;

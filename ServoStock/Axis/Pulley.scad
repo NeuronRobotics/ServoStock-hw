@@ -43,7 +43,7 @@ function WorkingPulleyHeight()= PulleyBaseHeight()+toothHeight+flangeHeight;
 function PulleyHeight()=PulleyBaseHeight()+toothHeight+flangeHeight+PulleyHubHeight();
 
 
-function PulleyTotalHeight()=30.48+3.7;
+function PulleyTotalHeight()=30.48+(3.7/2);
 
 function PulleyBeltOffset()=splineToPulleyHeight+beltWidth/2;
 //translate([10,10,0])

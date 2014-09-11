@@ -42,7 +42,7 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 								cylinder(r=608BallBearingInnerDiam()/1.5, h=608BallBearingHeight()/3, $fn=30);
 								translate([0,0,608BallBearingHeight()/3])
 								{
-								cylinder(r1=608BallBearingInnerDiam(3dPrinterTolerance=0)/2,r2=608BallBearingInnerDiam(3dPrinterTolerance=.4)/2, h=608BallBearingHeight(), $fn=30);
+								cylinder(r1=608BallBearingInnerDiam(3dPrinterTolerance=.4)/2,r2=608BallBearingInnerDiam(3dPrinterTolerance=.7)/2, h=608BallBearingHeight(), $fn=30);
 								}
 								if (LinearSpring==true)
 								{	
@@ -88,7 +88,7 @@ module CanvasPulleyMount(WormDriver=false,LinearSpring=false)
 
 //PRINT BED
 rotate([90,0,0])
-CanvasPulleyMount(WormDriver=true);
+CanvasPulleyMount(WormDriver=false);
 
 translate([80,0,0])
 rotate([90,0,0])

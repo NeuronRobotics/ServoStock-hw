@@ -22,9 +22,13 @@ function MotorCanvasPulleyLength()=CanvasPulleyLength()+608BallBearingHeight()*2
 
 function SpringCanvasPulleyLength()=MotorCanvasPulleyLength()+DrillPressSpringWidth()-2;
 
-function CanvasPulleyMountHerringboneDistance()=MotorCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4;
+//this slop factor is because of tolerancing issues with print, if everything is just slightly out of tolerance, it can add up fast, however if the holders are just a little too far apart, there are no consequences. So the goal is to place the mounts at a distance that they will always be slightly farther apart than neccessary
+function SlopFactor()=6;
 
-function CanvasPulleyMountNonDrivenDistance()=SpringCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4;
+
+function CanvasPulleyMountHerringboneDistance()=MotorCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4+SlopFactor();
+
+function CanvasPulleyMountNonDrivenDistance()=SpringCanvasPulleyLength()+(PlasticWidth()+608BallBearingHeight()/3)*2-HiLoBoltHeadDiameter()*4+SlopFactor();
 
 module CanvasSlit()
 {
@@ -179,7 +183,26 @@ module BottomBearingRoller()
 }
 
 
+module ConstantForceRoller()
+{
+	difference()
+	{
+		BaseCanvasRoller();
+		translate([-CanvasPulleyWidth()/2,-CanvasPulleySlitWidth()/2,CanvasPulleyLength()/2-18/2])
+		{
+			cube([CanvasPulleyWidth(),CanvasPulleySlitWidth(),18]);
+			translate([8,0,18/2])
+			{
+				rotate([0,0,50])
+				{
+					BoltHole();
+				}
+			}
+		}
+	}
+}
 
+ConstantForceRoller();
 
 
 module CanvasRoller(motor=false, type=1)
@@ -258,7 +281,7 @@ module CanvasRoller(motor=false, type=1)
 
 
 
-CanvasRoller(false);
+//CanvasRoller(false);
 
 //if you want to check if we are within the printable area for the flashforge
 //#cube([5,5,FlashforgePrintableHeight()]);

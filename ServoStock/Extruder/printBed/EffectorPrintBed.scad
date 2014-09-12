@@ -1,24 +1,31 @@
 use <../effector.scad>
 use <../Depricated/ExtruderEncoderKeepaway.scad>
 
-effector(true);
+//effector(true);
 
 translate([-50,-50,0]){
-	#encoderkeepaway();
+	//encoderkeepaway();
 }
-translate([10,15,0]){
+translate([-35,20,0]){
 	import("EncoderBearingMount.stl");
 }
-translate([10,40,0]){
+translate([-32,45,0]){
 	import("EncoderBearingMount.stl");
 }
-translate([-117,-10,24.5]){
-	rotate([180,0,90]){
+translate([-75,0,0]){
+	rotate([0,0,180]){
 		import("WormBottom.stl");
 	}
 }
-translate([-70,-10,-2]){
-	rotate([90,0,-90]){
+translate([-20,-10,0]){
+	rotate([0,0,90]){
 		import("WormTopWPI.stl");
 	}
 }
+
+translate([-70,60,0]){
+	rotate([90,0,0]){
+		import("hexbitadapter.stl");
+	}
+}
+	

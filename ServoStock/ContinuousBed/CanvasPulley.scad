@@ -4,6 +4,7 @@ use <../../../Vitamins/Vitamins/Fasteners/ScrewsAsBolts/High_Low_Screw_As_Bolt_V
 use <../../../Vitamins/Vitamins/Actuators/StandardServo/StandardServo_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/ConstantForceSpring_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
+use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Actuators/DrillPressSpring_Vitamin.scad>
 use <../../../Vitamins/Threaded_Library/WormDrive-NoThroat_ModifiedGear.scad>
 use <../../../Vitamins/Threaded_Library/HerringBoneGear_Modified.scad>
@@ -182,27 +183,66 @@ module BottomBearingRoller()
 	}
 }
 
-
-module ConstantForceRoller()
+module ConstantForceSpringSlot()
 {
-	difference()
+	union()
 	{
-		BaseCanvasRoller();
-		translate([-CanvasPulleyWidth()/2,-CanvasPulleySlitWidth()/2,CanvasPulleyLength()/2-18/2])
+		cube([CanvasPulleyWidth(),CanvasPulleySlitWidth(),18]);
+		translate([8,0,18/2])
 		{
-			cube([CanvasPulleyWidth(),CanvasPulleySlitWidth(),18]);
-			translate([8,0,18/2])
+			rotate([0,0,50])
 			{
-				rotate([0,0,50])
-				{
-					BoltHole();
-				}
+				BoltHole();
 			}
 		}
 	}
 }
 
+module ConstantForceRoller()
+
+{
+	difference()
+	{
+		BaseCanvasRoller();
+		translate([-CanvasPulleyWidth()/2,-CanvasPulleySlitWidth()/2,CanvasPulleyLength()/6-18/2])
+		{
+			ConstantForceSpringSlot();
+		}
+		translate([-CanvasPulleyWidth()/2,-CanvasPulleySlitWidth()/2,CanvasPulleyLength()*5/6-18/2])
+		{
+			ConstantForceSpringSlot();
+		}
+	}
+}
+
 ConstantForceRoller();
+
+module FrictionReductionRoller()
+{
+	difference()
+	{
+		union()
+		{
+			translate([0,0,608BallBearingHeight()-1])
+			{
+				union()
+				{
+					cylinder(r=CanvasPulleyWidth()/2, h=CanvasPulleyLength(), $fn=40);
+					TopBearingMount();
+				}
+			}
+			BottomBearingMount();
+		}
+		BottomBearingDraft();
+	}
+}
+
+translate([0,50,0])
+FrictionReductionRoller();
+
+
+
+
 
 
 module CanvasRoller(motor=false, type=1)
@@ -241,7 +281,26 @@ module CanvasRoller(motor=false, type=1)
 			{
 				union()
 				{
-					TopAndBottomBearingRoller();
+					BottomBearingRoller();
+					translate([0,0,CanvasPulleyLength()+608BallBearingDiam()/3-2])
+					{
+						cylinder(r=CanvasPulleyWidth()/2, h=608BallBearingHeight()/3);
+						translate([0,0,608BallBearingHeight()/3])
+						{
+							cylinder(r=608BallBearingInnerDiam()/1.5, h=608BallBearingHeight()/3);
+							translate([0,0,608BallBearingHeight()/3])
+							{
+								difference()
+								{
+									cylinder(r1=608BallBearingInnerDiam(3dPrinterTolerance=.3)/2,r2=608BallBearingInnerDiam(3dPrinterTolerance=.6)/2, h=608BallBearingHeight(), $fn=30);
+									translate([0,0,608BallBearingHeight()-MagnetLength()])
+									{
+										MagnetDraft(.4);
+									}
+								}
+							}
+						}
+					}
 					difference()
 					{
 						double_helix_gear (teeth=CanvasPulleyTeeth());
@@ -281,7 +340,8 @@ module CanvasRoller(motor=false, type=1)
 
 
 
-//CanvasRoller(false);
+translate([0,-50,0])
+CanvasRoller(true, 3);
 
 //if you want to check if we are within the printable area for the flashforge
 //#cube([5,5,FlashforgePrintableHeight()]);

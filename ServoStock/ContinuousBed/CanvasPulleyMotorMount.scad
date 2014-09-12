@@ -13,7 +13,7 @@ module HerringBoneMotorMountClearance()
 	{
 		rotate([0,-78,0])
 		{
-			cube([HerringboneMotorMountHeight()*1.5,PlasticWidth()+2,HerringboneMotorMountHeight()]);
+			cube([HerringboneMotorMountHeight()*1.5,PrinterBedPlasticWidth()+2,HerringboneMotorMountHeight()]);
 		}
 	}
 }
@@ -22,7 +22,7 @@ module CanvasPulleyMotorMount(herringbone=true)
 {
 	if (herringbone==true)
 	{
-		translate([-(StandardServoWingLength()+StandardServoBaseLength()-StandardServoCylinderDiam()/2),StandardServoOutcrop()-PlasticWidth(),0])
+		translate([-(StandardServoWingLength()+StandardServoBaseLength()-StandardServoCylinderDiam()/2),StandardServoOutcrop()-PrinterBedPlasticWidth(),0])
 		{
 			difference()
 			{
@@ -30,35 +30,32 @@ module CanvasPulleyMotorMount(herringbone=true)
 				{
 					union()	
 					{
-						difference()
+						
+						cube([HerringboneMotorMountLength(),PrinterBedPlasticWidth(),HerringboneMotorMountHeight()]);						
+						cube([HerringboneMotorMountLength(),HiLoScrewHeadDiameter()*3,PrinterBedPlasticWidth()]);
+						translate([-PrinterBedPlasticWidth(),0,0])
 						{
-							cube([HerringboneMotorMountLength(),PlasticWidth(),HerringboneMotorMountHeight()]);
-							HerringBoneMotorMountClearance();
-							translate([HerringboneMotorMountLength(),0,0])
-							{
-								mirror([1,0,0])
-								{
-									HerringBoneMotorMountClearance();
-								}
-							}
-						}
-						cube([HerringboneMotorMountLength(),HiLoScrewHeadDiameter()*3,PlasticWidth()]);
-					
+							cube([PrinterBedPlasticWidth(),HiLoScrewHeadDiameter()*3,HerringboneMotorMountHeight()]);
+						}		
+						translate([HerringboneMotorMountLength(),0,0])
+						{
+							cube([PrinterBedPlasticWidth(),HiLoScrewHeadDiameter()*3,HerringboneMotorMountHeight()]);
+						}				
 					}
 				}
-				translate([0,PlasticWidth(),StandardServoThickness()+CanvasPulleyHerringboneMotorOffset()])
+				translate([0,PrinterBedPlasticWidth(),StandardServoThickness()+CanvasPulleyHerringboneMotorOffset()])
 				{
 					rotate([0,90,-90])
 					{
 						#StandardServoMotor(true, 1, false, .4, 10);
 					}
 				}
-				translate([0,PlasticWidth()+HiLoScrewHeadDiameter()*1.5,PlasticWidth()])
+				translate([0,PrinterBedPlasticWidth()+HiLoScrewHeadDiameter()*1.5,PrinterBedPlasticWidth()])
 				{
 					#HiLoScrew();
 				
 				}
-				translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,PlasticWidth()+HiLoScrewHeadDiameter()*1.5,PlasticWidth()])
+				translate([HerringboneMotorMountLength()-HiLoScrewHeadDiameter()*2,PrinterBedPlasticWidth()+HiLoScrewHeadDiameter()*1.5,PrinterBedPlasticWidth()])
 				{
 					#HiLoScrew();
 				}				
@@ -74,6 +71,6 @@ module CanvasPulleyMotorMount(herringbone=true)
 //translate([0,-StandardServoOutcrop()-HiLoScrewHeadDiameter()*1.5,0])
 //CanvasPulleyMotorMount(true);
 
-translate([0,0,-StandardServoOutcrop()+PlasticWidth()])
+translate([0,0,-StandardServoOutcrop()+PrinterBedPlasticWidth()])
 rotate([90,0,0])
 CanvasPulleyMotorMount(true);

@@ -16,41 +16,68 @@ module setFrame(){
 	}
 }
 
+module ConstantForceSpringHolderFacer()
+{
+	translate([0,-1,0])
+	{
+		rotate([0,-78,0])
+		{
+			cube([CanvasPulleyEffectiveHeight()*1.5,PrinterBedPlasticWidth()+2,CanvasPulleyEffectiveHeight()]);
+		}
+	}
+}
+
+
 module ConstantForceSpringHolder()
 {
 	difference()
 	{
-		translate([-CanvasPulleyWidth()/2,0,-CanvasPulleyEffectiveHeight()])
+		translate([-DrillPressSpringOuterDiameter()/2,0,-CanvasPulleyEffectiveHeight()])
 		{
 			union()
 			{
-				cube([CanvasPulleyWidth(), PlasticWidth(),CanvasPulleyEffectiveHeight()]);
-				translate([CanvasPulleyWidth()/2,PlasticWidth(),CanvasPulleyEffectiveHeight()])
+				difference()
 				{
-					rotate([90,0,0])
+					translate([-DrillPressSpringOuterDiameter()/4,0,0])
 					{
-						cylinder(r=CanvasPulleyWidth()/2, h=PlasticWidth());
+						cube([DrillPressSpringOuterDiameter()*1.5, PrinterBedPlasticWidth(),CanvasPulleyEffectiveHeight()]);
+					}
+					translate([-DrillPressSpringOuterDiameter()/4,0,0])
+					{
+						ConstantForceSpringHolderFacer();
+					}
+					translate([DrillPressSpringOuterDiameter()*1.5-DrillPressSpringOuterDiameter()/4,0,0])
+					{
+						mirror([1,0,0])
+						{
+							ConstantForceSpringHolderFacer();
+						}
 					}
 				}
-				cube([CanvasPulleyWidth(),HiLoScrewHeadDiameter()*3, PlasticWidth()]);
-				translate([CanvasPulleyWidth()/2,PlasticWidth(),CanvasPulleyEffectiveHeight()])
+				translate([-DrillPressSpringOuterDiameter()*.5/2, 0, 0])
+				{
+					cube([DrillPressSpringOuterDiameter()*1.5,PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth(), PrinterBedPlasticWidth()]);
+				}
+				translate([0,PlasticWidth(),CanvasPulleyEffectiveHeight()])
 				{	
-					translate([0,-PlasticWidth(),0])
+					translate([DrillPressSpringOuterDiameter()/2,-PlasticWidth(),0])
 					{
 						rotate([-90,0,0])
 						{
 							difference()
 							{
-								cylinder(r=(DrillPressSpringOuterDiameter()+PlasticWidth())/2, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
-								translate([0,0,PlasticWidth()])
+								cylinder(r=(DrillPressSpringOuterDiameter()+PlasticWidth())/2, h=PrinterBedPlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());
+								translate([0,0,PrinterBedPlasticWidth()])
 								{
 									cylinder(r=DrillPressSpringOuterDiameter()/2, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth());		
 								}
 								for (i = [0:72:359])
 								{ 
-									rotate([0,0,i])
+									translate([0,0,PrinterBedPlasticWidth()-PlasticWidth()])
 									{
-										setFrame(){
+										rotate([0,0,i])
+										{
+											setFrame(){
 											{
 												cube([DrillPressSpringOuterDiameter()/2, 2, 18]);
 											}
@@ -58,6 +85,7 @@ module ConstantForceSpringHolder()
 									}
 								}
 							}	
+						}
 							difference()
 							{
 								cylinder(r=10, h=PlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth()+PlasticWidth()/2);
@@ -71,9 +99,9 @@ module ConstantForceSpringHolder()
 				}
 			}
 		}	
-		translate([CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+PlasticWidth()])
+		translate([DrillPressSpringOuterDiameter()*1.5/2.5,(PrinterBedPlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth())/2,-CanvasPulleyEffectiveHeight()+PrinterBedPlasticWidth()])
 		#HiLoScrew();
-		translate([-CanvasPulleyWidth()/4,HiLoScrewHeadDiameter()*2,-CanvasPulleyEffectiveHeight()+PlasticWidth()])
+		translate([-DrillPressSpringOuterDiameter()*1.5/2.5,(PrinterBedPlasticWidth()+608BallBearingHeight()*4/3+DrillPressSpringWidth())/2,-CanvasPulleyEffectiveHeight()+PrinterBedPlasticWidth()])
 		#HiLoScrew();
 	}
 }

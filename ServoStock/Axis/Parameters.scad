@@ -88,3 +88,6 @@ function CanvasDriverTeeth()= 8;
 function CanvasPulleyDriverRadius()=(CanvasDriverTeeth()*CanvasGearPitch()/180)/2;
 function CanvasPulleyGearOffsetAngle()=25;
 function CanvasPulleyMotorMountOffset()=sin(90-CanvasPulleyGearOffsetAngle())*(CanvasPulleyGearRadius()+CanvasPulleyDriverRadius());
+
+//this is because there is a lot of torque on the printer bed components
+function PrinterBedPlasticWidth()=PlasticWidth()*1.5;

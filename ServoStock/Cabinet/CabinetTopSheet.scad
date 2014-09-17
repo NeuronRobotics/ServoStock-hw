@@ -237,9 +237,9 @@ module CanvasHoles()
 			translate([-CanvasPulleyLength()/2,-getPrintbedWidth()/2,0])
 			{
 				square([CanvasPulleyLength(), CuttingToolDiam()]);
-				translate([0,getPrintbedWidth(),0])
+				translate([0,getPrintbedWidth()*1.4,0])
 				{
-					square([CanvasPulleyLength(), CuttingToolDiam()]);
+					#square([CanvasPulleyLength(), CuttingToolDiam()]);
 				}
 			}
 		}

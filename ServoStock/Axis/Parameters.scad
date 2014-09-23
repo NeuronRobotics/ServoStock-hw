@@ -27,12 +27,12 @@ function MotorBracketHeight()= StandardServoLength()+StandardServoTolerance()*4+
 function getBedToBearingPlateHeight() =60-getCaseBoardThickness();
 function getBedZHeight() = 150+getCaseBoardThickness();
 //function getBedZHeight() =0;
-function getCaseBoardThickness() = 19.05;//3/4in
-//function getCaseBoardThickness() = 3;//3/4in
+function getCaseBoardThickness() = mm(1/2);//3/4in
+//function getCaseBoardThickness() = 3;// 3mm
 
 function getPrintbedWidth() = 200;
 
-function getCaseHoleSize() = 4.5;
+function getCaseHoleSize() = mm(1/8);
 function getShortSideLength() = 180;
 //function getCabinetHeight() = 800;// rod length minus feet height and board thickness
 

@@ -14,12 +14,14 @@ use <../../../Vitamins/Vitamins/Electronics/Bowler_Board_Vitamin.scad>
 
 function CuttingToolDiam()=(1/8)*25.4; //diameter of cutting tool, maximum width of any hole
 
-
+scaleFactor = .01;
+tabWidth = getInnerPlateTabPitch()/4;
 
 module placeTabsMounts(){
-	for (a = [	getCaseBoardThickness()*2:
+	
+	for (a = [	 getInnerPlateTabPitch()/2 :
 		getInnerPlateTabPitch():
-		getBaseSideLength()-getCaseBoardThickness()*2]){
+		getBaseSideLength()]){
 		translate([0,a,0])
 			children();
 
@@ -27,14 +29,16 @@ module placeTabsMounts(){
 }
 
 module tabForInnerPlate(){
-	square([getCaseBoardThickness()+.1,getInnerPlateTabPitch()/4]);
+	square([getCaseBoardThickness()+.1,tabWidth]);
 }
 
 module getTabsForInnerPlate(addHoles=false){
-	scaleFactor = .05;
+	
+	startOffset = getCaseBoardThickness()/2;
+	
 	placeTabsMounts(){
 		if(addHoles){
-			translate([-scaleFactor*getCaseBoardThickness()/2,-scaleFactor*getInnerPlateTabPitch()/8])
+			translate([-scaleFactor*startOffset,-scaleFactor*getInnerPlateTabPitch()/8])
 			scale((1+scaleFactor))
 			 tabForInnerPlate();
 		}else{
@@ -43,7 +47,7 @@ module getTabsForInnerPlate(addHoles=false){
 	}
 	if(addHoles){
 		placeTabsMounts(){
-			translate([getCaseBoardThickness()/2,
+			translate([startOffset,
 			           getInnerPlateTabPitch()*2/3,
 			           0])
 			           circle(getCaseHoleSize()/2, $fn=100);
@@ -105,10 +109,12 @@ module squareWithMountHoles(sideLength=10, useTabs = false,bedCutout = false){
 				square([sideLength-getCaseBoardThickness()*2,sideLength-getCaseBoardThickness()*2],center=true);
 			}
 		}
-		// This checks to see if the case hole is less then 4 times the board thickness
-		if(getCaseBoardThickness()<(getCaseHoleSize()*4)){
-			placeAllSlotElements(sideLength){
-				teeSlot();
+		if(! forceNoTSlots()){
+			// This checks to see if the case hole is less then 4 times the board thickness
+			if(getCaseBoardThickness()<(getCaseHoleSize()*4)){
+				placeAllSlotElements(sideLength){
+					teeSlot();
+				}
 			}
 		}
 
@@ -231,9 +237,9 @@ module CanvasHoles()
 			translate([-CanvasPulleyLength()/2,-getPrintbedWidth()/2,0])
 			{
 				square([CanvasPulleyLength(), CuttingToolDiam()]);
-				translate([0,getPrintbedWidth(),0])
+				translate([0,getPrintbedWidth()*1.4,0])
 				{
-					square([CanvasPulleyLength(), CuttingToolDiam()]);
+					#square([CanvasPulleyLength(), CuttingToolDiam()]);
 				}
 			}
 		}

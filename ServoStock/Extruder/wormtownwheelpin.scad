@@ -11,7 +11,7 @@ module wormpin(){
 	difference(){
 		cylinder (r=608BallBearingInnerDiam(.4),h=pinheight());
 		translate([0,0,pinheight()-MagnetLength()]){
-			#MagnetDraft(.4);
+			MagnetDraft(.4);
 		}
 		translate([608BallBearingInnerDiam(.4)/2/2+MagnetDiam(.4)/2,-608BallBearingInnerDiam(.4),0]){
 			cube([608BallBearingInnerDiam(.4)*2,608BallBearingInnerDiam(.4)*2,pinheight(.4)]);

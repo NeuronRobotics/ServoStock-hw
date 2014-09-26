@@ -2,16 +2,17 @@
 
 $fn=100;
 
+use <wormtownwheel.scad>
 use <../../../Vitamins/Vitamins/Sensors/Encoders/EncoderMagnet_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitamin.scad>
 
-function pinheight()=608BallBearingHeight(.4)*4;
+function pinheight()=(2*608BallBearingHeight(.4))+wheelthickness(.4);
 
 module wormpin(){
 	difference(){
 		cylinder (r=608BallBearingInnerDiam(.4)/2,h=pinheight());
 		translate([0,0,pinheight()-MagnetLength()]){
-			MagnetDraft(.4);
+			EncoderMagnet(true,.4);
 		}
 		translate([608BallBearingInnerDiam(.4)/3,-608BallBearingInnerDiam(.4),0]){
 			cube([608BallBearingInnerDiam(.4)*2,608BallBearingInnerDiam(.4)*2,pinheight(.4)]);

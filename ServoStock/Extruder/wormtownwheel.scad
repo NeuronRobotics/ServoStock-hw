@@ -8,7 +8,9 @@ use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitam
 use <../../../Vitamins/Vitamins/Tools/ORing_Vitamin.scad>
 use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>
 
-module wormtownwheel(3dPrinterTolerance){
+module wormtownwheel(countersink,3dPrinterTolerance){
+function wheelthickness()=ORdiam()/2+ORdiam()+3dPrinterTolerance+1.5;
+
 	difference(){
 		union(){
 			cylinder(r=ORinnerdiam()/2+ORdiam()+2-3dPrinterTolerance,h=ORdiam()/2);//main body.
@@ -17,28 +19,39 @@ module wormtownwheel(3dPrinterTolerance){
 		translate([0,0,ORdiam()/2+3dPrinterTolerance*2]){
 			ORing();//o-ring subtraction.
 		}
-		for(i=[0:3]){
-			rotate(i*360/4,[0,0,1]){
-				translate([608BallBearingDiam(.4)-ORdiam()/1.5,0,HiLoScrewHeadHeight(.4)-.1]){
-					rotate([0,180,0]){
-						HiLoScrew();//screw subtraction.
+		if(countersink==true){
+			for(i=[0:3]){
+				rotate(i*360/4,[0,0,1]){
+					translate([608BallBearingDiam(.4)-ORdiam()/1.5,0,HiLoScrewHeadHeight(.4)-.1]){
+						rotate([0,180,0]){
+							HiLoScrew();//screw subtraction.
+						}
 					}
 				}
 			}
+		}
+		else {
+			for(i=[0:3]){
+			rotate(i*360/4,[0,0,1]){
+				translate([608BallBearingDiam(.4)-ORdiam()/1.5,0,HiLoScrewHeadHeight()*2+1]){
+					HiLoScrew();
+				}
+			}
+		}
 		}
 		translate([0,0,-1]){
 			wormpin();//pinhole subtraction.
 		}
 	}
 }
-difference(){
-	union(){
-	wormtownwheel(.4);
-		translate([0,0,ORdiam()*2+1.5]){
-			rotate([0,180,180]){
-				//wormtownwheel(.4);//mating wheel for construction
-			}
+
+module wheelprintbed(){	
+	wormtownwheel(true,.4);
+	translate([ORinnerdiam()+15,0,0]){
+		rotate([0,0,0]){
+			wormtownwheel(false,.4);//mating wheel for construction
 		}
 	}
-	//translate([0,0,-1]){cube([100,100,20]);}//cutaway view.
 }
+
+wormtownwheel(true,.4);

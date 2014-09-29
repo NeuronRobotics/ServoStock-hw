@@ -11,11 +11,13 @@ use <../../../Vitamins/Vitamins/Tools/Filament_Vitamin.scad>
 function wheelthickness(3dPrinterTolerance)=(2*ORdiam()+3dPrinterTolerance+4.8);//this is the approximate thickness of both halves of the wheel put together, including the space for the o-ring.
 echo(wheelthickness(.4));
 
+function wheelradius(3dPrinterTolerance)= ORinnerdiam()/2+ORdiam()+2-3dPrinterTolerance;
+
 module wormtownwheel(countersink,3dPrinterTolerance){
 	difference(){
 		union(){
 			translate([0,0,0]){
-				cylinder(r=ORinnerdiam()/2+ORdiam()+2-3dPrinterTolerance,h=ORdiam()/2+2);//outer cylinder.
+				cylinder(r=wheelradius(.4),h=ORdiam()/2+2);//outer cylinder.
 			}
 			cylinder(r=ORinnerdiam()/2-ORdiam()/2+5, h=ORdiam()+3dPrinterTolerance+2);//upper cylinder to mate with other half.
 		}

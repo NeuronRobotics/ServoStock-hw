@@ -18,15 +18,13 @@ use <wormtownwheelpin.scad>
 
 module encodermount(){
 	difference(){
-		translate([0,0,0]){
-			cube([PlasticWidth()*3, EncoderMountWidth(), EncoderHeight()+PlasticWidth()*2.5]);
-		}	
-		translate([PlasticWidth()*2,EncoderMountWidth()/2-1,EncoderHeight(.4)]){
+		cube([PlasticWidth()*3, EncoderMountWidth(), wheelradius(.4)+PlasticWidth()*3]);
+		translate([PlasticWidth()*2,EncoderMountWidth()/2-1,wheelradius(.4)+1]){
 			rotate([90,180,270]){
 				Encoder_Keepaway(true,.8);
 			}
 		}
-		translate([PlasticWidth()*3+608BallBearingHeight(.4),EncoderMountWidth()/2-1,EncoderHeight()]){
+		translate([PlasticWidth()*3+608BallBearingHeight(.4),EncoderMountWidth()/2,wheelradius(.4)]){
 			rotate([0,180,0]){
 				BearingCutout();
 			}
@@ -36,13 +34,22 @@ module encodermount(){
 
 module wormtownbracket(encoder=true,3dPrinterTolerance){
 	union(){
-		translate([0,0,wheelradius(.4)]){
-			difference(){
-				if (encoder==true){
-					encodermount();
-				}	
-				else {
-				}
+		difference(){
+			translate([-PlasticWidth(),-(EncoderMountWidth()-wheelradius(.4))-1,0]){
+				cube([PlasticWidth()*5,wheelradius(.4)*2,PlasticWidth()*2]);
+			}
+			translate([PlasticWidth()*1.5,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){
+				HiLoScrew(.4);
+			}
+			translate([PlasticWidth()*1.5,-HiLoScrewHeadDiameter(.4)+2,PlasticWidth()*2+1]){
+				HiLoScrew(.4);
+			}
+		}
+		difference(){
+			if (encoder==true){
+				encodermount();
+			}	
+			else {
 			}
 		}
 	}

@@ -12,7 +12,7 @@ use <wormtownwheel.scad>
 use <wormtownwheelpin.scad>
 
 
-//function
+function bracketwidth()= PlasticWidth()*3+608BallBearingHeight(.4)-.1;
 //function
 //function
 
@@ -34,12 +34,9 @@ module encodermount(){
 module wormtownbracket(encoder=true,3dPrinterTolerance){
 	difference(){
 		union(){
-			cube([PlasticWidth()*3, EncoderMountWidth(), wheelradius(.4)+PlasticWidth()*3]);
+			cube([bracketwidth(), EncoderMountWidth(), wheelradius(.4)+PlasticWidth()*3]);
 			translate([0,-(EncoderMountWidth()-wheelradius(.4))-1,0]){
-				cube([PlasticWidth()*3+608BallBearingHeight(.4)-.1,wheelradius(.4)*2,PlasticWidth()*2]);
-			}
-			translate([PlasticWidth()*3,0,0]){
-				cube([608BallBearingHeight(.4)-.1,EncoderMountWidth(),wheelradius(.4)+PlasticWidth()*3]);	
+				cube([bracketwidth(),wheelradius(.4)*2,PlasticWidth()*2]);
 			}
 		}
 		translate([PlasticWidth()*1.5,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){

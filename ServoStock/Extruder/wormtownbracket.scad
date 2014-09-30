@@ -17,8 +17,7 @@ use <wormtownwheelpin.scad>
 //function
 
 module encodermount(){
-	difference(){
-		cube([PlasticWidth()*3, EncoderMountWidth(), wheelradius(.4)+PlasticWidth()*3]);
+	union(){
 		translate([PlasticWidth()*2,EncoderMountWidth()/2-1,wheelradius(.4)+1]){
 			rotate([90,180,270]){
 				Encoder_Keepaway(true,.8);
@@ -33,30 +32,40 @@ module encodermount(){
 }
 
 module wormtownbracket(encoder=true,3dPrinterTolerance){
-	union(){
-		difference(){
-			translate([-PlasticWidth(),-(EncoderMountWidth()-wheelradius(.4))-1,0]){
-				cube([PlasticWidth()*5,wheelradius(.4)*2,PlasticWidth()*2]);
+	difference(){
+		union(){
+			cube([PlasticWidth()*3, EncoderMountWidth(), wheelradius(.4)+PlasticWidth()*3]);
+			translate([0,-(EncoderMountWidth()-wheelradius(.4))-1,0]){
+				cube([PlasticWidth()*3+608BallBearingHeight(.4)-.1,wheelradius(.4)*2,PlasticWidth()*2]);
 			}
-			translate([PlasticWidth()*1.5,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){
-				HiLoScrew(.4);
-			}
-			translate([PlasticWidth()*1.5,-HiLoScrewHeadDiameter(.4)+2,PlasticWidth()*2+1]){
-				HiLoScrew(.4);
+			translate([PlasticWidth()*3,0,0]){
+				cube([608BallBearingHeight(.4)-.1,EncoderMountWidth(),wheelradius(.4)+PlasticWidth()*3]);	
 			}
 		}
-		difference(){
-			if (encoder==true){
-				encodermount();
-			}	
-			else {
-			}
+		translate([PlasticWidth()*1.5,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){
+			HiLoScrew(.4);
+		}
+		translate([PlasticWidth()*1.5,-HiLoScrewHeadDiameter(.4)+2,PlasticWidth()*2+1]){
+			HiLoScrew(.4);
+		}	
+		if (encoder==true){
+			encodermount();
+		}	
+		else {
+			translate([PlasticWidth()*3+608BallBearingHeight(.4),EncoderMountWidth()/2,wheelradius(.4)]){
+				rotate([0,180,0]){
+					BearingCutout();
+				}
+			}		
 		}
 	}
 }
 
+wormtownbracket(true,.4);
+translate([PlasticWidth()*6,0,0]){
+	wormtownbracket(false,.4);	
+}
 
-wormtownbracket(true,.4);	
 
 
 

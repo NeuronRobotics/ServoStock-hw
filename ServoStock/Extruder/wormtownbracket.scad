@@ -39,10 +39,10 @@ module wormtownbracket(encoder=true,3dPrinterTolerance){
 				cube([bracketwidth(),wheelradius(.4)*2,PlasticWidth()*2]);
 			}
 		}
-		translate([PlasticWidth()*1.5,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){
+		translate([bracketwidth(.4)/2+HiLoScrewHeadDiameter(.4)/2+1,EncoderMountWidth()+HiLoScrewHeadDiameter(.4)-2,PlasticWidth()*2+1]){
 			HiLoScrew(.4);
 		}
-		translate([PlasticWidth()*1.5,-HiLoScrewHeadDiameter(.4)+2,PlasticWidth()*2+1]){
+		translate([bracketwidth(.4)/2+HiLoScrewHeadDiameter(.4)/2+1,-HiLoScrewHeadDiameter(.4)+2,PlasticWidth()*2+1]){
 			HiLoScrew(.4);
 		}	
 		if (encoder==true){
@@ -53,13 +53,16 @@ module wormtownbracket(encoder=true,3dPrinterTolerance){
 				rotate([0,180,0]){
 					BearingCutout();
 				}
-			}		
+			}	
+			translate([-1,-PlasticWidth(.4)*2-3,-1]){	
+				cube([bracketwidth(.4)/2+1,wheelradius(.4)*2+1,wheelradius(.4)+PlasticWidth(.4)*3+2]);
+			}
 		}
 	}
 }
 
 wormtownbracket(true,.4);
-translate([PlasticWidth()*6,0,0]){
+translate([PlasticWidth()*6,bracketwidth(.4)*2,0]){
 	wormtownbracket(false,.4);	
 }
 

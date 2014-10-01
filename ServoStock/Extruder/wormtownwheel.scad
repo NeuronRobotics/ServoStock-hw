@@ -45,7 +45,7 @@ module wormtownwheel(countersink,3dPrinterTolerance){
 		}
 		}
 		translate([0,0,-1]){
-			wormpin();//pinhole subtraction.
+			wormpin(.2);//pinhole subtraction.
 		}
 	}
 }

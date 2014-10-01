@@ -1,4 +1,4 @@
-// This is the pin for the encoder wheel.
+// This is the pin for the encoder wheel.  when printing, call '3dPrinterTolerance in the module as zero.  add .4-.8 for subtractions in the wheel and elsewhere.
 
 $fn=100;
 
@@ -8,9 +8,9 @@ use <../../../Vitamins/Vitamins/Structural/SealedBearings/SealedBearing608_Vitam
 
 function pinheight()=(2*608BallBearingHeight(.4))+wheelthickness(.4);
 
-module wormpin(){
+module wormpin(3dPrinterTolerance){
 	difference(){
-		cylinder (r=608BallBearingInnerDiam(.4)/2,h=pinheight());
+		cylinder (r=608BallBearingInnerDiam(.4)/2+3dPrinterTolerance,h=pinheight());
 		translate([0,0,pinheight()-MagnetLength()]){
 			EncoderMagnet(true,.4);
 		}

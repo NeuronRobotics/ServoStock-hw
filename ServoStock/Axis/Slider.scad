@@ -160,7 +160,7 @@ module LinearBearingGrip(Style=2)
 
 module BeltClip(HiLo=false, Style=2)
 {
-	translate([-PulleyInnerDiam()/2-2XLBeltGripHeight()/2,BeltClipLength()/2,SliderHeight()/2])
+	translate([-PulleyInnerDiam()/2-2XLBeltGripHeight()/2,BeltClipLength()/2,SliderHeight()*1])
 	{
 		union()
 		{
@@ -170,7 +170,7 @@ module BeltClip(HiLo=false, Style=2)
 				{
 					translate([0,BeltClipLength()*.15,0])
 					{
-						cube([2XLBeltGripHeight()*3.5, BeltClipLength()*1.3, SliderHeight()], center=true);
+						cube([2XLBeltGripHeight()*3.5, BeltClipLength()*1.3, SliderHeight()*2], center=true);
 					}
 				}else{
 					

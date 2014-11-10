@@ -59,7 +59,7 @@ module MotorMount()
 		{
 			rotate([-90,-90,0]) 
 			{
-				#MiniServoMotor(true, 2, false, .4);
+				MiniServoMotor(true, 2, false, .4);
 			}
 		}
 			translate([MiniServoWingLength()-0.5,0,-1])
@@ -218,7 +218,7 @@ module effector(useVertical=false) {
 			}
 		translate([0,hotEndOffset,-1])
 			{
-				cylinder(r=offset*1.2, h=height+2);
+				#cylinder(r=offset*1.2, h=height+2);
 			}
 		}
 	}

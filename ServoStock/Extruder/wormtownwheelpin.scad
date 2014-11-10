@@ -10,12 +10,12 @@ function pinheight()=(2*608BallBearingHeight(.4))+wheelthickness(.4);
 
 module wormpin(3dPrinterTolerance){
 	difference(){
-		cylinder (r=608BallBearingInnerDiam(.4)/2+3dPrinterTolerance,h=pinheight());
-		translate([0,0,pinheight()-MagnetLength()]){
+		cylinder (r=608BallBearingInnerDiam(.4)/2,h=pinheight());
+		translate([0,0,pinheight()-MagnetLength()+.1]){
 			EncoderMagnet(true,.4);
 		}
-		translate([608BallBearingInnerDiam(.4)/3,-608BallBearingInnerDiam(.4),0]){
-			cube([608BallBearingInnerDiam(.4)*2,608BallBearingInnerDiam(.4)*2,pinheight(.4)]);
+		translate([608BallBearingInnerDiam(.4)/3,-608BallBearingInnerDiam(.4),-.5]){
+			cube([608BallBearingInnerDiam(.4)*2,608BallBearingInnerDiam(.4)*2,pinheight(.4)+1]);
 		}
 	}
 }
